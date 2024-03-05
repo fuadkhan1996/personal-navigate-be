@@ -1,0 +1,58 @@
+require:
+  - rubocop-rails
+  - rubocop-rspec
+
+inherit_from:
+  - https://raw.githubusercontent.com/rubocop/rubocop/master/config/default.yml
+
+AllCops:
+  NewCops: enable
+  TargetRubyVersion: 3.3
+  TargetRailsVersion: 7.1
+  Exclude:
+    - 'db/**/*'
+    - 'bin/*'
+    - 'config/**/*'
+    - 'script/**/*'
+    - 'vendor/**/*'
+    - 'spec/fixtures/**/*'
+    - 'tmp/**/*'
+    - 'node_modules/**/*'
+    - 'Gemfile.lock'
+    - 'Rakefile'
+    - 'config.ru'
+    - 'test/**/*'
+
+Rails:
+  Enabled: true
+
+# Correct the namespace for LineLength from Metrics to Layout
+Layout/LineLength:
+  Max: 120
+
+Metrics/BlockLength:
+  Max: 25
+  Exclude:
+    - 'spec/**/*.rb'
+
+Metrics/MethodLength:
+  Max: 15
+
+Metrics/ClassLength:
+  Max: 150
+
+Metrics/ModuleLength:
+  Max: 150
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+# Make sure to remove any reference to obsolete parameters
+# Specifically, do not use `AllowOnlyRestArgument` or `ParserEngine`
+
+# Note: If you see warnings about an inherited file (.rubocop-https---raw-githubusercontent-com-rubocop-rubocop-master-config-default-yml),
+# it's due to configurations in the remote file, which you can't change. 
+# You may consider copying the contents to a local file and removing the problematic configurations.
