@@ -30,12 +30,17 @@ gem 'tzinfo-data', platforms: %i[windows jruby]
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', require: false
+# gem 'aws-sdk', '~> 3'
+gem 'aws-sdk-cognitoidentity'
+gem 'aws-sdk-cognitoidentityprovider'
+gem 'rswag-api'
+gem 'rswag-ui'
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin Ajax possible
-# gem "rack-cors"
+gem "rack-cors"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -43,6 +48,8 @@ group :development, :test do
   gem 'rubocop', '~> 1.61', require: false
   gem 'rubocop-rails', require: false
   gem 'rubocop-rspec', require: false
+  gem 'rspec-rails'
+  gem 'rswag-specs'
 end
 
 group :development do
