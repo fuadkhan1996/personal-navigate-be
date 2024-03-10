@@ -15,6 +15,12 @@ module Dc
       end
     end
 
+    def attributes
+      instance_variables.each_with_object({}) do |var, hash|
+        hash[var.to_s.delete('@')] = instance_variable_get(var)
+      end
+    end
+
     def self.find(id)
       query = ActiveRecord::Base.sanitize_sql_array([<<-SQL.squish, id])
         SELECT * FROM dc_employees WHERE id = ? LIMIT 1

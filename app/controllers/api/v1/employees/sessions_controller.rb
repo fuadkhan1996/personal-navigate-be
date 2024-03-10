@@ -4,11 +4,12 @@ module Api
   module V1
     module Employees
       class SessionsController < ApplicationController
-        def create
-          response = Dc::Employee.authenticate(sign_in_params[:email], sign_in_params[:password])
+        skip_before_action :authenticate_request!, only: :create
 
-          if response[:error].blank?
-            render json: response, status: :ok
+        def create
+          employee = Dc::Employee.authenticate(sign_in_params[:email], sign_in_params[:password])
+          if employee.is_a?(Dc::Employee)
+            render json: { employee: employee.attributes }, status: :ok
           else
             invalid_credentials
           end
