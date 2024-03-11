@@ -33,6 +33,7 @@ gem 'bootsnap', require: false
 # gem 'aws-sdk', '~> 3'
 gem 'aws-sdk-cognitoidentity'
 gem 'aws-sdk-cognitoidentityprovider'
+gem 'jsonapi-serializer'
 gem 'rswag-api'
 gem 'rswag-ui'
 
@@ -45,11 +46,11 @@ gem 'rack-cors'
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem 'debug', platforms: %i[mri windows]
+  gem 'rspec-rails'
+  gem 'rswag-specs'
   gem 'rubocop', '~> 1.61', require: false
   gem 'rubocop-rails', require: false
-  gem 'rspec-rails'
   gem 'rubocop-rspec', require: false
-  gem 'rswag-specs'
 end
 
 group :development do

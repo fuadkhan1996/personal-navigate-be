@@ -9,7 +9,7 @@ module Api
         def create
           employee = Dc::Employee.authenticate(sign_in_params[:email], sign_in_params[:password])
           if employee.is_a?(Dc::Employee)
-            render json: { employee: employee.attributes }, status: :ok
+            render json: Dc::EmployeeSerializer.new(employee).serializable_hash.to_json, status: :ok
           else
             invalid_credentials
           end

@@ -22,17 +22,26 @@ describe 'Api::V1::Employees::Sessions' do
       }
 
       response '200', 'Authentication successful' do
-        it 'returns a valid access token and refresh token' do
-          schema type: :object,
-                properties: {
-                  access_token: { type: :string },
-                  refresh_token: { type: :string }
-                },
-                required: %w[access_token refresh_token]
+        schema type: :object,
+               properties: {
+                 employee: {
+                   type: :object,
+                   properties: {
+                     id: { type: :bigint },
+                     email: { type: :string },
+                     first_name: { type: :string },
+                     last_name: { type: :string },
+                     cognito_username: { type: :string },
+                     access_token: { type: :string },
+                     refresh_token: { type: :string }
+                   },
+                   required: %w[id email first_name last_name cognito_username access_token refresh_token]
+                 },
+                 required: %w[employee]
+               }
 
-          let(:session) { { employee: { email: 'email', password: 'password' } } }
-          run_test!
-        end
+        let(:session) { { employee: { email: 'email', password: 'password' } } }
+        run_test!
       end
 
       response '401', 'Authentication failed' do

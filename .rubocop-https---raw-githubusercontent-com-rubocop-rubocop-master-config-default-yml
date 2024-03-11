@@ -147,6 +147,8 @@ AllCops:
   # You can specify the parser engine. There are two options available:
   # - `parser_whitequark` ... https://github.com/whitequark/parser
   # - `parser_prism` ... https://github.com/ruby/prism (`Prism::Translation::Parser`)
+  # By default, `parser` is used. For the `TargetRubyVersion` value, `parser` can be specified for versions `2.0` and above.
+  # `parser_prism` can be specified for versions `3.3` and above. `parser_prism` is faster but still considered experimental.
   # Determines if a notification for extension libraries should be shown when
   # rubocop is run. Keys are the name of the extension, and values are an array
   # of gems in the Gemfile that the extension is suggested for, if not already
@@ -1654,7 +1656,7 @@ Lint/Debugger:
   Description: 'Check for debugger calls.'
   Enabled: true
   VersionAdded: '0.14'
-  VersionChanged: '1.46'
+  VersionChanged: '<<next>>'
   DebuggerMethods:
     # Groups are available so that a specific group can be disabled in
     # a user's configuration, but are otherwise not significant.

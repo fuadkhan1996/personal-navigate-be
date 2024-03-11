@@ -3,6 +3,7 @@
 module Dc
   class Employee
     include ActiveModel::API
+    include ActiveModel::Serialization
     include Dc::Api::Employee
     include Authable
 
