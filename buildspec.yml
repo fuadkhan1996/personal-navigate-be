@@ -1,0 +1,20 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      ruby: 3.3.0
+    commands:
+      - bundle install
+  pre_build:
+    commands:
+      - echo Commands...
+  build:
+    commands:
+      - echo Building the Rails API app...
+  post_build:
+    commands:
+      - echo Build completed on `date`
+artifacts:
+  files:
+    - '**/*'
