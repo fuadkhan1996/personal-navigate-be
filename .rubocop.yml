@@ -3,7 +3,7 @@ require:
   - rubocop-rspec
 
 inherit_from:
-  - https://raw.githubusercontent.com/rubocop/rubocop/master/config/default.yml
+  - .rubocop_default.yml
 
 AllCops:
   NewCops: enable
