@@ -28,6 +28,8 @@ phases:
       - bundle install
   build:
     commands:
+      - echo "Running bundle exec rubocop..."
+      - bundle exec rubocop
       - echo "Running tests..."
       # Add your build commands here
   post_build:
