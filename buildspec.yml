@@ -2,14 +2,23 @@ version: 0.2
 
 phases:
   install:
-    runtime-versions:
-      ruby: 3.2
-    commands:
-      - gem install bundler
-      - bundle install
+    # Install rbenv and ruby-build if not already available
+    - git clone https://github.com/rbenv/rbenv.git ~/.rbenv
+    - git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
+    - echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc
+    - echo 'eval "$(rbenv init -)"' >> ~/.bashrc
+    - source ~/.bashrc
+    # Install Ruby 3.2.3 and set it as the default version
+    - rbenv install 3.3.0
+    - rbenv global 3.3.0
+    # Verify Ruby installation
+    - ruby -v
+    # Install Bundler
+    - gem install bundler
   pre_build:
     commands:
-      - echo Commands...
+      - echo bundle install...
+      - bundle install
   build:
     commands:
       - echo Running bundle exec rubocop...
