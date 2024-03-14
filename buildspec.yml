@@ -25,6 +25,7 @@ phases:
           rbenv install 3.3.0
         fi
       - rbenv global 3.3.0
+      - rbenv rehash
       - ruby -v
       - gem install bundler
   pre_build:
