@@ -17,8 +17,7 @@ phases:
           echo "ruby-build already installed"
         fi
       - echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc
-      - echo 'eval "$(rbenv init -)"' >> ~/.bashrc
-      - source ~/.bashrc
+      - echo 'eval "$(~/.rbenv/bin/rbenv init - bash)"' >> ~/.bashrc
       - rbenv install 3.3.0 --skip-existing
       - rbenv global 3.3.0
       - ruby -v
