@@ -4,27 +4,16 @@ phases:
   install:
     commands:
       # Ensure rbenv is installed correctly
-      - |
-        if [ ! -d "$HOME/.rbenv" ]; then
-          git clone https://github.com/rbenv/rbenv.git ~/.rbenv
-        else
-          echo "rbenv already installed"
-        fi
-      - |
-        if [ ! -d "$HOME/.rbenv/plugins/ruby-build" ]; then
-          git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
-        else
-          echo "ruby-build already installed"
-        fi
+      - if [ ! -d "$HOME/.rbenv" ]; then git clone https://github.com/rbenv/rbenv.git ~/.rbenv; fi
+      - if [ ! -d "$HOME/.rbenv/plugins/ruby-build" ]; then git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build; fi
       - export PATH="$HOME/.rbenv/bin:$PATH"
       - eval "$(rbenv init -)"
-      - |
-        if rbenv versions | grep -q "3.3.0"; then
-          echo "Ruby 3.3.0 already installed"
-        else
-          rbenv install 3.3.0
-        fi
-      - rbenv global 3.3.0
+      - echo "rbenv versions:"
+      - rbenv versions
+      # Check and install Ruby version as needed
+      - RUBY_VERSION=$(cat .ruby-version)
+      - if rbenv versions | grep -q "$RUBY_VERSION"; then echo "Ruby $RUBY_VERSION already installed"; else rbenv install $RUBY_VERSION; fi
+      - rbenv global $RUBY_VERSION
       - rbenv rehash
       - ruby -v
       - gem install bundler
