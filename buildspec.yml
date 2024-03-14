@@ -16,8 +16,8 @@ phases:
         else
           echo "ruby-build already installed"
         fi
-      - echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc
-      - echo 'eval "$(~/.rbenv/bin/rbenv init - bash)"' >> ~/.bashrc
+      - export PATH="$HOME/.rbenv/bin:$PATH"
+      - eval "$(rbenv init -)"
       - |
         if rbenv versions | grep -q "3.3.0"; then
           echo "Ruby 3.3.0 already installed"
