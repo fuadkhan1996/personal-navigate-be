@@ -5,12 +5,16 @@ phases:
     runtime-versions:
       ruby: 3.2
     commands:
+      - echo Installing bundler...
+      - gem install bundler
       - bundle install
   pre_build:
     commands:
       - echo Commands...
   build:
     commands:
+      - echo Running bundle exec rubocop...
+      - bundle exec rubocop
       - echo Building the Rails API app...
   post_build:
     commands:
