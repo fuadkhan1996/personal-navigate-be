@@ -2,20 +2,9 @@ version: 0.2
 
 phases:
   install:
+    runtime-versions:
+      ruby: latest
     commands:
-      # Ensure rbenv is installed correctly
-      - if [ ! -d "$HOME/.rbenv" ]; then git clone https://github.com/rbenv/rbenv.git ~/.rbenv; fi
-      - if [ ! -d "$HOME/.rbenv/plugins/ruby-build" ]; then git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build; fi
-      - export PATH="$HOME/.rbenv/bin:$PATH"
-      - eval "$(rbenv init -)"
-      - echo "rbenv versions:"
-      - rbenv versions
-      # Check and install Ruby version as needed
-      - RUBY_VERSION=$(cat .ruby-version)
-      - if rbenv versions | grep -q "$RUBY_VERSION"; then echo "Ruby $RUBY_VERSION already installed"; else rbenv install $RUBY_VERSION; fi
-      - rbenv global $RUBY_VERSION
-      - rbenv rehash
-      - ruby -v
       - gem install bundler
   pre_build:
     commands:
