@@ -2,19 +2,20 @@ version: 0.2
 
 phases:
   install:
-    # Install rbenv and ruby-build if not already available
-    - git clone https://github.com/rbenv/rbenv.git ~/.rbenv
-    - git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
-    - echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc
-    - echo 'eval "$(rbenv init -)"' >> ~/.bashrc
-    - source ~/.bashrc
-    # Install Ruby 3.2.3 and set it as the default version
-    - rbenv install 3.3.0
-    - rbenv global 3.3.0
-    # Verify Ruby installation
-    - ruby -v
-    # Install Bundler
-    - gem install bundler
+    commands:
+      # Install rbenv and ruby-build if not already available
+      - git clone https://github.com/rbenv/rbenv.git ~/.rbenv
+      - git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
+      - echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc
+      - echo 'eval "$(rbenv init -)"' >> ~/.bashrc
+      - source ~/.bashrc
+      # Install Ruby 3.3.0 and set it as the default version
+      - rbenv install 3.3.0
+      - rbenv global 3.3.0
+      # Verify Ruby installation
+      - ruby -v
+      # Install Bundler
+      - gem install bundler
   pre_build:
     commands:
       - echo bundle install...
@@ -22,11 +23,12 @@ phases:
   build:
     commands:
       - echo Running bundle exec rubocop...
-      - echo bundle exec rubocop
+      - bundle exec rubocop
       - echo Building the Rails API app...
   post_build:
     commands:
       - echo Build completed on `date`
+
 artifacts:
   files:
     - '**/*'
