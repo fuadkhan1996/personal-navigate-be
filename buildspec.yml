@@ -5,12 +5,18 @@ phases:
     runtime-versions:
       ruby: 3.2
     commands:
-      - echo "Installing asdf and Ruby..."
-      - git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.8.1
-      - . $HOME/.asdf/asdf.sh
-      - asdf plugin-add ruby https://github.com/asdf-vm/asdf-ruby.git
-      - asdf install ruby 3.2.3
-      - asdf global ruby 3.2.3
+      - echo Installing Ruby 3.2.3...
+      - sudo apt update
+      - sudo apt install git libssl-dev libreadline-dev zlib1g-dev autoconf bison build-essential libyaml-dev libreadline-dev libncurses5-dev libffi-dev libgdbm-dev
+      - git clone https://github.com/rbenv/rbenv.git ~/.rbenv
+      - echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc
+      - echo 'eval "$(rbenv init -)"' >> ~/.bashrc
+      - source ~/.bashrc
+      - git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
+      - rbenv install 3.2.3
+      - rbenv global 3.2.3
+      - rbenv rehash
+      - echo Installing bundler...
       - gem install bundler -v '2.5.6'
       - bundle install
   pre_build:
