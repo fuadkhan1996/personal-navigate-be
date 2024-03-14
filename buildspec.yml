@@ -5,7 +5,12 @@ phases:
     runtime-versions:
       ruby: 3.2
     commands:
-      - echo Installing bundler...
+      - echo "Installing asdf and Ruby..."
+      - git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.8.1
+      - . $HOME/.asdf/asdf.sh
+      - asdf plugin-add ruby https://github.com/asdf-vm/asdf-ruby.git
+      - asdf install ruby 3.2.3
+      - asdf global ruby 3.2.3
       - gem install bundler -v '2.5.6'
       - bundle install
   pre_build:
