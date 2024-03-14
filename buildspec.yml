@@ -18,7 +18,12 @@ phases:
         fi
       - echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc
       - echo 'eval "$(~/.rbenv/bin/rbenv init - bash)"' >> ~/.bashrc
-      - rbenv install 3.3.0 --skip-existing
+      - |
+        if rbenv versions | grep -q "3.3.0"; then
+          echo "Ruby 3.3.0 already installed"
+        else
+          rbenv install 3.3.0
+        fi
       - rbenv global 3.3.0
       - ruby -v
       - gem install bundler
