@@ -87,6 +87,8 @@ test:
 #
 production:
   <<: *default
-  database: navigate_be_production
-  username: navigate_be
-  password: <%= ENV["NAVIGATE_BE_DATABASE_PASSWORD"] %>
+  host: <%= Rails.application.credentials.dig(:database_host) %>
+  port: <%= Rails.application.credentials.dig(:database_port) %>
+  username: <%= Rails.application.credentials.dig(:database_username) %>
+  password: <%= Rails.application.credentials.dig(:database_password) %>
+  database: <%= Rails.application.credentials.dig(:database_name) %>
