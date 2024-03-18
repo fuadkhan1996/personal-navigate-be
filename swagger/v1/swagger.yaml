@@ -18,13 +18,33 @@ paths:
               schema:
                 type: object
                 properties:
-                  access_token:
-                    type: string
-                  refresh_token:
-                    type: string
-                required:
-                - access_token
-                - refresh_token
+                  employee:
+                    type: object
+                    properties:
+                      id:
+                        type: bigint
+                      email:
+                        type: string
+                      first_name:
+                        type: string
+                      last_name:
+                        type: string
+                      cognito_username:
+                        type: string
+                      access_token:
+                        type: string
+                      refresh_token:
+                        type: string
+                    required:
+                    - id
+                    - email
+                    - first_name
+                    - last_name
+                    - cognito_username
+                    - access_token
+                    - refresh_token
+                  required:
+                  - employee
         '401':
           description: Authentication failed
           content:
@@ -54,11 +74,6 @@ paths:
                   - password
               required:
               - employee
-servers:
-- url: http://{defaultHost}
-  variables:
-    defaultHost:
-      default: localhost:3001
 components:
   securitySchemes:
     bearerAuth:
