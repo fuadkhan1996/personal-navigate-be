@@ -7,8 +7,6 @@ module Dc
     include Dc::Api::Employee
     include Authable
 
-    attr_accessor :access_token, :refresh_token
-
     def initialize(attributes)
       attributes.each do |key, value|
         self.class.send(:attr_accessor, key)

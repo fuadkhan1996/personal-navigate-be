@@ -32,7 +32,9 @@ class ApplicationController < ActionController::API
   end
 
   def athenticate_token!(token)
-    self.current_employee = Dc::Employee.get_user(access_token: token)
+    # rubocop:disable Rails/DynamicFindBy
+    self.current_employee = Dc::Employee.find_by_access_token(token)
+    # rubocop:enable Rails/DynamicFindBy
   end
 
   def not_found(exception)

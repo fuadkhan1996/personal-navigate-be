@@ -1,7 +1,7 @@
 namespace :api do
   namespace :v1 do
     namespace :employees do
-      resources :sessions, only: %i[create]
+      resource :session, only: %i[create show]
     end
   end
 end

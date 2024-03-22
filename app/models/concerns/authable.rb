@@ -7,28 +7,36 @@ module Authable
 
   module ClassMethods
     def authenticate(email, password)
-      user_object = {
-        username: email.to_s,
-        password: password.to_s,
-        auth_flow: 'USER_PASSWORD_AUTH'
-      }
-
-      response = Cognito::Base.authenticate(user_object: user_object.to_h)
-      if response[:success]
-        employee = get_employee(access_token: response[:data].access_token)
-        employee.access_token = response[:data].access_token
-        employee.refresh_token = response[:data].refresh_token
-        employee
-      else
-        { error: response[:message] }
-      end
+      response = Cognito::Base.authenticate(user_object: authentication_object(email, password).to_h)
+      authentication_response(response)
     end
 
-    def get_employee(access_token:)
+    def find_by_access_token(access_token)
       cognito_user = Cognito::Base.get_user(access_token: access_token.to_s)
       return if cognito_user.blank?
 
       find_by_email(cognito_user[:email])
+    end
+
+    private
+
+    def authentication_object(email, password)
+      {
+        username: email.to_s,
+        password: password.to_s,
+        auth_flow: 'USER_PASSWORD_AUTH'
+      }.to_h
+    end
+
+    def authentication_response(response)
+      return { error: response[:message] } unless response[:success]
+
+      data = response[:data]
+      {
+        access_token: data.access_token,
+        refresh_token: data.refresh_token,
+        token_expires_in: data.expires_in
+      }
     end
   end
 end
