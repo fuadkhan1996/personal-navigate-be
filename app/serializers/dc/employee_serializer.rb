@@ -4,10 +4,13 @@ module Dc
   class EmployeeSerializer
     include JSONAPI::Serializer
 
-    attributes :id,
-               :email,
+    attribute :id, &:company_employee_uuid
+    attributes :email,
                :last_name,
-               :first_name,
-               :cognito_username
+               :first_name
+
+    attribute :company do |employee|
+      CompanySerializer.new(employee.company).serializable_hash[:data][:attributes] if employee.company
+    end
   end
 end

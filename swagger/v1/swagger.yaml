@@ -63,14 +63,14 @@ paths:
               required:
               - employee
     get:
-      summary: Get Current Logged In User
+      summary: Get Current Logged In Employee
       tags:
       - Sessions
       security:
       - bearerAuth: []
       responses:
         '200':
-          description: Logged In User Data
+          description: Logged In Employee Data
           content:
             application/json:
               schema:
@@ -83,15 +83,32 @@ paths:
                         type: object
                         properties:
                           id:
-                            type: integer
+                            type: string
                           email:
                             type: string
                           first_name:
                             type: string
                           last_name:
                             type: string
-                          cognito_username:
-                            type: string
+                          company:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                              title:
+                                type: string
+                              logo:
+                                type: string
+                              created_at:
+                                type: string
+                              updated_at:
+                                type: string
+                            required:
+                            - id
+                            - title
+                            - logo
+                            - created_at
+                            - updated_at
                         required:
                         - id
                         - email

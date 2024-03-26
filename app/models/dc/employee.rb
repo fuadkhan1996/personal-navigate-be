@@ -30,10 +30,17 @@ module Dc
 
     def self.find_by_email(email)
       query = ActiveRecord::Base.sanitize_sql_array([<<-SQL.squish, email])
-        SELECT * FROM dc_employees WHERE email = ? LIMIT 1
+        SELECT dc_company_employees.uuid AS company_employee_uuid,
+          dc_company_employees.*, dc_employees.* FROM dc_company_employees
+          INNER JOIN dc_employees ON dc_employees.id = dc_company_employees.dc_employee_id
+          WHERE email = ? LIMIT 1
       SQL
 
       new(ApplicationRecord.connection.execute(query).try(:first))
+    end
+
+    def company
+      @company ||= Company.find(dc_company_id)
     end
   end
 end

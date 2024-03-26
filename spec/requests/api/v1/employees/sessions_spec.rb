@@ -52,13 +52,13 @@ describe 'Api::V1::Employees::Sessions' do
       end
     end
 
-    get 'Get Current Logged In User' do
+    get 'Get Current Logged In Employee' do
       tags 'Sessions'
       consumes 'application/json'
       produces 'application/json'
       security [bearerAuth: []]
 
-      response '200', 'Logged In User Data' do
+      response '200', 'Logged In Employee Data' do
         schema type: :object,
                properties: {
                  data: {
@@ -67,11 +67,21 @@ describe 'Api::V1::Employees::Sessions' do
                      attributes: {
                        type: :object,
                        properties: {
-                         id: { type: :integer },
+                         id: { type: :string },
                          email: { type: :string },
                          first_name: { type: :string },
                          last_name: { type: :string },
-                         cognito_username: { type: :string }
+                         company: {
+                           type: :object,
+                           properties: {
+                             id: { type: :string },
+                             title: { type: :string },
+                             logo: { type: :string },
+                             created_at: { type: :string },
+                             updated_at: { type: :string }
+                           },
+                           required: %w[id title logo created_at updated_at]
+                         }
                        },
                        required: %w[id email first_name last_name cognito_username]
                      }
