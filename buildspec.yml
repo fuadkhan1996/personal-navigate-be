@@ -3,7 +3,7 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      ruby: latest
+      ruby: 3.2
     commands:
       - gem install bundler
   pre_build:
