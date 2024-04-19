@@ -31,6 +31,7 @@ module Dc
     def self.find_by_email(email)
       query = ActiveRecord::Base.sanitize_sql_array([<<-SQL.squish, email])
         SELECT dc_company_employees.uuid AS company_employee_uuid,
+          dc_company_employees.id as company_employee_id,
           dc_company_employees.*, dc_employees.* FROM dc_company_employees
           INNER JOIN dc_employees ON dc_employees.id = dc_company_employees.dc_employee_id
           WHERE email = ? LIMIT 1
