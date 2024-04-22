@@ -15,6 +15,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_19_202713) do
   enable_extension "plpgsql"
 
   create_table "nav_questionnaire_rules", force: :cascade do |t|
+    t.string "question_key"
     t.datetime "deleted_at"
     t.bigint "nav_questionnaire_id"
     t.bigint "nav_rule_id"
