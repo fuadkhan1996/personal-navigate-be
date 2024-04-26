@@ -4,6 +4,71 @@ info:
   title: Navigate API V1
   version: v1
 paths:
+  "/api/v1/action_types":
+    get:
+      summary: Get Action Types
+      tags:
+      - Actions
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: Action Types List
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        type:
+                          type: string
+                        attributes:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                            title:
+                              type: string
+                            description:
+                              type: string
+                            action_kind:
+                              type: string
+                            deleted_at:
+                              type: string
+                            created_at:
+                              type: string
+                            updated_at:
+                              type: string
+                          required:
+                          - id
+                          - title
+                          - description
+                          - action_kind
+                          - created_at
+                          - updated_at
+                      required:
+                      - id
+                      - type
+                      - attributes
+                required:
+                - data
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
   "/api/v1/employees/session":
     post:
       summary: Create an Employee Session

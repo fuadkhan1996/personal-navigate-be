@@ -90,7 +90,6 @@ describe 'Api::V1::Employees::Sessions' do
                  }
                }
 
-        let(:session) { { access_token: 'access_token' } }
         run_test!
       end
 
@@ -101,7 +100,6 @@ describe 'Api::V1::Employees::Sessions' do
                },
                required: %w[error]
 
-        let(:session) { { access_token: 'access_token' } }
         run_test!
       end
     end
