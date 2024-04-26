@@ -10,19 +10,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_19_202713) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_26_194446) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "nav_questionnaire_rules", force: :cascade do |t|
-    t.string "question_key"
+  create_table "nav_action_types", force: :cascade do |t|
+    t.string "title"
+    t.string "action_kind"
+    t.text "description"
     t.datetime "deleted_at"
-    t.bigint "nav_questionnaire_id"
-    t.bigint "nav_rule_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["nav_questionnaire_id"], name: "index_nav_questionnaire_rules_on_nav_questionnaire_id"
-    t.index ["nav_rule_id"], name: "index_nav_questionnaire_rules_on_nav_rule_id"
+  end
+
+  create_table "nav_actions", force: :cascade do |t|
+    t.string "title"
+    t.string "description"
+    t.jsonb "details", default: {}
+    t.datetime "deleted_at"
+    t.bigint "dc_company_id"
+    t.bigint "dc_company_employee_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["dc_company_employee_id"], name: "index_nav_actions_on_dc_company_employee_id"
+    t.index ["dc_company_id"], name: "index_nav_actions_on_dc_company_id"
   end
 
   create_table "nav_questionnaires", force: :cascade do |t|
@@ -38,23 +49,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_19_202713) do
     t.index ["dc_company_id"], name: "index_nav_questionnaires_on_dc_company_id"
   end
 
-  create_table "nav_rules", force: :cascade do |t|
-    t.string "title"
-    t.string "description"
-    t.jsonb "data", default: {}
-    t.datetime "deleted_at"
-    t.bigint "dc_company_id"
-    t.bigint "dc_company_employee_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["dc_company_employee_id"], name: "index_nav_rules_on_dc_company_employee_id"
-    t.index ["dc_company_id"], name: "index_nav_rules_on_dc_company_id"
-  end
-
-  add_foreign_key "nav_questionnaire_rules", "nav_questionnaires", on_delete: :cascade
-  add_foreign_key "nav_questionnaire_rules", "nav_rules", on_delete: :cascade
+  add_foreign_key "nav_actions", "dc_companies", on_delete: :cascade
+  add_foreign_key "nav_actions", "dc_company_employees"
   add_foreign_key "nav_questionnaires", "dc_companies", on_delete: :cascade
   add_foreign_key "nav_questionnaires", "dc_company_employees"
-  add_foreign_key "nav_rules", "dc_companies", on_delete: :cascade
-  add_foreign_key "nav_rules", "dc_company_employees"
 end
