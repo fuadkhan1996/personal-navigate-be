@@ -3,5 +3,7 @@ namespace :api do
     namespace :employees do
       resource :session, only: %i[create show]
     end
+
+    resources :action_types, only: %i[index]
   end
 end
