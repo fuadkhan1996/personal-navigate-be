@@ -3,6 +3,11 @@
 module Api
   module V1
     class ActionsController < ApplicationController
+      def index
+        @actions = Action.where(dc_company_id: current_employee.dc_company_id).order(updated_at: :desc)
+        render json: ActionSerializer.new(@actions).serializable_hash.to_json, status: :ok
+      end
+
       def create
         @action = Action.new(action_create_params)
         if @action.save
