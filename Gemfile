@@ -31,6 +31,7 @@ gem 'tzinfo-data', platforms: %i[windows jruby]
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', require: false
 # gem 'aws-sdk', '~> 3'
+gem 'aws-sdk-s3', require: false
 gem 'aws-sdk-cognitoidentity'
 gem 'aws-sdk-cognitoidentityprovider'
 gem 'jsonapi-serializer'
