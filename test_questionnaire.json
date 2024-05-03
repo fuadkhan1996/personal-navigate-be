@@ -1,0 +1,139 @@
+{
+  "sections": [
+    {
+      "title": "General Information",
+      "components": [
+        {
+          "key": "account_name",
+          "type": "text",
+          "label": "Account:"
+        },
+        {
+          "key": "date_of_survey",
+          "type": "text",
+          "label": "Date of Survey:"
+        },
+        {
+          "key": "policy_number",
+          "type": "text",
+          "label": "Policy Number:"
+        },
+        {
+          "key": "representative",
+          "type": "text",
+          "label": "Representative:"
+        },
+        {
+          "key": "insured",
+          "type": "text",
+          "label": "Insured:"
+        },
+        {
+          "key": "person_interviewed",
+          "type": "text",
+          "label": "Person Interviewed:"
+        },
+        {
+          "key": "order_type",
+          "type": "text",
+          "label": "Order Type:"
+        },
+        {
+          "key": "title",
+          "type": "text",
+          "label": "Title:"
+        },
+        {
+          "key": "broker",
+          "type": "text",
+          "label": "Broker:"
+        },
+        {
+          "key": "location",
+          "type": "text",
+          "label": "Location:"
+        }
+      ]
+    },
+    {
+      "title": "Operations/Risk Mangement",
+      "components": [
+        {
+          "key": "address_inspected_flag",
+          "type": "radio",
+          "label": "Is address inspected the same as on the order request (if No, what is the address as inspected)?",
+          "options": [
+            {
+              "label": "Yes",
+              "value": true
+            },
+            {
+              "label": "No",
+              "value": false
+            }
+          ]
+        },
+        {
+          "key": "num_of_buildings",
+          "type": "number",
+          "label": "Number of buildings:",
+          "placeholder": "#"
+        },
+        {
+          "key": "num_of_vacant_units",
+          "type": "number",
+          "label": "Number of Vacant Units:",
+          "placeholder": "#"
+        },
+        {
+          "key": "percentage_of_sec8_units",
+          "type": "number",
+          "label": "% of units designated Section 8:",
+          "placeholder": "%"
+        },
+        {
+          "key": "percentage_of_sec42_units",
+          "type": "number",
+          "label": "% of units designated Section 42:",
+          "placeholder": "%"
+        },
+        {
+          "key": "percentage_of_students_units",
+          "type": "number",
+          "label": "% of units occupied by students:",
+          "placeholder": "%"
+        },
+        {
+          "key": "individual_with_explicit_responsibility_flag",
+          "type": "radio",
+          "label": "Is there an individual with explicit responsibility for risk management within the property ownership group?",
+          "options": [
+            {
+              "label": "Yes",
+              "value": "true"
+            },
+            {
+              "label": "No",
+              "value": "false"
+            }
+          ]
+        },
+        {
+          "key": "onsite_property_flag",
+          "type": "radio",
+          "label": "Is there on-site property management during business hours at least?",
+          "options": [
+            {
+              "label": "Yes",
+              "value": "true"
+            },
+            {
+              "label": "No",
+              "value": "false"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

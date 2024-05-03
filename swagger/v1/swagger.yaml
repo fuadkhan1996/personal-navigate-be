@@ -4,6 +4,75 @@ info:
   title: Navigate API V1
   version: v1
 paths:
+  "/api/v1/actions":
+    post:
+      summary: Create Action
+      tags:
+      - Actions
+      security:
+      - bearerAuth: []
+      parameters: []
+      responses:
+        '200':
+          description: Action data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                required:
+                - message
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    additionalProperties:
+                      type: array
+                      items:
+                        type: string
+                required:
+                - errors
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                action_payload:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                    description:
+                      type: string
+                    action_kind:
+                      type: string
+                    details:
+                      type: object
+                  required:
+                  - title
+                  - description
+                  - details
+              required:
+              - action
   "/api/v1/action_types":
     get:
       summary: Get Action Types

@@ -5,5 +5,6 @@ namespace :api do
     end
 
     resources :action_types, only: %i[index]
+    resources :actions, only: %i[create]
   end
 end
