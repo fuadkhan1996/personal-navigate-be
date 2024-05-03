@@ -22,7 +22,7 @@ module Api
         params.require(:action_payload).permit(
           :title,
           :description,
-          :supporting_documents,
+          { supporting_documents: [] },
           details: details_params
         ).merge({
                   nav_action_type_id: action_type.id,
