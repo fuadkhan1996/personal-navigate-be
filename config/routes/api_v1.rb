@@ -6,5 +6,11 @@ namespace :api do
 
     resources :action_types, only: %i[index]
     resources :actions, only: %i[create index]
+
+    scope module: :questionnaires do
+      resources :questionnaires, only: [] do
+        resources :actions, only: %i[create index]
+      end
+    end
   end
 end

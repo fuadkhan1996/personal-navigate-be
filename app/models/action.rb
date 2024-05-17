@@ -3,8 +3,15 @@
 class Action < ApplicationRecord
   self.table_name = :nav_actions
 
-  belongs_to :action_type, foreign_key: 'nav_action_type_id', inverse_of: :actions
+  belongs_to :action_type, foreign_key: :nav_action_type_id, inverse_of: :actions
   has_many_attached :supporting_documents
+  has_many :questionnaire_actions,
+           dependent: :restrict_with_exception,
+           class_name: 'Questionnaire::Action',
+           foreign_key: :nav_action_id,
+           inverse_of: :action
+
+  has_many :questionnaires, through: :questionnaire_actions
 
   before_validation :change_max_number_of_files_to_integer
   validates :title, :description, presence: true
