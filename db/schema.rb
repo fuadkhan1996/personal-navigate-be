@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_01_144657) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_07_185758) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -67,6 +67,17 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_01_144657) do
     t.index ["blob_id", "variation_digest"], name: "nav_index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "nav_questionnaire_actions", force: :cascade do |t|
+    t.jsonb "criteria", default: {}
+    t.datetime "deleted_at"
+    t.bigint "nav_action_id"
+    t.bigint "nav_questionnaire_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["nav_action_id"], name: "index_nav_questionnaire_actions_on_nav_action_id"
+    t.index ["nav_questionnaire_id"], name: "index_nav_questionnaire_actions_on_nav_questionnaire_id"
+  end
+
   create_table "nav_questionnaires", force: :cascade do |t|
     t.string "title"
     t.string "description"
@@ -85,6 +96,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_01_144657) do
   add_foreign_key "nav_actions", "nav_action_types"
   add_foreign_key "nav_active_storage_attachments", "nav_active_storage_blobs", column: "blob_id"
   add_foreign_key "nav_active_storage_variant_records", "nav_active_storage_blobs", column: "blob_id"
+  add_foreign_key "nav_questionnaire_actions", "nav_actions", on_delete: :cascade
+  add_foreign_key "nav_questionnaire_actions", "nav_questionnaires", on_delete: :cascade
   add_foreign_key "nav_questionnaires", "dc_companies", on_delete: :cascade
   add_foreign_key "nav_questionnaires", "dc_company_employees"
 end
