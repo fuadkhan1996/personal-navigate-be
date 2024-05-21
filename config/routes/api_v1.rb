@@ -12,5 +12,8 @@ namespace :api do
         resources :actions, only: %i[create index]
       end
     end
+
+    resources :accounts, only: %i[index]
+    resources :assessments, only: %i[create show]
   end
 end

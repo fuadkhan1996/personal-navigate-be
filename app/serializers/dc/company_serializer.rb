@@ -4,6 +4,6 @@ module Dc
   class CompanySerializer
     include JSONAPI::Serializer
 
-    attributes :uuid, :title, :logo, :created_at, :updated_at
+    attributes :id, :uuid, :title, :logo, :deleted_at, :created_at, :updated_at
   end
 end

@@ -40,8 +40,24 @@ module Dc
       new(ApplicationRecord.connection.execute(query).try(:first))
     end
 
+    def self.find_by_company_employee_id(company_employee_id)
+      query = ActiveRecord::Base.sanitize_sql_array([<<-SQL.squish, company_employee_id])
+        SELECT dc_company_employees.uuid AS company_employee_uuid,
+          dc_company_employees.id as company_employee_id,
+          dc_company_employees.*, dc_employees.* FROM dc_company_employees
+          INNER JOIN dc_employees ON dc_employees.id = dc_company_employees.dc_employee_id
+          WHERE dc_company_employees.id = ? LIMIT 1
+      SQL
+
+      new(ApplicationRecord.connection.execute(query).try(:first))
+    end
+
     def company
       @company ||= Company.find(dc_company_id)
+    end
+
+    def fullname
+      [first_name, last_name].joins(' ');
     end
   end
 end

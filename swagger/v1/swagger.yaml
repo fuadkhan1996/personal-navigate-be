@@ -4,6 +4,70 @@ info:
   title: Navigate API V1
   version: v1
 paths:
+  "/api/v1/accounts":
+    get:
+      summary: Get Accounts
+      tags:
+      - Company
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: Accounts List
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        type:
+                          type: string
+                        attributes:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                            uuid:
+                              type: string
+                            logo:
+                              type: string
+                            title:
+                              type: string
+                            created_at:
+                              type: string
+                            updated_at:
+                              type: string
+                          required:
+                          - id
+                          - uuid
+                          - logo
+                          - title
+                          - deleted_at
+                          - created_at
+                          - updated_at
+                      required:
+                      - id
+                      - type
+                      - attributes
+                required:
+                - data
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
   "/api/v1/action_types":
     get:
       summary: Get Action Types
@@ -187,6 +251,81 @@ paths:
                       - id
                       - type
                       - attributes
+                required:
+                - data
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
+  "/api/v1/assessments/{assessment_id}":
+    get:
+      summary: Get Assessment
+      tags:
+      - Company
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: assessment_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Assessment Data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      type:
+                        type: string
+                      attributes:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          title:
+                            type: string
+                          form_data:
+                            type: object
+                          account:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                              title:
+                                type: string
+                          deleted_at:
+                            type: string
+                          created_at:
+                            type: string
+                          updated_at:
+                            type: string
+                        required:
+                        - id
+                        - title
+                        - form_data
+                        - account
+                        - deleted_at
+                        - created_at
+                        - updated_at
+                    required:
+                    - id
+                    - type
+                    - attributes
                 required:
                 - data
         '401':
@@ -471,6 +610,17 @@ paths:
                       - attributes
                 required:
                 - data
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
 components:
   securitySchemes:
     bearerAuth:

@@ -13,6 +13,7 @@ class Questionnaire < ApplicationRecord
            inverse_of: :questionnaire
 
   has_many :actions, through: :questionnaire_actions
+  has_many :assessments, inverse_of: :questionnaire, dependent: :restrict_with_exception
 
   validates :dc_company_id, :dc_company_employee_id, presence: true
 end
