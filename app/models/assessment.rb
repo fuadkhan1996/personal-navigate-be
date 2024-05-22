@@ -14,6 +14,8 @@ class Assessment < ApplicationRecord
   end
 
   def company_employee
+    # rubocop:disable Rails/DynamicFindBy
     @company_employee ||= Dc::Employee.find_by_company_employee_id(dc_company_employee_id)
+    # rubocop:enable Rails/DynamicFindBy
   end
 end

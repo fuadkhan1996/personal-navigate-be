@@ -3,7 +3,7 @@ require 'swagger_helper'
 describe 'Api::V1::Accounts' do
   path '/api/v1/accounts' do
     get 'Get Accounts' do
-      tags 'Company'
+      tags 'Accounts'
       consumes 'application/json'
       produces 'application/json'
       security [bearerAuth: []]

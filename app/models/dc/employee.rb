@@ -57,7 +57,7 @@ module Dc
     end
 
     def fullname
-      [first_name, last_name].joins(' ');
+      [first_name, last_name].joins(' ')
     end
   end
 end
