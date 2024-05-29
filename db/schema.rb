@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_29_192456) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_29_193238) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -75,6 +75,20 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_29_192456) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "nav_activity_actions", force: :cascade do |t|
+    t.string "title"
+    t.string "description"
+    t.jsonb "details", default: {}
+    t.integer "order"
+    t.datetime "deleted_at"
+    t.bigint "nav_action_id"
+    t.bigint "nav_activity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["nav_action_id"], name: "index_nav_activity_actions_on_nav_action_id"
+    t.index ["nav_activity_id"], name: "index_nav_activity_actions_on_nav_activity_id"
+  end
+
   create_table "nav_assessments", force: :cascade do |t|
     t.string "title"
     t.jsonb "form_data", default: {}
@@ -120,6 +134,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_29_192456) do
   add_foreign_key "nav_actions", "nav_action_types"
   add_foreign_key "nav_active_storage_attachments", "nav_active_storage_blobs", column: "blob_id"
   add_foreign_key "nav_active_storage_variant_records", "nav_active_storage_blobs", column: "blob_id"
+  add_foreign_key "nav_activity_actions", "nav_actions", on_delete: :cascade
+  add_foreign_key "nav_activity_actions", "nav_activities", on_delete: :cascade
   add_foreign_key "nav_assessments", "dc_companies", column: "account_id"
   add_foreign_key "nav_assessments", "dc_companies", on_delete: :cascade
   add_foreign_key "nav_assessments", "dc_company_employees"

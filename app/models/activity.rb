@@ -2,4 +2,10 @@
 
 class Activity < ApplicationRecord
   self.table_name = :nav_activities
+
+  has_many :activity_actions,
+           dependent: :restrict_with_exception,
+           class_name: 'Activity::Action',
+           foreign_key: :nav_activity_id,
+           inverse_of: :activity
 end

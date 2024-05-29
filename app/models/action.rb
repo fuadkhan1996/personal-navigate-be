@@ -12,6 +12,11 @@ class Action < ApplicationRecord
            inverse_of: :action
 
   has_many :questionnaires, through: :questionnaire_actions
+  has_many :activity_actions,
+           dependent: :restrict_with_exception,
+           class_name: 'Activity::Action',
+           foreign_key: :nav_action_id,
+           inverse_of: :action
 
   before_validation :change_max_number_of_files_to_integer
   validates :title, :description, presence: true
