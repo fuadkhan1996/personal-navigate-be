@@ -64,8 +64,12 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_29_194436) do
     t.string "title"
     t.text "description"
     t.datetime "deleted_at"
+    t.bigint "dc_company_id"
+    t.bigint "dc_company_employee_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["dc_company_employee_id"], name: "index_nav_activities_on_dc_company_employee_id"
+    t.index ["dc_company_id"], name: "index_nav_activities_on_dc_company_id"
   end
 
   create_table "nav_activity_actions", force: :cascade do |t|
@@ -124,6 +128,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_29_194436) do
 
   add_foreign_key "nav_active_storage_attachments", "nav_active_storage_blobs", column: "blob_id"
   add_foreign_key "nav_active_storage_variant_records", "nav_active_storage_blobs", column: "blob_id"
+  add_foreign_key "nav_activities", "dc_companies", on_delete: :cascade
+  add_foreign_key "nav_activities", "dc_company_employees"
   add_foreign_key "nav_activity_actions", "nav_actions", on_delete: :cascade
   add_foreign_key "nav_activity_actions", "nav_activities", on_delete: :cascade
   add_foreign_key "nav_assessments", "dc_companies", column: "account_id"
