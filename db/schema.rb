@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_29_194436) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_30_161510) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -86,6 +86,19 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_29_194436) do
     t.index ["nav_activity_id"], name: "index_nav_activity_actions_on_nav_activity_id"
   end
 
+  create_table "nav_activity_triggers", force: :cascade do |t|
+    t.string "title"
+    t.string "description"
+    t.jsonb "criteria", default: {}
+    t.datetime "deleted_at"
+    t.bigint "nav_questionnaire_id"
+    t.bigint "nav_activity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["nav_activity_id"], name: "index_nav_activity_triggers_on_nav_activity_id"
+    t.index ["nav_questionnaire_id"], name: "index_nav_activity_triggers_on_nav_questionnaire_id"
+  end
+
   create_table "nav_assessments", force: :cascade do |t|
     t.string "title"
     t.jsonb "form_data", default: {}
@@ -132,6 +145,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_29_194436) do
   add_foreign_key "nav_activities", "dc_company_employees"
   add_foreign_key "nav_activity_actions", "nav_actions", on_delete: :cascade
   add_foreign_key "nav_activity_actions", "nav_activities", on_delete: :cascade
+  add_foreign_key "nav_activity_triggers", "nav_activities", on_delete: :cascade
+  add_foreign_key "nav_activity_triggers", "nav_questionnaires", on_delete: :cascade
   add_foreign_key "nav_assessments", "dc_companies", column: "account_id"
   add_foreign_key "nav_assessments", "dc_companies", on_delete: :cascade
   add_foreign_key "nav_assessments", "dc_company_employees"
