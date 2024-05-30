@@ -4,9 +4,7 @@ namespace :api do
       resource :session, only: %i[create show]
     end
 
-    resources :action_types, only: %i[index]
-    resources :actions, only: %i[create index]
-
+    resources :actions, only: %i[index]
     scope module: :questionnaires do
       resources :questionnaires, only: [] do
         resources :actions, only: %i[create index]

@@ -4,7 +4,7 @@ module Api
   module V1
     class ActionsController < ApplicationController
       def index
-        @actions = Action.where(dc_company_id: current_employee.dc_company_id).order(updated_at: :desc)
+        @actions = Action.all
         render json: ActionSerializer.new(@actions).serializable_hash.to_json, status: :ok
       end
 
