@@ -3,7 +3,6 @@
 class Action < ApplicationRecord
   self.table_name = :nav_actions
 
-  belongs_to :action_type, foreign_key: :nav_action_type_id, inverse_of: :actions
   has_many_attached :supporting_documents
   has_many :questionnaire_actions,
            dependent: :restrict_with_exception,
@@ -18,10 +17,7 @@ class Action < ApplicationRecord
            foreign_key: :nav_action_id,
            inverse_of: :action
 
-  before_validation :change_max_number_of_files_to_integer
   validates :title, :description, presence: true
-  validates :title, uniqueness: { case_sensitive: false, scope: :dc_company_employee_id }
-  validate :validate_details
 
   private
 
