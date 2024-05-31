@@ -24,6 +24,7 @@ class Activity
     validate :validate_details
 
     delegate :action_kind, to: :action, allow_nil: true
+    delegate :title, :description, to: :action, prefix: true
 
     private
 

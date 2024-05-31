@@ -213,6 +213,86 @@ paths:
                             type: integer
               required:
               - activity
+  "/api/v1/activities/{id}":
+    get:
+      summary: Get Activity
+      tags:
+      - Activities
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Activity Data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  title:
+                    type: string
+                  description:
+                    type: string
+                  deleted_at:
+                    type: string
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  activity_actions:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      title:
+                        type: string
+                      description:
+                        type: string
+                      order:
+                        type: integer
+                      action_kind:
+                        type: string
+                      deleted_at:
+                        type: string
+                      created_at:
+                        type: string
+                      updated_at:
+                        type: string
+                    required:
+                    - id
+                    - title
+                    - description
+                    - order
+                    - action_kind
+                    - deleted_at
+                    - created_at
+                    - updated_at
+                required:
+                - id
+                - title
+                - description
+                - deleted_at
+                - created_at
+                - updated_at
+                - activity_actions
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
   "/api/v1/assessments":
     post:
       summary: Create Assessment

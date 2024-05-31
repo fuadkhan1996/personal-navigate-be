@@ -3,6 +3,12 @@
 module Api
   module V1
     class ActivitiesController < ApplicationController
+      before_action :set_activity, only: %i[show]
+
+      def show
+        render json: ::ActivityBlueprint.render(@activity, view: :normal), status: :ok
+      end
+
       def create
         @activity = Activity.new(activity_create_params)
         if @activity.save
@@ -33,6 +39,13 @@ module Api
           :order,
           :nav_action_id
         ]
+      end
+
+      def set_activity
+        @activity = Activity.find_by(
+          dc_company_id: current_employee.company.id,
+          id: params[:id]
+        )
       end
     end
   end
