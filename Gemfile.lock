@@ -102,6 +102,7 @@ GEM
       aws-eventstream (~> 1, >= 1.0.2)
     base64 (0.2.0)
     bigdecimal (3.1.7)
+    blueprinter (1.0.2)
     bootsnap (1.18.3)
       msgpack (~> 1.2)
     builder (3.2.4)
@@ -165,6 +166,8 @@ GEM
       racc (~> 1.4)
     nokogiri (1.16.4-x86_64-linux)
       racc (~> 1.4)
+    oj (3.16.3)
+      bigdecimal (>= 3.0)
     parallel (1.24.0)
     parser (3.3.0.5)
       ast (~> 2.4.1)
@@ -305,9 +308,11 @@ DEPENDENCIES
   aws-sdk-cognitoidentity
   aws-sdk-cognitoidentityprovider
   aws-sdk-s3
+  blueprinter
   bootsnap
   debug
   jsonapi-serializer
+  oj
   pg (~> 1.1)
   puma (>= 5.0)
   rack-cors

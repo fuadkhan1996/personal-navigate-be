@@ -42,6 +42,8 @@ gem 'rswag-ui'
 # gem "image_processing", "~> 1.2"
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin Ajax possible
+gem 'blueprinter'
+gem 'oj'
 gem 'rack-cors'
 
 group :development, :test do
