@@ -134,8 +134,87 @@ paths:
                     type: string
                 required:
                 - error
+  "/api/v1/activities":
+    post:
+      summary: Create Activity
+      tags:
+      - Activities
+      security:
+      - bearerAuth: []
+      parameters: []
+      responses:
+        '201':
+          description: Activity Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  message:
+                    type: string
+                required:
+                - id
+                - message
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    additionalProperties:
+                      type: array
+                      items:
+                        type: string
+                required:
+                - errors
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                activity:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                    description:
+                      type: string
+                    activity_actions_attributes:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          title:
+                            type: string
+                          description:
+                            type: string
+                          details:
+                            type: object
+                          order:
+                            type: integer
+                          nav_action_id:
+                            type: integer
+              required:
+              - activity
   "/api/v1/assessments":
-    get:
+    post:
       summary: Create Assessment
       tags:
       - Assessments

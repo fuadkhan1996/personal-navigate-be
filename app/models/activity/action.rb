@@ -16,5 +16,27 @@ class Activity
              class_name: '::Assessment::ActionResult',
              foreign_key: :nav_activity_action_id,
              inverse_of: :activity_action
+
+    before_validation :change_max_number_of_files_to_integer
+
+    validates :title, presence: true
+    validates :title, uniqueness: { case_sensitive: false, scope: :activity }
+    validate :validate_details
+
+    delegate :action_kind, to: :action, allow_nil: true
+
+    private
+
+    def change_max_number_of_files_to_integer
+      return unless action_kind == 'file_upload'
+      return if details['max_number_of_files'].blank?
+
+      details['max_number_of_files'] = details['max_number_of_files'].to_i
+    end
+
+    def validate_details
+      errors.add(:'details.allowed_file_types', "can't be blank") if details['allowed_file_types'].blank?
+      errors.add(:'details.max_number_of_files', "can't be blank") if details['max_number_of_files'].blank?
+    end
   end
 end

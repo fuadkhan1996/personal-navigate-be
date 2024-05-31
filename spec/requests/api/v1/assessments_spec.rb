@@ -2,7 +2,7 @@ require 'swagger_helper'
 
 describe 'Api::V1::Assessments' do
   path '/api/v1/assessments' do
-    get 'Create Assessment' do
+    post 'Create Assessment' do
       tags 'Assessments'
       consumes 'application/json'
       produces 'application/json'

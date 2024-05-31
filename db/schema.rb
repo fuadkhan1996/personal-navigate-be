@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_30_162943) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_31_170427) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -70,6 +70,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_30_162943) do
     t.datetime "updated_at", null: false
     t.index ["dc_company_employee_id"], name: "index_nav_activities_on_dc_company_employee_id"
     t.index ["dc_company_id"], name: "index_nav_activities_on_dc_company_id"
+    t.index ["title", "dc_company_id"], name: "index_nav_activities_on_title_and_dc_company_id", unique: true
   end
 
   create_table "nav_activity_actions", force: :cascade do |t|
@@ -84,6 +85,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_30_162943) do
     t.datetime "updated_at", null: false
     t.index ["nav_action_id"], name: "index_nav_activity_actions_on_nav_action_id"
     t.index ["nav_activity_id"], name: "index_nav_activity_actions_on_nav_activity_id"
+    t.index ["title", "nav_activity_id"], name: "index_nav_activity_actions_on_title_and_nav_activity_id", unique: true
   end
 
   create_table "nav_activity_triggers", force: :cascade do |t|

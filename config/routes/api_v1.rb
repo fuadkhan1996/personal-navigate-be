@@ -13,5 +13,6 @@ namespace :api do
 
     resources :accounts, only: %i[index]
     resources :assessments, only: %i[create show]
+    resources :activities, only: %i[create]
   end
 end

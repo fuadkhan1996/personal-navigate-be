@@ -17,4 +17,11 @@ class Activity < ApplicationRecord
            class_name: 'Activity::Trigger',
            foreign_key: :nav_activity_id,
            inverse_of: :activity
+
+  accepts_nested_attributes_for :activity_actions
+
+  validates :title, presence: true
+  validates :title, uniqueness: { case_sensitive: false, scope: :dc_company_id }
+  validates :activity_actions, presence: true, on: :create
+  validates_associated :activity_actions
 end
