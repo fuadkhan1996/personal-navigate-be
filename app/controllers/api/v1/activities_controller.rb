@@ -5,6 +5,14 @@ module Api
     class ActivitiesController < ApplicationController
       before_action :set_activity, only: %i[show]
 
+      def index
+        @activities = Activity.includes(activity_actions: :action)
+                              .where(dc_company_id: current_employee.company.id)
+                              .order(created_at: :desc)
+
+        render json: ::ActivityBlueprint.render(@activities, view: :normal), status: :ok
+      end
+
       def show
         render json: ::ActivityBlueprint.render(@activity, view: :normal), status: :ok
       end

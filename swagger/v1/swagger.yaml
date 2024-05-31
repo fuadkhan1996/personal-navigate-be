@@ -135,6 +135,84 @@ paths:
                 required:
                 - error
   "/api/v1/activities":
+    get:
+      summary: Get Activities
+      tags:
+      - Activities
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: Activity List
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    title:
+                      type: string
+                    description:
+                      type: string
+                    deleted_at:
+                      type: string
+                    created_at:
+                      type: string
+                    updated_at:
+                      type: string
+                    activity_actions:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        title:
+                          type: string
+                        description:
+                          type: string
+                        order:
+                          type: integer
+                        details:
+                          type: object
+                        action_kind:
+                          type: string
+                        deleted_at:
+                          type: string
+                        created_at:
+                          type: string
+                        updated_at:
+                          type: string
+                      required:
+                      - id
+                      - title
+                      - description
+                      - order
+                      - details
+                      - action_kind
+                      - deleted_at
+                      - created_at
+                      - updated_at
+                  required:
+                  - id
+                  - title
+                  - description
+                  - deleted_at
+                  - created_at
+                  - updated_at
+                  - activity_actions
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
     post:
       summary: Create Activity
       tags:
@@ -257,6 +335,8 @@ paths:
                         type: string
                       order:
                         type: integer
+                      details:
+                        type: object
                       action_kind:
                         type: string
                       deleted_at:
@@ -270,6 +350,7 @@ paths:
                     - title
                     - description
                     - order
+                    - details
                     - action_kind
                     - deleted_at
                     - created_at
