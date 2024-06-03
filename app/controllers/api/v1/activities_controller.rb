@@ -14,7 +14,7 @@ module Api
       end
 
       def show
-        render json: ::ActivityBlueprint.render(@activity, view: :normal), status: :ok
+        render json: ::ActivityBlueprint.render(@activity, view: :extended), status: :ok
       end
 
       def create

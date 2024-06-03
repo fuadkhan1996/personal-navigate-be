@@ -3,9 +3,13 @@
 class ActivityBlueprint < Blueprinter::Base
   identifier :id
 
-  fields :title, :description, :deleted_at, :created_at, :updated_at
-
   view :normal do
+    fields :title, :description, :deleted_at, :created_at, :updated_at
+  end
+
+  view :extended do
+    include_view :normal
     association :activity_actions, blueprint: Activity::ActionBlueprint
+    association :activity_triggers, blueprint: Activity::TriggerBlueprint
   end
 end

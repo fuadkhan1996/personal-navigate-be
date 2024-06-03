@@ -18,24 +18,9 @@ describe 'Api::V1::Activities' do
                    description: { type: :string },
                    deleted_at: { type: :string },
                    created_at: { type: :string },
-                   updated_at: { type: :string },
-                   activity_actions: {
-                     type: :object,
-                     properties: {
-                       id: { type: :integer },
-                       title: { type: :string },
-                       description: { type: :string },
-                       order: { type: :integer },
-                       details: { type: :object },
-                       action_kind: { type: :string },
-                       deleted_at: { type: :string },
-                       created_at: { type: :string },
-                       updated_at: { type: :string }
-                     },
-                     required: %w[id title description order details action_kind deleted_at created_at updated_at]
-                   }
+                   updated_at: { type: :string }
                  },
-                 required: %w[id title description deleted_at created_at updated_at activity_actions]
+                 required: %w[id title description deleted_at created_at updated_at]
                }
 
         run_test!
