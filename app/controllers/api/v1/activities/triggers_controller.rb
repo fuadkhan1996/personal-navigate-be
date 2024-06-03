@@ -4,9 +4,15 @@ module Api
   module V1
     module Activities
       class TriggersController < ApplicationController
+        before_action :set_trigger, only: %i[show]
+
         def index
           @triggers = activity.activity_triggers.order(created_at: :desc)
           render json: ::Activity::TriggerBlueprint.render(@triggers), status: :ok
+        end
+
+        def show
+          render json: ::Activity::TriggerBlueprint.render(@trigger), status: :ok
         end
 
         def create
@@ -22,6 +28,10 @@ module Api
 
         def activity
           @activity ||= current_employee.company_activities.find(params[:activity_id])
+        end
+
+        def set_trigger
+          @trigger = activity.activity_triggers.find(params[:id])
         end
 
         def trigger_create_params

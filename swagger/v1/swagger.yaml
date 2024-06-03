@@ -315,6 +315,86 @@ paths:
                     type: string
                 required:
                 - error
+  "/api/v1/activities/{activity_id}/triggers/{id}":
+    get:
+      summary: Get Activity Trigger
+      tags:
+      - Activities
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: activity_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Activity trigger Data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  title:
+                    type: string
+                  description:
+                    type: string
+                  deleted_at:
+                    type: string
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  criteria:
+                    type: object
+                    properties:
+                      conjunction:
+                        type: string
+                      conditions:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            key:
+                              type: string
+                            operator:
+                              type: string
+                            value:
+                              type: string
+                          required:
+                          - key
+                          - operator
+                          - value
+                    required:
+                    - conjunction
+                    - conditions
+                required:
+                - id
+                - title
+                - description
+                - deleted_at
+                - created_at
+                - updated_at
+                - criteria
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
   "/api/v1/activities":
     get:
       summary: Get Activities
