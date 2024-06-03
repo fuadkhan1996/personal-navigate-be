@@ -12,6 +12,10 @@ module Dc
       end
     end
 
+    def activities
+      Activity.where(dc_company_id: id)
+    end
+
     def self.find(id)
       query = ActiveRecord::Base.sanitize_sql_array([<<-SQL.squish, id])
         SELECT * FROM dc_companies WHERE id = ? LIMIT 1

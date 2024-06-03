@@ -8,5 +8,11 @@ namespace :api do
     resources :accounts, only: %i[index]
     resources :assessments, only: %i[create show]
     resources :activities, only: %i[create show index]
+
+    scope module: :activities do
+      resources :activities, only: [] do
+        resources :triggers, only: %i[create]
+      end
+    end
   end
 end

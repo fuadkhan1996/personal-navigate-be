@@ -134,6 +134,111 @@ paths:
                     type: string
                 required:
                 - error
+  "/api/v1/activities/{activity_id}/triggers":
+    post:
+      summary: Create Activity
+      tags:
+      - Activities
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: activity_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Activity Trigger Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  message:
+                    type: string
+                required:
+                - id
+                - message
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    additionalProperties:
+                      type: array
+                      items:
+                        type: string
+                required:
+                - errors
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                activity_trigger:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                    description:
+                      type: string
+                    nav_questionnaire_id:
+                      type: integer
+                    criteria:
+                      type: object
+                      properties:
+                        conjunction:
+                          type: string
+                          enum:
+                          - and
+                        conditions:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              key:
+                                type: string
+                              operator:
+                                type: string
+                                enum:
+                                - eq
+                                - gt
+                                - gteq
+                                - lteq
+                              value:
+                                type: string
+                            required:
+                            - key
+                            - operator
+                            - value
+                      required:
+                      - conjunction
+                      - conditions
+                  required:
+                  - title
+                  - description
+                  - criteria
+              required:
+              - activity_trigger
   "/api/v1/activities":
     get:
       summary: Get Activities
