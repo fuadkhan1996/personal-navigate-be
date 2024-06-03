@@ -16,6 +16,8 @@ class Activity
                foreign_key: :nav_questionnaire_id,
                inverse_of: :activity_triggers
 
+    delegate :title, to: :questionnaire, prefix: true
+
     validates :title, :criteria, presence: true
     validate :validate_criteria
 

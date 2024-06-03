@@ -11,7 +11,7 @@ namespace :api do
 
     scope module: :activities do
       resources :activities, only: [] do
-        resources :triggers, only: %i[create]
+        resources :triggers, only: %i[create index]
       end
     end
   end

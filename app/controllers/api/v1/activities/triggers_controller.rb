@@ -4,6 +4,11 @@ module Api
   module V1
     module Activities
       class TriggersController < ApplicationController
+        def index
+          @triggers = activity.activity_triggers.order(created_at: :desc)
+          render json: ::Activity::TriggerBlueprint.render(@triggers), status: :ok
+        end
+
         def create
           @trigger = activity.activity_triggers.new(trigger_create_params)
           if @trigger.save
