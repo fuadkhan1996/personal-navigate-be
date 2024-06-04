@@ -554,36 +554,77 @@ paths:
                   updated_at:
                     type: string
                   activity_actions:
-                    type: object
-                    properties:
-                      id:
-                        type: integer
-                      title:
-                        type: string
-                      description:
-                        type: string
-                      order:
-                        type: integer
-                      details:
-                        type: object
-                      action_kind:
-                        type: string
-                      deleted_at:
-                        type: string
-                      created_at:
-                        type: string
-                      updated_at:
-                        type: string
-                    required:
-                    - id
-                    - title
-                    - description
-                    - order
-                    - details
-                    - action_kind
-                    - deleted_at
-                    - created_at
-                    - updated_at
+                    type: array
+                    items:
+                      properties:
+                        id:
+                          type: integer
+                        title:
+                          type: string
+                        description:
+                          type: string
+                        order:
+                          type: integer
+                        details:
+                          type: object
+                        action_kind:
+                          type: string
+                        deleted_at:
+                          type: string
+                        created_at:
+                          type: string
+                        updated_at:
+                          type: string
+                      required:
+                      - id
+                      - title
+                      - description
+                      - order
+                      - details
+                      - action_kind
+                      - deleted_at
+                      - created_at
+                      - updated_at
+                  activity_triggers:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        title:
+                          type: string
+                        description:
+                          type: string
+                        deleted_at:
+                          type: string
+                        created_at:
+                          type: string
+                        updated_at:
+                          type: string
+                        criteria:
+                          type: object
+                          properties:
+                            conjunction:
+                              type: string
+                            conditions:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  key:
+                                    type: string
+                                  operator:
+                                    type: string
+                                  value:
+                                    type: string
+                                required:
+                                - key
+                                - operator
+                                - value
+                          required:
+                          - conjunction
+                          - conditions
                 required:
                 - id
                 - title
@@ -592,6 +633,7 @@ paths:
                 - created_at
                 - updated_at
                 - activity_actions
+                - activity_triggers
         '401':
           description: Unauthorized
           content:
