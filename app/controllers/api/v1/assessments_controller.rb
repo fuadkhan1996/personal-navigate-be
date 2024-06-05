@@ -3,16 +3,24 @@
 module Api
   module V1
     class AssessmentsController < ApplicationController
-      before_action :set_assessment, only: %i[show]
+      before_action :set_assessment, only: %i[show update]
 
       def show
-        render json: AssessmentSerializer.new(@assessment).serializable_hash.to_json, status: :ok
+        render json: ::AssessmentBlueprint.render(@assessment), status: :ok
       end
 
       def create
         @assessment = Assessment.new(create_assessment_params)
         if @assessment.save
           render json: { id: @assessment.id, message: 'Assessment Created Successfully.' }, status: :created
+        else
+          unprocessable_entity(@action.errors.messages)
+        end
+      end
+
+      def update
+        if @assessment.update(update_assessment_params)
+          render json: ::AssessmentBlueprint.render(@assessment), status: :ok
         else
           unprocessable_entity(@action.errors.messages)
         end
@@ -31,6 +39,13 @@ module Api
             dc_company_employee_id: current_employee.company_employee_id,
             nav_questionnaire_id: Questionnaire.first.try(:id)
           }
+        )
+      end
+
+      def update_assessment_params
+        params.require(:assessment).permit(
+          :title,
+          { form_data: {} }
         )
       end
 

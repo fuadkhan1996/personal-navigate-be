@@ -65,46 +65,97 @@ describe 'Api::V1::Assessments' do
     end
   end
 
-  path '/api/v1/assessments/{assessment_id}' do
+  path '/api/v1/assessments/{id}' do
     get 'Get Assessment' do
       tags 'Assessments'
       consumes 'application/json'
       produces 'application/json'
       security [bearerAuth: []]
 
-      parameter name: :assessment_id, in: :path, type: :string
+      parameter name: :id, in: :path, type: :string
       response '200', 'Assessment Data' do
         schema type: :object,
                properties: {
-                 data: {
+                 id: { type: :integer },
+                 title: { type: :string },
+                 form_data: { type: :object },
+                 deleted_at: { type: :string },
+                 created_at: { type: :string },
+                 updated_at: { type: :string },
+                 account: {
+                   id: { type: :integer },
+                   uuid: { type: :string },
+                   title: { type: :string },
+                   logo: { type: :string },
+                   deleted_at: { type: :string },
+                   created_at: { type: :string },
+                   updated_at: { type: :string }
+                 },
+                 required: %w[id uuid title logo deleted_at created_at updated_at]
+               },
+               required: %w[id title form_data deleted_at created_at updated_at account]
+
+        run_test!
+      end
+
+      response '401', 'Unauthorized' do
+        schema type: :object,
+               properties: {
+                 error: { type: :string }
+               },
+               required: %w[error]
+
+        run_test!
+      end
+    end
+
+    put 'Update Assessment' do
+      tags 'Assessments'
+      consumes 'application/json'
+      produces 'application/json'
+      security [bearerAuth: []]
+
+      parameter name: :id, in: :path, type: :string
+      parameter name: :assessment, in: :body, schema: {
+        type: :object,
+        properties: {
+          assessment: {
+            type: :object,
+            properties: {
+              title: { type: :string },
+              form_data: { type: :object }
+            },
+            required: %w[title form_data]
+          }
+        },
+        required: %w[assessment]
+      }
+
+      response '200', 'Assessment Updated' do
+        schema type: :object,
+               properties: {
+                 id: { type: :integer },
+                 message: { type: :string }
+               },
+               required: %w[id message]
+
+        run_test!
+      end
+
+      response '422', 'Unprocessable Entity' do
+        schema type: :object,
+               properties: {
+                 errors: {
                    type: :object,
-                   properties: {
-                     id: { type: :string },
-                     type: { type: :string },
-                     attributes: {
-                       type: :object,
-                       properties: {
-                         id: { type: :integer },
-                         title: { type: :string },
-                         form_data: { type: :object },
-                         account: {
-                           type: :object,
-                           properties: {
-                             id: { type: :integer },
-                             title: { type: :string }
-                           }
-                         },
-                         deleted_at: { type: :string },
-                         created_at: { type: :string },
-                         updated_at: { type: :string }
-                       },
-                       required: %w[id title form_data account deleted_at created_at updated_at]
+                   additionalProperties: {
+                     type: :array,
+                     items: {
+                       type: :string
                      }
-                   },
-                   required: %w[id type attributes]
+                   }
                  }
                },
-               required: %w[data]
+               required: %w[errors]
 
         run_test!
       end
