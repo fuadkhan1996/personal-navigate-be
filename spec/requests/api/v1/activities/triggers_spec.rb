@@ -2,7 +2,7 @@ require 'swagger_helper'
 
 describe 'Api::V1::Activities::TriggersController' do
   path '/api/v1/activities/{activity_id}/triggers' do
-    post 'Create Activity' do
+    post 'Create Activity Trigger' do
       tags 'Activities'
       consumes 'application/json'
       produces 'application/json'

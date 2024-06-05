@@ -7,7 +7,7 @@ module Dc
     include Dc::Api::Employee
     include Authable
 
-    delegate :activities, to: :company, prefix: true
+    delegate :activities, :assessments, to: :company, prefix: true
 
     def initialize(attributes)
       attributes.each do |key, value|

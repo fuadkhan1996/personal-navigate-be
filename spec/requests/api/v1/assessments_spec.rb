@@ -63,6 +63,51 @@ describe 'Api::V1::Assessments' do
         run_test!
       end
     end
+
+    get 'Get Assessments' do
+      tags 'Assessments'
+      consumes 'application/json'
+      produces 'application/json'
+      security [bearerAuth: []]
+
+      response '200', 'Assessment List' do
+        schema type: :array,
+               items: {
+                 type: :object,
+                 properties: {
+                   id: { type: :integer },
+                   title: { type: :string },
+                   form_data: { type: :object },
+                   deleted_at: { type: :string },
+                   created_at: { type: :string },
+                   updated_at: { type: :string },
+                   account: {
+                     id: { type: :integer },
+                     uuid: { type: :string },
+                     title: { type: :string },
+                     logo: { type: :string },
+                     deleted_at: { type: :string },
+                     created_at: { type: :string },
+                     updated_at: { type: :string }
+                   },
+                   required: %w[id uuid title logo deleted_at created_at updated_at]
+                 },
+                 required: %w[id title form_data deleted_at created_at updated_at account]
+               }
+
+        run_test!
+      end
+
+      response '401', 'Unauthorized' do
+        schema type: :object,
+               properties: {
+                 error: { type: :string }
+               },
+               required: %w[error]
+
+        run_test!
+      end
+    end
   end
 
   path '/api/v1/assessments/{id}' do

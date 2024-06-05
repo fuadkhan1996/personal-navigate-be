@@ -5,6 +5,11 @@ module Api
     class AssessmentsController < ApplicationController
       before_action :set_assessment, only: %i[show update]
 
+      def index
+        @assessments = current_employee.company_assessments.order(created_at: :desc)
+        render json: ::AssessmentBlueprint.render(@assessments), status: :ok
+      end
+
       def show
         render json: ::AssessmentBlueprint.render(@assessment), status: :ok
       end

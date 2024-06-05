@@ -6,7 +6,7 @@ namespace :api do
 
     resources :actions, only: %i[index]
     resources :accounts, only: %i[index]
-    resources :assessments, only: %i[create show update]
+    resources :assessments, only: %i[create show update index]
     resources :activities, only: %i[create show index]
 
     scope module: :activities do
