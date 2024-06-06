@@ -81,48 +81,32 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  data:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        id:
-                          type: string
-                        type:
-                          type: string
-                        attributes:
-                          type: object
-                          properties:
-                            id:
-                              type: string
-                            title:
-                              type: string
-                            description:
-                              type: string
-                            action_kind:
-                              type: string
-                            deleted_at:
-                              type: string
-                            created_at:
-                              type: string
-                            updated_at:
-                              type: string
-                          required:
-                          - id
-                          - title
-                          - description
-                          - action_kind
-                          - deleted_at
-                          - created_at
-                          - updated_at
-                      required:
-                      - id
-                      - type
-                      - attributes
-                required:
-                - data
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    title:
+                      type: string
+                    description:
+                      type: string
+                    action_kind:
+                      type: string
+                    deleted_at:
+                      type: string
+                    created_at:
+                      type: string
+                    updated_at:
+                      type: string
+                  required:
+                  - id
+                  - title
+                  - description
+                  - action_kind
+                  - deleted_at
+                  - created_at
+                  - updated_at
         '401':
           description: Unauthorized
           content:

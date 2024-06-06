@@ -3,5 +3,5 @@
 class ActionBlueprint < Blueprinter::Base
   identifier :id
 
-  fields :title, :description, :created_at, :updated_at
+  fields :title, :description, :action_kind, :created_at, :updated_at
 end

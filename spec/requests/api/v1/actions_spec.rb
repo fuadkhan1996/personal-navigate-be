@@ -1,6 +1,6 @@
 require 'swagger_helper'
 
-describe 'Api::V1::Actions' do
+describe 'Api::V1::ActionsController' do
   path '/api/v1/actions' do
     get 'Get All Actions' do
       tags 'Actions'
@@ -9,34 +9,20 @@ describe 'Api::V1::Actions' do
       security [bearerAuth: []]
 
       response '200', 'Actions List' do
-        schema type: :object,
-               properties: {
-                 data: {
-                   type: :array,
-                   items: {
-                     type: :object,
-                     properties: {
-                       id: { type: :string },
-                       type: { type: :string },
-                       attributes: {
-                         type: :object,
-                         properties: {
-                           id: { type: :string },
-                           title: { type: :string },
-                           description: { type: :string },
-                           action_kind: { type: :string },
-                           deleted_at: { type: :string },
-                           created_at: { type: :string },
-                           updated_at: { type: :string }
-                         },
-                         required: %w[id title description action_kind deleted_at created_at updated_at]
-                       }
-                     },
-                     required: %w[id type attributes]
-                   }
-                 }
-               },
-               required: %w[data]
+        schema type: :array,
+               items: {
+                 type: :object,
+                 properties: {
+                   id: { type: :string },
+                   title: { type: :string },
+                   description: { type: :string },
+                   action_kind: { type: :string },
+                   deleted_at: { type: :string },
+                   created_at: { type: :string },
+                   updated_at: { type: :string }
+                 },
+                 required: %w[id title description action_kind deleted_at created_at updated_at]
+               }
 
         run_test!
       end
