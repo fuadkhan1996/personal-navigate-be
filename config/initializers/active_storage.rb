@@ -1,6 +1,7 @@
 Rails.application.config.to_prepare do
   ActiveStorage::Blob.table_name = 'nav_active_storage_blobs'
   ActiveStorage::Attachment.table_name = 'nav_active_storage_attachments'
+  ActiveStorage::VariantRecord.table_name = 'nav_active_storage_variant_records'
 
   ActiveStorage::Blob.class_eval do
     before_create :generate_key_with_prefix
