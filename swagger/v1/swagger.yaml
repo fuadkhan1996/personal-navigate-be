@@ -498,10 +498,14 @@ paths:
                             type: string
                           details:
                             type: object
+                          document_keys:
+                            type: array
+                            items:
+                              type: string
                           order:
                             type: integer
-                          nav_action_id:
-                            type: integer
+                          linked_action_kind:
+                            type: string
               required:
               - activity
   "/api/v1/activities/{id}":
@@ -1039,6 +1043,45 @@ paths:
                     type: string
                 required:
                 - error
+  "/api/v1/uploads":
+    post:
+      summary: Upload File
+      tags:
+      - Upload
+      security:
+      - bearerAuth: []
+      parameters: []
+      responses:
+        '200':
+          description: File Attached Successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  key:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+        required: true
 components:
   securitySchemes:
     bearerAuth:

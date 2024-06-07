@@ -61,8 +61,12 @@ describe 'Api::V1::Activities' do
                     title: { type: :string },
                     description: { type: :string },
                     details: { type: :object },
+                    document_keys: {
+                      type: :array,
+                      items: { type: :string }
+                    },
                     order: { type: :integer },
-                    nav_action_id: { type: :integer }
+                    linked_action_kind: { type: :string }
                   }
                 }
               }

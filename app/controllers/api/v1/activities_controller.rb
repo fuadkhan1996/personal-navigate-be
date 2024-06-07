@@ -43,9 +43,10 @@ module Api
         [
           :title,
           :description,
+          { document_keys: [] },
           { details: {} },
           :order,
-          :nav_action_id
+          :linked_action_kind
         ]
       end
 
