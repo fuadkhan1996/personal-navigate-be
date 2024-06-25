@@ -6,7 +6,14 @@ namespace :api do
 
     resources :actions, only: %i[index]
     resources :accounts, only: %i[index]
-    resources :assessments, only: %i[create show update index]
+    resources :assessments, only: %i[create show update index] do
+      scope module: :assessments do
+        resources :triggers, only: [] do
+          post :evaluate_trigger, on: :member
+        end
+      end
+    end
+
     resources :activities, only: %i[create show index]
     resources :uploads, only: :create
 

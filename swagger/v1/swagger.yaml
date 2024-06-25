@@ -633,6 +633,92 @@ paths:
                     type: string
                 required:
                 - error
+  "/api/v1/assessments/{assessment_id}/triggers/{id}/evaluate_trigger":
+    post:
+      summary: Evaluate Trigger
+      tags:
+      - Assessments
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: assessment_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Trigger Evaluated Successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  activity_action_id:
+                    type: integer
+                  assessment_id:
+                    type: integer
+                  activity_trigger_id:
+                    type: integer
+                  result_data:
+                    type: object
+                  deleted_at:
+                    type: string
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  activity:
+                    type: object
+                  activity_trigger:
+                    type: object
+                  activity_action:
+                    type: object
+                required:
+                - id
+                - activity_action_id
+                - assessment_id
+                - activity_trigger_id
+                - result_data
+                - deleted_at
+                - created_at
+                - updated_at
+                - activity
+                - activity_trigger
+                - activity_action
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: false
+                  message:
+                    type: string
+                required:
+                - success
+                - message
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
   "/api/v1/assessments":
     post:
       summary: Create Assessment

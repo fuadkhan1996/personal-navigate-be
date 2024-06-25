@@ -20,5 +20,17 @@ class Assessment
                inverse_of: :assessment_action_results
 
     has_one :activity, through: :activity_trigger
+
+    def activity_action_id
+      nav_activity_action_id
+    end
+
+    def assessment_id
+      nav_assessment_id
+    end
+
+    def activity_trigger_id
+      nav_activity_trigger_id
+    end
   end
 end

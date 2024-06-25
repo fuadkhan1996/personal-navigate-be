@@ -4,7 +4,7 @@ class Activity
   class Trigger < ApplicationRecord
     self.table_name = :nav_activity_triggers
 
-    OPERATORS = %w[eq lg gt gteq lteq].freeze
+    OPERATORS = %w[eq lt gt gteq lteq].freeze
 
     belongs_to :activity,
                class_name: '::Activity',
