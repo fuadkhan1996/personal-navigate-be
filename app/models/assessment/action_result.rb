@@ -13,5 +13,12 @@ class Assessment
                class_name: '::Assessment',
                foreign_key: :nav_assessment_id,
                inverse_of: :assessment_action_results
+
+    belongs_to :activity_trigger,
+               class_name: '::Activity::Trigger',
+               foreign_key: :nav_activity_trigger_id,
+               inverse_of: :assessment_action_results
+
+    has_one :activity, through: :activity_trigger
   end
 end

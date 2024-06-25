@@ -10,8 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_31_170427) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_25_165419) do
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
   create_table "nav_action_types", force: :cascade do |t|
@@ -108,7 +109,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_31_170427) do
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "nav_activity_trigger_id"
     t.index ["nav_activity_action_id"], name: "index_nav_assessment_action_results_on_nav_activity_action_id"
+    t.index ["nav_activity_trigger_id"], name: "index_nav_assessment_action_results_on_nav_activity_trigger_id"
     t.index ["nav_assessment_id"], name: "index_nav_assessment_action_results_on_nav_assessment_id"
   end
 
@@ -161,6 +164,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_31_170427) do
   add_foreign_key "nav_activity_triggers", "nav_activities", on_delete: :cascade
   add_foreign_key "nav_activity_triggers", "nav_questionnaires", on_delete: :cascade
   add_foreign_key "nav_assessment_action_results", "nav_activity_actions"
+  add_foreign_key "nav_assessment_action_results", "nav_activity_triggers"
   add_foreign_key "nav_assessment_action_results", "nav_assessments", on_delete: :cascade
   add_foreign_key "nav_assessments", "dc_companies", column: "account_id"
   add_foreign_key "nav_assessments", "dc_companies", on_delete: :cascade
