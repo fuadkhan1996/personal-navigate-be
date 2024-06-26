@@ -10,6 +10,7 @@ namespace :api do
       scope module: :assessments do
         resources :triggers, only: [] do
           post :evaluate_trigger, on: :member
+          post :evaluate_triggers, on: :collection
         end
       end
     end

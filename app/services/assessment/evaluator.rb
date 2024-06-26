@@ -2,23 +2,26 @@
 
 class Assessment
   class Evaluator
-    attr_reader :assessment, :trigger
+    attr_reader :assessment, :triggers, :trigger
 
-    def initialize(assessment, trigger)
+    def initialize(assessment, triggers)
       @assessment = assessment
-      @trigger = trigger
+      @triggers = Array(triggers)
     end
 
     def call
       ActiveRecord::Base.transaction do
-        raise ActiveRecord::Rollback unless criteria_met?
+        triggers.each do |trig|
+          @trigger = trig
+          raise ActiveRecord::Rollback unless criteria_met?
 
-        create_action_results
+          create_action_results
+        end
       end
     end
 
-    def self.call(assessment:, trigger:)
-      new(assessment, trigger).call
+    def self.call(assessment:, triggers:)
+      new(assessment, triggers).call
     end
 
     private
