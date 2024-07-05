@@ -1,7 +1,9 @@
 namespace :api do
   namespace :v1 do
     namespace :employees do
-      resource :session, only: %i[create show]
+      resource :session, only: %i[create show] do
+        post :refresh, on: :collection
+      end
     end
 
     resources :actions, only: %i[index]

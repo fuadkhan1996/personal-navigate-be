@@ -76,7 +76,9 @@ module Cognito
 
     def auth_parameters
       auth_params = { SECRET_HASH: secret_hash(user_object[:username]) }
-      return auth_params.merge(REFRESH_TOKEN: refresh_token) if user_object[:auth_flow] == 'REFRESH_TOKEN'
+      if user_object[:auth_flow] == 'REFRESH_TOKEN_AUTH'
+        return auth_params.merge(REFRESH_TOKEN: user_object[:refresh_token])
+      end
 
       auth_params.merge(
         USERNAME: user_object[:username],

@@ -58,7 +58,7 @@ describe 'Api::V1::Employees::Sessions' do
       produces 'application/json'
       security [bearerAuth: []]
 
-      response '200', 'Logged In Employee Data' do
+      response '201', 'Logged In Employee Data' do
         schema type: :object,
                properties: {
                  data: {
@@ -94,6 +94,50 @@ describe 'Api::V1::Employees::Sessions' do
       end
 
       response '401', 'Failed to Get User Data' do
+        schema type: :object,
+               properties: {
+                 error: { type: :string }
+               },
+               required: %w[error]
+
+        run_test!
+      end
+    end
+  end
+
+  path '/api/v1/employees/session/refresh' do
+    post 'Refresh an Employee Session' do
+      tags 'Sessions'
+      consumes 'application/json'
+      produces 'application/json'
+      parameter name: :refresh_access_token, in: :body, schema: {
+        type: :object,
+        properties: {
+          refresh_token: { type: :string },
+          email: { type: :string }
+        },
+        required: %w[refresh_token]
+      }
+
+      response '201', 'Authentication successful' do
+        schema type: :object,
+               properties: {
+                 data: {
+                   type: :object,
+                   properties: {
+                     access_token: { type: :string },
+                     refresh_token: { type: :string },
+                     token_expires_in: { type: :integer }
+                   },
+                   required: %w[access_token refresh_token token_expires_in]
+                 }
+               },
+               required: %w[data]
+
+        run_test!
+      end
+
+      response '401', 'Unauthorized' do
         schema type: :object,
                properties: {
                  error: { type: :string }
