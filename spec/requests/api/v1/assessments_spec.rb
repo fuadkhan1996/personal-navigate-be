@@ -82,15 +82,18 @@ describe 'Api::V1::Assessments' do
                    created_at: { type: :string },
                    updated_at: { type: :string },
                    account: {
-                     id: { type: :integer },
-                     uuid: { type: :string },
-                     title: { type: :string },
-                     logo: { type: :string },
-                     deleted_at: { type: :string },
-                     created_at: { type: :string },
-                     updated_at: { type: :string }
-                   },
-                   required: %w[id uuid title logo deleted_at created_at updated_at]
+                     type: :object,
+                     properties: {
+                       id: { type: :integer },
+                       uuid: { type: :string },
+                       title: { type: :string },
+                       logo: { type: :string },
+                       deleted_at: { type: :string },
+                       created_at: { type: :string },
+                       updated_at: { type: :string }
+                     },
+                     required: %w[id uuid title logo deleted_at created_at updated_at]
+                   }
                  },
                  required: %w[id title form_data deleted_at created_at updated_at account]
                }
@@ -128,17 +131,21 @@ describe 'Api::V1::Assessments' do
                  created_at: { type: :string },
                  updated_at: { type: :string },
                  account: {
-                   id: { type: :integer },
-                   uuid: { type: :string },
-                   title: { type: :string },
-                   logo: { type: :string },
-                   deleted_at: { type: :string },
-                   created_at: { type: :string },
-                   updated_at: { type: :string }
+                   type: :object,
+                   properties: {
+                     id: { type: :integer },
+                     uuid: { type: :string },
+                     title: { type: :string },
+                     logo: { type: :string },
+                     deleted_at: { type: :string },
+                     created_at: { type: :string },
+                     updated_at: { type: :string }
+                   },
+                   required: %w[id uuid title logo deleted_at created_at updated_at]
                  },
-                 required: %w[id uuid title logo deleted_at created_at updated_at]
+                 assessment_action_results: { type: :array, items: { type: :object } }
                },
-               required: %w[id title form_data deleted_at created_at updated_at account]
+               required: %w[id title form_data deleted_at created_at updated_at account assessment_action_results]
 
         run_test!
       end

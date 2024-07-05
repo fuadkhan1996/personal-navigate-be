@@ -11,7 +11,7 @@ module Api
       end
 
       def show
-        render json: ::AssessmentBlueprint.render(@assessment), status: :ok
+        render json: ::AssessmentBlueprint.render(@assessment, view: :extended), status: :ok
       end
 
       def create

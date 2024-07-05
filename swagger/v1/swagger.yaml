@@ -906,28 +906,30 @@ paths:
                     updated_at:
                       type: string
                     account:
-                      id:
-                        type: integer
-                      uuid:
-                        type: string
-                      title:
-                        type: string
-                      logo:
-                        type: string
-                      deleted_at:
-                        type: string
-                      created_at:
-                        type: string
-                      updated_at:
-                        type: string
-                    required:
-                    - id
-                    - uuid
-                    - title
-                    - logo
-                    - deleted_at
-                    - created_at
-                    - updated_at
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        uuid:
+                          type: string
+                        title:
+                          type: string
+                        logo:
+                          type: string
+                        deleted_at:
+                          type: string
+                        created_at:
+                          type: string
+                        updated_at:
+                          type: string
+                      required:
+                      - id
+                      - uuid
+                      - title
+                      - logo
+                      - deleted_at
+                      - created_at
+                      - updated_at
                   required:
                   - id
                   - title
@@ -981,28 +983,34 @@ paths:
                   updated_at:
                     type: string
                   account:
-                    id:
-                      type: integer
-                    uuid:
-                      type: string
-                    title:
-                      type: string
-                    logo:
-                      type: string
-                    deleted_at:
-                      type: string
-                    created_at:
-                      type: string
-                    updated_at:
-                      type: string
-                  required:
-                  - id
-                  - uuid
-                  - title
-                  - logo
-                  - deleted_at
-                  - created_at
-                  - updated_at
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      uuid:
+                        type: string
+                      title:
+                        type: string
+                      logo:
+                        type: string
+                      deleted_at:
+                        type: string
+                      created_at:
+                        type: string
+                      updated_at:
+                        type: string
+                    required:
+                    - id
+                    - uuid
+                    - title
+                    - logo
+                    - deleted_at
+                    - created_at
+                    - updated_at
+                  assessment_action_results:
+                    type: array
+                    items:
+                      type: object
                 required:
                 - id
                 - title
@@ -1011,6 +1019,7 @@ paths:
                 - created_at
                 - updated_at
                 - account
+                - assessment_action_results
         '401':
           description: Unauthorized
           content:
