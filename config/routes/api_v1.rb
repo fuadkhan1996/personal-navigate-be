@@ -25,5 +25,11 @@ namespace :api do
         resources :triggers, only: %i[create show index]
       end
     end
+
+    scope module: :questionnaires do
+      resources :questionnaires, only: %i[] do
+        resources :triggers, only: %i[index]
+      end
+    end
   end
 end

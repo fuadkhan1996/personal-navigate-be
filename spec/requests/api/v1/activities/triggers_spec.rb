@@ -155,6 +155,7 @@ describe 'Api::V1::Activities::TriggersController' do
                  id: { type: :string },
                  title: { type: :string },
                  description: { type: :string },
+                 questionnaire_title: { type: :string },
                  deleted_at: { type: :string },
                  created_at: { type: :string },
                  updated_at: { type: :string },
@@ -178,7 +179,7 @@ describe 'Api::V1::Activities::TriggersController' do
                    required: %w[conjunction conditions]
                  }
                },
-               required: %w[id title description deleted_at created_at updated_at criteria]
+               required: %w[id title description questionnaire_title deleted_at created_at updated_at criteria]
 
         run_test!
       end

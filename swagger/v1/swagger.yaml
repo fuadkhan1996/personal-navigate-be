@@ -331,6 +331,8 @@ paths:
                     type: string
                   description:
                     type: string
+                  questionnaire_title:
+                    type: string
                   deleted_at:
                     type: string
                   created_at:
@@ -364,6 +366,7 @@ paths:
                 - id
                 - title
                 - description
+                - questionnaire_title
                 - deleted_at
                 - created_at
                 - updated_at
@@ -1266,6 +1269,88 @@ paths:
                   type: string
               required:
               - refresh_token
+  "/api/v1/questionnaires/{questionnaire_id}/triggers":
+    get:
+      summary: Get Questionnaire Triggers
+      tags:
+      - Questionnaires
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: questionnaire_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Questionnaire triggers List
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    title:
+                      type: string
+                    description:
+                      type: string
+                    questionnaire_title:
+                      type: string
+                    deleted_at:
+                      type: string
+                    created_at:
+                      type: string
+                    updated_at:
+                      type: string
+                    criteria:
+                      type: object
+                      properties:
+                        conjunction:
+                          type: string
+                        conditions:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              key:
+                                type: string
+                              operator:
+                                type: string
+                              value:
+                                type: string
+                            required:
+                            - key
+                            - operator
+                            - value
+                      required:
+                      - conjunction
+                      - conditions
+                    activity:
+                      type: object
+                  required:
+                  - id
+                  - title
+                  - description
+                  - questionnaire_title
+                  - deleted_at
+                  - created_at
+                  - updated_at
+                  - criteria
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
   "/api/v1/uploads":
     post:
       summary: Upload File
