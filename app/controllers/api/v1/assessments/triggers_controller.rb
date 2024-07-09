@@ -15,7 +15,7 @@ module Api
         end
 
         def evaluate_trigger
-          if Assessment::Evaluator.call(assessment:, trigger: @trigger)
+          if Assessment::Evaluator.call(assessment:, triggers: @trigger)
             render json: ::Assessment::ActionResultBlueprint.render(assessment.assessment_action_results), status: :ok
           else
             render json: { success: false, message: 'Criteria not met or action failed' }, status: :unprocessable_entity

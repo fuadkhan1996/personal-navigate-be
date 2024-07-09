@@ -10,13 +10,17 @@ class Assessment
     end
 
     def call
+      criteria_met = false
       ActiveRecord::Base.transaction do
         triggers.each do |trig|
           @trigger = trig
-          raise ActiveRecord::Rollback unless criteria_met?
+          next unless criteria_met?
 
+          criteria_met = true
           create_action_results
         end
+
+        raise ActiveRecord::Rollback unless criteria_met
       end
     end
 
