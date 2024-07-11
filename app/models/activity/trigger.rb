@@ -27,6 +27,8 @@ class Activity
     validates :title, :criteria, presence: true
     validate :validate_criteria
 
+    scope :for_company, ->(company_id) { joins(:activity).where(nav_activities: { dc_company_id: company_id }) }
+
     private
 
     def validate_criteria

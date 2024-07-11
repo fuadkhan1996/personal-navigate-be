@@ -5,7 +5,9 @@ module Api
     module Questionnaires
       class TriggersController < ApplicationController
         def index
-          @triggers = questionnaire.activity_triggers.includes(:questionnaire, :activity).order(created_at: :desc)
+          @triggers = questionnaire.activity_triggers.includes(:questionnaire, :activity)
+                                   .for_company(current_employee.company.id).order(created_at: :desc)
+
           render json: ::Activity::TriggerBlueprint.render(@triggers, view: :extended), status: :ok
         end
 
