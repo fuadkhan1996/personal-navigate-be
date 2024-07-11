@@ -22,6 +22,8 @@ class Assessment
 
         raise ActiveRecord::Rollback unless criteria_met
       end
+
+      criteria_met
     end
 
     def self.call(assessment:, triggers:)
@@ -72,23 +74,23 @@ class Assessment
     end
 
     def activity
-      @activity ||= trigger.activity
+      trigger.activity
     end
 
     def criteria
-      @criteria ||= trigger.criteria
+      trigger.criteria
     end
 
     def conditions
-      @conditions ||= criteria['conditions']
+      criteria['conditions']
     end
 
     def conjunction
-      @conjunction ||= criteria['conjunction']
+      criteria['conjunction']
     end
 
     def form_data
-      @form_data ||= assessment.form_data
+      assessment.form_data
     end
   end
 end
