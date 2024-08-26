@@ -36,7 +36,10 @@ module Dc
           dc_company_employees.id as company_employee_id,
           dc_company_employees.*, dc_employees.* FROM dc_company_employees
           INNER JOIN dc_employees ON dc_employees.id = dc_company_employees.dc_employee_id
-          WHERE email = ? LIMIT 1
+          INNER JOIN dc_companies ON dc_companies.id = dc_company_employees.dc_company_id
+          INNER JOIN dc_company_types ON dc_company_types.id = dc_companies.comp_type_id
+          WHERE dc_employees.email = ? AND dc_company_types.name != 'Account'
+          ORDER BY dc_company_employees.created_at ASC LIMIT 1
       SQL
 
       new(ApplicationRecord.connection.execute(query).try(:first))
@@ -48,9 +51,7 @@ module Dc
           dc_company_employees.id as company_employee_id,
           dc_company_employees.*, dc_employees.* FROM dc_company_employees
           INNER JOIN dc_employees ON dc_employees.id = dc_company_employees.dc_employee_id
-          WHERE dc_company_employees.id = ?
-          ORDER BY dc_company_employees.created_at DESC
-          LIMIT 1
+          WHERE dc_company_employees.id = ? LIMIT 1
       SQL
 
       new(ApplicationRecord.connection.execute(query).try(:first))
