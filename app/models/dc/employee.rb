@@ -48,7 +48,9 @@ module Dc
           dc_company_employees.id as company_employee_id,
           dc_company_employees.*, dc_employees.* FROM dc_company_employees
           INNER JOIN dc_employees ON dc_employees.id = dc_company_employees.dc_employee_id
-          WHERE dc_company_employees.id = ? LIMIT 1
+          WHERE dc_company_employees.id = ?
+          ORDER BY dc_company_employees.created_at DESC
+          LIMIT 1
       SQL
 
       new(ApplicationRecord.connection.execute(query).try(:first))
