@@ -36,23 +36,32 @@ module Api
       def create_assessment_params
         params.require(:assessment).permit(
           :title,
-          :account_id,
           { form_data: {} }
-        ).merge(
-          {
-            dc_company_id: current_employee.company.id,
-            dc_company_employee_id: current_employee.company_employee_id,
-            nav_questionnaire_id: Questionnaire.first.try(:id)
-          }
-        )
+        ).merge(default_create_assessment_attributes)
+      end
+
+      def default_create_assessment_attributes
+        {
+          dc_company_id: current_employee.company.id,
+          dc_company_employee_id: current_employee.company_employee_id,
+          nav_questionnaire_id: Questionnaire.first.try(:id)
+        }
       end
 
       def update_assessment_params
         params.require(:assessment).permit(
           :title,
-          { form_data: {} }
+          { form_data: {} },
+          { account_attributes: account_attributes }
         )
       end
+
+      def account_attributes
+        [
+          :title,
+          { employee: %i[first_name last_name email] }
+        ]
+      end      
 
       def set_assessment
         @assessment = Assessment.find_by(

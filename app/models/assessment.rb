@@ -13,10 +13,12 @@ class Assessment < ApplicationRecord
 
   # attr_accessor :dc_company_id, :dc_employee_id, :account_id
 
-  validates :account_id, :title, presence: true
+  validates :title, presence: true
 
   def account
-    @account ||= Dc::Company.find(account_id)
+    return if account_id.blank?
+
+    @account ||= Dc::Account.find(account_id)
   end
 
   def company_employee

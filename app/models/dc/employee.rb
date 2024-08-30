@@ -30,17 +30,14 @@ module Dc
       new(ApplicationRecord.connection.execute(query).try(:first))
     end
 
-    def self.find_by_email(email, entity_type = nil)
-      condition = entity_type.blank? ? "dc_company_types.name != 'Account'" : "dc_company_types.name = ?"
-
+    def self.find_by_email(email)
       query = ActiveRecord::Base.sanitize_sql_array([<<-SQL.squish, email, entity_type])
         SELECT dc_company_employees.uuid AS company_employee_uuid,
           dc_company_employees.id as company_employee_id,
           dc_company_employees.*, dc_employees.* FROM dc_company_employees
           INNER JOIN dc_employees ON dc_employees.id = dc_company_employees.dc_employee_id
           INNER JOIN dc_companies ON dc_companies.id = dc_company_employees.dc_company_id
-          INNER JOIN dc_company_types ON dc_company_types.id = dc_companies.comp_type_id
-          WHERE dc_employees.email = ? AND #{condition}
+          WHERE dc_employees.email = ?
           ORDER BY dc_company_employees.created_at ASC LIMIT 1
       SQL
 

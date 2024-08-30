@@ -1118,6 +1118,8 @@ paths:
                 properties:
                   id:
                     type: string
+                  uuid:
+                    type: string
                   email:
                     type: string
                   first_name:
@@ -1209,6 +1211,8 @@ paths:
                 properties:
                   id:
                     type: string
+                  uuid:
+                    type: string
                   email:
                     type: string
                   first_name:
@@ -1239,6 +1243,7 @@ paths:
                     - updated_at
                 required:
                 - id
+                - uuid
                 - first_name
                 - last_name
                 - email
@@ -1436,3 +1441,7 @@ components:
       type: http
       scheme: bearer
       bearerFormat: JWT
+    companyId:
+      type: apiKey
+      name: Company-Id
+      in: header
