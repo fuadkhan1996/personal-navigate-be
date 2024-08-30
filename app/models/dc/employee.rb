@@ -30,15 +30,17 @@ module Dc
       new(ApplicationRecord.connection.execute(query).try(:first))
     end
 
-    def self.find_by_email(email)
-      query = ActiveRecord::Base.sanitize_sql_array([<<-SQL.squish, email])
+    def self.find_by_email(email, entity_type = nil)
+      condition = entity_type.blank? ? "dc_company_types.name != 'Account'" : "dc_company_types.name = ?"
+
+      query = ActiveRecord::Base.sanitize_sql_array([<<-SQL.squish, email, entity_type])
         SELECT dc_company_employees.uuid AS company_employee_uuid,
           dc_company_employees.id as company_employee_id,
           dc_company_employees.*, dc_employees.* FROM dc_company_employees
           INNER JOIN dc_employees ON dc_employees.id = dc_company_employees.dc_employee_id
           INNER JOIN dc_companies ON dc_companies.id = dc_company_employees.dc_company_id
           INNER JOIN dc_company_types ON dc_company_types.id = dc_companies.comp_type_id
-          WHERE dc_employees.email = ? AND dc_company_types.name != 'Account'
+          WHERE dc_employees.email = ? AND #{condition}
           ORDER BY dc_company_employees.created_at ASC LIMIT 1
       SQL
 
@@ -55,6 +57,11 @@ module Dc
       SQL
 
       new(ApplicationRecord.connection.execute(query).try(:first))
+    end
+
+    def self.lookup_by_email_and_company_type(email, company_type)
+      response = ::Dc::Api::Company::Employee.lookup_by_email_and_company_type(email, company_type)
+      new(response) if response.present?
     end
 
     def company

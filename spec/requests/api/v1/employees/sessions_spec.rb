@@ -13,28 +13,40 @@ describe 'Api::V1::Employees::Sessions' do
             type: :object,
             properties: {
               email: { type: :string },
-              password: { type: :string }
+              password: { type: :string },
+              entity_type: { type: :string }
             },
-            required: %w[email password]
+            required: %w[email password entity_type]
           }
         },
         required: %w[employee]
       }
 
-      response '200', 'Authentication successful' do
+      response '201', 'Authentication successful' do
         schema type: :object,
                properties: {
-                 data: {
+                 id: { type: :string },
+                 uuid: { type: :string },
+                 email: { type: :string },
+                 first_name: { type: :string },
+                 last_name: { type: :string },
+                 access_token: { type: :string },
+                 refresh_token: { type: :string },
+                 token_expires_in: { type: :integer },
+                 company: {
                    type: :object,
                    properties: {
-                     access_token: { type: :string },
-                     refresh_token: { type: :string },
-                     token_expires_in: { type: :integer }
+                     id: { type: :string },
+                     title: { type: :string },
+                     logo: { type: :string },
+                     company_type_name: { type: :string },
+                     created_at: { type: :string },
+                     updated_at: { type: :string }
                    },
-                   required: %w[access_token refresh_token token_expires_in]
+                   required: %w[id title logo company_type_name created_at updated_at]
                  }
                },
-               required: %w[data]
+               required: %w[id first_name last_name email access_token refresh_token token_expires_in company]
 
         let(:session) { { employee: { email: 'email', password: 'password' } } }
         run_test!
@@ -58,38 +70,30 @@ describe 'Api::V1::Employees::Sessions' do
       produces 'application/json'
       security [bearerAuth: []]
 
-      response '201', 'Logged In Employee Data' do
+      response '200', 'Logged In Employee Data' do
         schema type: :object,
                properties: {
-                 data: {
+                 id: { type: :string },
+                 uuid: { type: :string },
+                 email: { type: :string },
+                 first_name: { type: :string },
+                 last_name: { type: :string },
+                 company: {
                    type: :object,
                    properties: {
-                     attributes: {
-                       type: :object,
-                       properties: {
-                         id: { type: :string },
-                         email: { type: :string },
-                         first_name: { type: :string },
-                         last_name: { type: :string },
-                         company: {
-                           type: :object,
-                           properties: {
-                             id: { type: :string },
-                             title: { type: :string },
-                             logo: { type: :string },
-                             created_at: { type: :string },
-                             updated_at: { type: :string }
-                           },
-                           required: %w[id title logo created_at updated_at]
-                         }
-                       },
-                       required: %w[id email first_name last_name cognito_username]
-                     }
+                     id: { type: :string },
+                     title: { type: :string },
+                     logo: { type: :string },
+                     company_type_name: { type: :string },
+                     created_at: { type: :string },
+                     updated_at: { type: :string }
                    },
-                   required: %w[data]
+                   required: %w[id title logo company_type_name created_at updated_at]
                  }
-               }
+               },
+               required: %w[id uuid first_name last_name email access_token refresh_token token_expires_in company]
 
+        let(:session) { { employee: { email: 'email', password: 'password' } } }
         run_test!
       end
 

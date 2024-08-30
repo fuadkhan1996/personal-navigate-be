@@ -5,11 +5,17 @@ module Dc
     include ActiveModel::API
     include Dc::Api::Company
 
+    delegate :name, to: :company_type, prefix: true, allow_nil: true
+
     def initialize(attributes)
       attributes.each do |key, value|
         self.class.send(:attr_accessor, key)
         instance_variable_set("@#{key}", value)
       end
+    end
+
+    def company_type
+      @company_type ||= CompanyType.find(comp_type_id)
     end
 
     def activities
