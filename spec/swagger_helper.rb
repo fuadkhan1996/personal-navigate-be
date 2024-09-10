@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.configure do |config|
-  config.openapi_root = Rails.root.join('swagger').to_s
+  config.openapi_root = Rails.root.to_s + '/swagger'
 
   config.openapi_specs = {
     'v1/swagger.yaml' => {
@@ -20,13 +20,17 @@ RSpec.configure do |config|
             scheme: 'bearer',
             bearerFormat: 'JWT'
           },
-          companyId: {
+          apiKeyAuth: {
             type: :apiKey,
             name: 'Company-Id',
             in: :header
           }
         }
-      }
+      },
+      security: [
+        { bearerAuth: [] },
+        { apiKeyAuth: [] }
+      ]
     }
   }
 

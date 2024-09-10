@@ -8,15 +8,12 @@ class AssessmentBuilder
   end
 
   def self.create(params:)
-    new(params: params).create
+    new(params:).create
   end
 
-  def create
-    ActiveRecord::Base.transaction do
-      assessment = Assessment.new(params)
+  def create; end
 
-    end
-  rescue Activerecord::RecordInvalid => e
-    raise e
-  end
+  private
+
+  def assessment_params; end
 end

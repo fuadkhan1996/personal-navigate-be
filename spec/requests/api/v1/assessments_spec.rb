@@ -6,7 +6,7 @@ describe 'Api::V1::Assessments' do
       tags 'Assessments'
       consumes 'application/json'
       produces 'application/json'
-      security [bearerAuth: []]
+      security [{ bearerAuth: [], apiKeyAuth: [] }]
 
       parameter name: :assessment, in: :body, schema: {
         type: :object,
@@ -68,7 +68,7 @@ describe 'Api::V1::Assessments' do
       tags 'Assessments'
       consumes 'application/json'
       produces 'application/json'
-      security [bearerAuth: []]
+      security [{ bearerAuth: [], apiKeyAuth: [] }]
 
       response '200', 'Assessment List' do
         schema type: :array,
@@ -118,7 +118,7 @@ describe 'Api::V1::Assessments' do
       tags 'Assessments'
       consumes 'application/json'
       produces 'application/json'
-      security [bearerAuth: []]
+      security [{ bearerAuth: [], apiKeyAuth: [] }]
 
       parameter name: :id, in: :path, type: :string
       response '200', 'Assessment Data' do
@@ -165,7 +165,7 @@ describe 'Api::V1::Assessments' do
       tags 'Assessments'
       consumes 'application/json'
       produces 'application/json'
-      security [bearerAuth: []]
+      security [{ bearerAuth: [], apiKeyAuth: [] }]
 
       parameter name: :id, in: :path, type: :string
       parameter name: :assessment, in: :body, schema: {

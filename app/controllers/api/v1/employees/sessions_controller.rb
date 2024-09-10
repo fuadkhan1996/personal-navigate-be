@@ -4,10 +4,11 @@ module Api
   module V1
     module Employees
       class SessionsController < ApplicationController
+        skip_before_action :set_current_company, only: %i[create]
         skip_before_action :authenticate_request!, only: %i[create refresh]
 
         def show
-          render json: Dc::EmployeeBlueprint.render(employee), status: :ok
+          render json: Dc::CompanyEmployeeBlueprint.render(current_employee), status: :ok
         end
 
         def create
@@ -20,12 +21,9 @@ module Api
         end
 
         def refresh
-          # rubocop:disable Rails/DynamicFindBy
-          dc_employee = Dc::Employee.find_by_email(refresh_params[:email])
-          # rubocop:enable Rails/DynamicFindBy
-
+          employee = Dc::Employee.find_by(email: refresh_params[:email].to_s)
           response = Dc::Employee.refresh_access_token(
-            dc_employee.try(:cognito_username),
+            employee.try(:cognito_username),
             refresh_params[:refresh_token]
           )
 
@@ -50,12 +48,30 @@ module Api
         end
 
         def render_successful_authentication(response)
-          employee = Dc::Employee.lookup_by_email_and_company_type(
-            sign_in_params[:email].to_s,
-            sign_in_params[:entity_type].to_s
-          )
+          employee = find_employee
+          render json: Dc::CompanyEmployeeBlueprint.render_as_hash(employee).merge(response), status: :created
+        end
 
-          render json: Dc::Company::EmployeeBlueprint.render_as_hash(employee).merge(response), status: :created
+        def find_employee
+          if sign_in_params[:entity_type].present?
+            find_employee_by_entity_type
+          else
+            find_employee_without_entity_type
+          end
+        end
+
+        def find_employee_by_entity_type
+          Dc::CompanyEmployee.find_for_email_and_company_type(
+            email: sign_in_params[:email].to_s,
+            company_type_name: sign_in_params[:entity_type].to_s
+          )
+        end
+
+        def find_employee_without_entity_type
+          Dc::CompanyEmployee.by_email(sign_in_params[:email].to_s)
+                             .company_type_not_in(['Account'])
+                             .order_by_created_at
+                             .first
         end
       end
     end

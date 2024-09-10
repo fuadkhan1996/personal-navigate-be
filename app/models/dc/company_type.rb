@@ -1,22 +1,12 @@
 # frozen_string_literal: true
 
 module Dc
-  class CompanyType
-    include ActiveModel::API
+  class CompanyType < ApplicationRecord
+    self.table_name = :dc_company_types
 
-    def initialize(attributes)
-      attributes.each do |key, value|
-        self.class.send(:attr_accessor, key)
-        instance_variable_set("@#{key}", value)
-      end
-    end
-
-    def self.find(id)
-      query = ActiveRecord::Base.sanitize_sql_array([<<-SQL.squish, id])
-        SELECT * FROM dc_company_types WHERE id = ? LIMIT 1
-      SQL
-
-      new(ApplicationRecord.connection.execute(query).try(:first))
-    end
+    has_many :companies,
+             dependent: :restrict_with_exception,
+             foreign_key: :comp_type_id,
+             inverse_of: :company_type
   end
 end

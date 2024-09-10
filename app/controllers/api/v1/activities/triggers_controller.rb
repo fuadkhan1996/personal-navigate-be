@@ -27,7 +27,7 @@ module Api
         private
 
         def activity
-          @activity ||= current_employee.company_activities.find(params[:activity_id])
+          @activity ||= current_company.activities.find(params[:activity_id])
         end
 
         def set_trigger

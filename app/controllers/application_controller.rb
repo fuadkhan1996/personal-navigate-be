@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::API
-  attr_accessor :current_employee
+  attr_accessor :current_employee, :current_company
 
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
   rescue_from ActionController::ParameterMissing, with: :parameter_missing
 
+  before_action :set_current_company
   before_action :authenticate_request!
 
   protected
@@ -24,17 +25,24 @@ class ApplicationController < ActionController::API
 
   private
 
+  def set_current_company
+    company_id = request.headers['Company-Id']
+    self.current_company = Dc::Company.find_by(guid: company_id)
+    current_company || not_authorized
+  end
+
   def authenticate_request!
     auth_header = request.headers['Authorization']
-    return not_authorized if auth_header.blank?
+    return not_authorized if auth_header.blank? && current_company.blank?
 
     athenticate_token!(auth_header.split[-1]) || not_authorized
   end
 
   def athenticate_token!(token)
-    # rubocop:disable Rails/DynamicFindBy
-    self.current_employee = Dc::Employee.find_by_access_token(token)
-    # rubocop:enable Rails/DynamicFindBy
+    cognito_user = Cognito::Base.get_user(access_token: token.to_s)
+    return if cognito_user.blank?
+
+    self.current_employee = current_company.company_employees_by_email(cognito_user[:email].to_s).first
   end
 
   def not_found(exception)

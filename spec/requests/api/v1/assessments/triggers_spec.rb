@@ -6,7 +6,7 @@ describe 'Api::V1::Assessments::TriggersController' do
       tags 'Assessments'
       consumes 'application/json'
       produces 'application/json'
-      security [bearerAuth: []]
+      security [{ bearerAuth: [], apiKeyAuth: [] }]
 
       parameter name: :assessment_id, in: :path, type: :string
       parameter name: :id, in: :path, type: :string
@@ -74,7 +74,7 @@ describe 'Api::V1::Assessments::TriggersController' do
       tags 'Assessments'
       consumes 'application/json'
       produces 'application/json'
-      security [bearerAuth: []]
+      security [{ bearerAuth: [], apiKeyAuth: [] }]
 
       parameter name: :assessment_id, in: :path, type: :string
       response '200', 'Triggers Evaluated Successfully.' do

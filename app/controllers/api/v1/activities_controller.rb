@@ -6,10 +6,7 @@ module Api
       before_action :set_activity, only: %i[show]
 
       def index
-        @activities = Activity.includes(activity_actions: :action)
-                              .where(dc_company_id: current_employee.company.id)
-                              .order(created_at: :desc)
-
+        @activities = current_company.activities.includes(activity_actions: :action).order(created_at: :desc)
         render json: ::ActivityBlueprint.render(@activities, view: :normal), status: :ok
       end
 
@@ -34,8 +31,8 @@ module Api
           :description,
           activity_actions_attributes: activity_actions_params
         ).merge(
-          dc_company_employee_id: current_employee.company_employee_id,
-          dc_company_id: current_employee.dc_company_id
+          dc_company_employee_id: current_employee.id,
+          dc_company_id: current_company.id
         )
       end
 
@@ -51,10 +48,7 @@ module Api
       end
 
       def set_activity
-        @activity = Activity.find_by(
-          dc_company_id: current_employee.company.id,
-          id: params[:id]
-        )
+        @activity = current_company.activities.find(params[:id])
       end
     end
   end

@@ -68,7 +68,7 @@ describe 'Api::V1::Employees::Sessions' do
       tags 'Sessions'
       consumes 'application/json'
       produces 'application/json'
-      security [bearerAuth: []]
+      security [{ bearerAuth: [], apiKeyAuth: [] }]
 
       response '200', 'Logged In Employee Data' do
         schema type: :object,

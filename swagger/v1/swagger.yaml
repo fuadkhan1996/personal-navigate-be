@@ -4,70 +4,6 @@ info:
   title: Navigate API V1
   version: v1
 paths:
-  "/api/v1/accounts":
-    get:
-      summary: Get Accounts
-      tags:
-      - Accounts
-      security:
-      - bearerAuth: []
-      responses:
-        '200':
-          description: Accounts List
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  data:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        id:
-                          type: string
-                        type:
-                          type: string
-                        attributes:
-                          type: object
-                          properties:
-                            id:
-                              type: integer
-                            uuid:
-                              type: string
-                            logo:
-                              type: string
-                            title:
-                              type: string
-                            created_at:
-                              type: string
-                            updated_at:
-                              type: string
-                          required:
-                          - id
-                          - uuid
-                          - logo
-                          - title
-                          - deleted_at
-                          - created_at
-                          - updated_at
-                      required:
-                      - id
-                      - type
-                      - attributes
-                required:
-                - data
-        '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                required:
-                - error
   "/api/v1/actions":
     get:
       summary: Get All Actions
@@ -75,6 +11,7 @@ paths:
       - Actions
       security:
       - bearerAuth: []
+        apiKeyAuth: []
       responses:
         '200':
           description: Actions List
@@ -125,6 +62,7 @@ paths:
       - Activities
       security:
       - bearerAuth: []
+        apiKeyAuth: []
       parameters:
       - name: activity_id
         in: path
@@ -229,6 +167,7 @@ paths:
       - Activities
       security:
       - bearerAuth: []
+        apiKeyAuth: []
       parameters:
       - name: activity_id
         in: path
@@ -306,6 +245,7 @@ paths:
       - Activities
       security:
       - bearerAuth: []
+        apiKeyAuth: []
       parameters:
       - name: activity_id
         in: path
@@ -389,6 +329,7 @@ paths:
       - Activities
       security:
       - bearerAuth: []
+        apiKeyAuth: []
       responses:
         '200':
           description: Activity List
@@ -435,6 +376,7 @@ paths:
       - Activities
       security:
       - bearerAuth: []
+        apiKeyAuth: []
       parameters: []
       responses:
         '201':
@@ -518,6 +460,7 @@ paths:
       - Activities
       security:
       - bearerAuth: []
+        apiKeyAuth: []
       parameters:
       - name: id
         in: path
@@ -643,6 +586,7 @@ paths:
       - Assessments
       security:
       - bearerAuth: []
+        apiKeyAuth: []
       parameters:
       - name: assessment_id
         in: path
@@ -731,6 +675,7 @@ paths:
       - Assessments
       security:
       - bearerAuth: []
+        apiKeyAuth: []
       parameters:
       - name: assessment_id
         in: path
@@ -814,6 +759,7 @@ paths:
       - Assessments
       security:
       - bearerAuth: []
+        apiKeyAuth: []
       parameters: []
       responses:
         '201':
@@ -883,6 +829,7 @@ paths:
       - Assessments
       security:
       - bearerAuth: []
+        apiKeyAuth: []
       responses:
         '200':
           description: Assessment List
@@ -956,6 +903,7 @@ paths:
       - Assessments
       security:
       - bearerAuth: []
+        apiKeyAuth: []
       parameters:
       - name: id
         in: path
@@ -1037,6 +985,7 @@ paths:
       - Assessments
       security:
       - bearerAuth: []
+        apiKeyAuth: []
       parameters:
       - name: id
         in: path
@@ -1102,6 +1051,60 @@ paths:
                   - form_data
               required:
               - assessment
+  "/api/v1/companies":
+    get:
+      summary: Get Linked Companies
+      tags:
+      - Companies
+      security:
+      - bearerAuth: []
+        apiKeyAuth: []
+      parameters:
+      - name: company_type
+        in: query
+        description: Account/Carrier/Wholesaler/SubAgency
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Companies List
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    title:
+                      type: string
+                    logo:
+                      type: string
+                    company_type_name:
+                      type: string
+                    created_at:
+                      type: string
+                    updated_at:
+                      type: string
+                  required:
+                  - id
+                  - title
+                  - logo
+                  - company_type_name
+                  - created_at
+                  - updated_at
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
   "/api/v1/employees/session":
     post:
       summary: Create an Employee Session
@@ -1201,6 +1204,7 @@ paths:
       - Sessions
       security:
       - bearerAuth: []
+        apiKeyAuth: []
       responses:
         '200':
           description: Logged In Employee Data
@@ -1321,6 +1325,7 @@ paths:
       - Questionnaires
       security:
       - bearerAuth: []
+        apiKeyAuth: []
       parameters:
       - name: questionnaire_id
         in: path
@@ -1403,6 +1408,7 @@ paths:
       - Upload
       security:
       - bearerAuth: []
+        apiKeyAuth: []
       parameters: []
       responses:
         '200':
@@ -1441,7 +1447,10 @@ components:
       type: http
       scheme: bearer
       bearerFormat: JWT
-    companyId:
+    apiKeyAuth:
       type: apiKey
       name: Company-Id
       in: header
+security:
+- bearerAuth: []
+- apiKeyAuth: []

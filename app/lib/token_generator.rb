@@ -3,7 +3,7 @@
 class TokenGenerator
   def initialize
     @key_generator = ActiveSupport::CachingKeyGenerator.new(
-      ActiveSupport::KeyGenerator.new(Rails.application.credentials.dig(:secret_key_base))
+      ActiveSupport::KeyGenerator.new(Rails.application.credentials[:secret_key_base])
     )
 
     @digest = 'SHA256'

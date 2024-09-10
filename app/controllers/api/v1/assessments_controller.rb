@@ -6,7 +6,7 @@ module Api
       before_action :set_assessment, only: %i[show update]
 
       def index
-        @assessments = current_employee.company_assessments.order(created_at: :desc)
+        @assessments = current_company.assessments.order(created_at: :desc)
         render json: ::AssessmentBlueprint.render(@assessments), status: :ok
       end
 
@@ -52,7 +52,7 @@ module Api
         params.require(:assessment).permit(
           :title,
           { form_data: {} },
-          { account_attributes: account_attributes }
+          :account_attributes
         )
       end
 
@@ -61,13 +61,10 @@ module Api
           :title,
           { employee: %i[first_name last_name email] }
         ]
-      end      
+      end
 
       def set_assessment
-        @assessment = Assessment.find_by(
-          dc_company_id: current_employee.company.id,
-          id: params[:id]
-        )
+        @assessment = current_company.assessments.find(params[:id])
       end
     end
   end

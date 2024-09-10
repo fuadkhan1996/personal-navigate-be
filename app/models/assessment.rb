@@ -4,6 +4,13 @@ class Assessment < ApplicationRecord
   self.table_name = :nav_assessments
 
   belongs_to :questionnaire, foreign_key: :nav_questionnaire_id, inverse_of: :assessments
+  belongs_to :company, class_name: 'Dc::Company', foreign_key: :dc_company_id, inverse_of: :assessments
+  belongs_to :account, class_name: 'Dc::Company', inverse_of: :assessments
+  belongs_to :company_employee,
+             class_name: 'Dc::CompanyEmployee',
+             foreign_key: :dc_company_employee_id,
+             inverse_of: :assessments
+
   has_many :activity_triggers, through: :questionnaire
   has_many :assessment_action_results,
            dependent: :restrict_with_exception,
@@ -14,16 +21,4 @@ class Assessment < ApplicationRecord
   # attr_accessor :dc_company_id, :dc_employee_id, :account_id
 
   validates :title, presence: true
-
-  def account
-    return if account_id.blank?
-
-    @account ||= Dc::Account.find(account_id)
-  end
-
-  def company_employee
-    # rubocop:disable Rails/DynamicFindBy
-    @company_employee ||= Dc::Employee.find_by_company_employee_id(dc_company_employee_id)
-    # rubocop:enable Rails/DynamicFindBy
-  end
 end

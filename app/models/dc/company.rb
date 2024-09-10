@@ -1,49 +1,55 @@
 # frozen_string_literal: true
 
 module Dc
-  class Company
-    include ActiveModel::API
-    include Dc::Api::Company
+  class Company < ApplicationRecord
+    self.table_name = :dc_companies
+
+    belongs_to :company_type, foreign_key: :comp_type_id, inverse_of: :companies
+    has_many :company_employees,
+             dependent: :restrict_with_exception,
+             class_name: 'Dc::CompanyEmployee',
+             foreign_key: :dc_company_id,
+             inverse_of: :company
+
+    has_many :activities,
+             dependent: :restrict_with_exception,
+             class_name: '::Activity',
+             foreign_key: :dc_company_id,
+             inverse_of: :company
+
+    has_many :company_connections,
+             dependent: :restrict_with_exception,
+             class_name: 'Dc::CompanyConnection',
+             foreign_key: :dc_company_id,
+             inverse_of: :company
+
+    has_many :partner_company_connections,
+             dependent: :restrict_with_exception,
+             class_name: 'Dc::CompanyConnection',
+             foreign_key: :dc_partner_company_id,
+             inverse_of: :partner_company
+
+    scope :by_company_type, lambda { |company_type_name|
+      joins(:company_type)
+        .where(dc_company_types: { name: company_type_name })
+    }
 
     delegate :name, to: :company_type, prefix: true, allow_nil: true
+    delegate :by_email, to: :company_employees, prefix: true, allow_nil: true
+    delegate :by_company_type, to: :linked_companies, prefix: true, allow_nil: true
 
-    def initialize(attributes)
-      attributes.each do |key, value|
-        self.class.send(:attr_accessor, key)
-        instance_variable_set("@#{key}", value)
-      end
-    end
-
-    def company_type
-      @company_type ||= CompanyType.find(comp_type_id)
-    end
-
-    def activities
-      Activity.where(dc_company_id: id)
+    def linked_companies
+      company_ids = company_connections.pluck(:dc_partner_company_id) +
+                    partner_company_connections.pluck(:dc_company_id)
+      Company.where(id: company_ids)
     end
 
     def assessments
-      Assessment.where(dc_company_id: id)
-    end
-
-    def self.find(id)
-      query = ActiveRecord::Base.sanitize_sql_array([<<-SQL.squish, id])
-        SELECT * FROM dc_companies WHERE id = ? LIMIT 1
-      SQL
-
-      new(ApplicationRecord.connection.execute(query).try(:first))
-    end
-
-    def linked_accounts
-      query = ActiveRecord::Base.sanitize_sql_array([<<-SQL.squish, id])
-      SELECT dc_companies.*, dc_company_types.name as company_type_name FROM dc_companies
-        INNER JOIN dc_company_connections ON dc_company_connections.dc_partner_company_id = dc_companies.id
-        INNER JOIN dc_company_types ON dc_company_types.id = dc_companies.comp_type_id
-        WHERE dc_company_types.name = 'Account' AND dc_company_connections.dc_company_id = ?
-      SQL
-
-      results = ApplicationRecord.connection.execute(query)
-      results.map { |record| self.class.new(record) }
+      if company_type_name == 'Account'
+        Assessment.where(account_id: id)
+      else
+        Assessment.where(dc_company_id: id)
+      end
     end
   end
 end

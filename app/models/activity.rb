@@ -3,8 +3,12 @@
 class Activity < ApplicationRecord
   self.table_name = :nav_activities
 
-  attr_accessor :dc_company,
-                :dc_company_employee
+  belongs_to :company, class_name: 'Dc::Company', foreign_key: :dc_company_id, inverse_of: :activities
+
+  belongs_to :company_employee,
+             class_name: 'Dc::CompanyEmployee',
+             foreign_key: :dc_company_employee_id,
+             inverse_of: :activities
 
   has_many :activity_actions,
            dependent: :restrict_with_exception,

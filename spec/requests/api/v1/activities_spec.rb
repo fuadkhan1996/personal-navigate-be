@@ -6,7 +6,7 @@ describe 'Api::V1::Activities' do
       tags 'Activities'
       consumes 'application/json'
       produces 'application/json'
-      security [bearerAuth: []]
+      security [{ bearerAuth: [], apiKeyAuth: [] }]
 
       response '200', 'Activity List' do
         schema type: :array,
@@ -43,7 +43,7 @@ describe 'Api::V1::Activities' do
       tags 'Activities'
       consumes 'application/json'
       produces 'application/json'
-      security [bearerAuth: []]
+      security [{ bearerAuth: [], apiKeyAuth: [] }]
 
       parameter name: :activity, in: :body, schema: {
         type: :object,
@@ -122,7 +122,7 @@ describe 'Api::V1::Activities' do
       tags 'Activities'
       consumes 'application/json'
       produces 'application/json'
-      security [bearerAuth: []]
+      security [{ bearerAuth: [], apiKeyAuth: [] }]
 
       parameter name: :id, in: :path, type: :string
       response '200', 'Activity Data' do
