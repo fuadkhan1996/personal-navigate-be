@@ -11,19 +11,19 @@ AllCops:
   TargetRubyVersion: 3.2
   TargetRailsVersion: 7.1
   Exclude:
-    - 'db/**/*'
-    - 'bin/*'
-    - 'config/**/*'
-    - 'script/**/*'
-    - 'vendor/**/*'
-    - 'spec/fixtures/**/*'
-    - 'tmp/**/*'
-    - 'node_modules/**/*'
-    - 'Gemfile.lock'
-    - 'Rakefile'
-    - 'config.ru'
-    - 'test/**/*'
-    - 'spec/*_helper.rb'
+    - "db/**/*"
+    - "bin/*"
+    - "config/**/*"
+    - "script/**/*"
+    - "vendor/**/*"
+    - "spec/fixtures/**/*"
+    - "tmp/**/*"
+    - "node_modules/**/*"
+    - "Gemfile.lock"
+    - "Rakefile"
+    - "config.ru"
+    - "test/**/*"
+    - "spec/*_helper.rb"
 
 Rails:
   Enabled: true
@@ -35,7 +35,7 @@ Layout/LineLength:
 Metrics/BlockLength:
   Max: 25
   Exclude:
-    - 'spec/**/*.rb'
+    - "spec/**/*.rb"
 
 Metrics/MethodLength:
   Max: 15
@@ -57,15 +57,14 @@ RSpec/ExampleLength:
 
 RSpec/EmptyExampleGroup:
   Exclude:
-    - 'spec/requests/api/**/*'
+    - "spec/requests/api/**/*"
 
 RSpec/NoExpectationExample:
   Exclude:
-    - 'spec/requests/api/**/*'
-
+    - "spec/requests/api/**/*"
 # Make sure to remove any reference to obsolete parameters
 # Specifically, do not use `AllowOnlyRestArgument` or `ParserEngine`
 
 # Note: If you see warnings about an inherited file (.rubocop-https---raw-githubusercontent-com-rubocop-rubocop-master-config-default-yml),
-# it's due to configurations in the remote file, which you can't change. 
+# it's due to configurations in the remote file, which you can't change.
 # You may consider copying the contents to a local file and removing the problematic configurations.
