@@ -49,7 +49,7 @@ module Api
 
         def render_successful_authentication(response)
           employee = find_employee
-          render json: Dc::CompanyEmployeeBlueprint.render_as_hash(employee).merge(response), status: :created
+          render json: { success: 'Logged In' }, status: :created
         end
 
         def find_employee
