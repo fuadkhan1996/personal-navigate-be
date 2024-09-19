@@ -27,12 +27,6 @@ jobs:
     steps:
       - name: ⬇️ Checkout Repo
         uses: actions/checkout@v4
-      - name: 🔑 Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v3
-        with:
-          role-to-assume: arn:aws:iam::141673609209:role/GitHubActionsElasticBeanstalkRole
-          aws-region: us-east-1
-          role-session-name: GitHubActionScript
       - name: 💎 Set up Ruby 3.2.2
         uses: ruby/setup-ruby@v1
         with:
@@ -59,6 +53,8 @@ jobs:
       - name: 🚀 Deploy to Elastic Beanstalk
         uses: einaregilsson/beanstalk-deploy@v20
         with:
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           application_name: Navigate-api
           environment_name: Navigate-api-env
           version_label: ${{ github.sha }}
