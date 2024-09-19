@@ -47,8 +47,9 @@ module Api
           params.require(:session).permit(:refresh_token, :email)
         end
 
-        def render_successful_authentication(_response)
-          render json: { success: 'Logged In' }, status: :created
+        def render_successful_authentication(response)
+          employee = find_employee
+          render json: Dc::CompanyEmployeeBlueprint.render_as_hash(employee).merge(response), status: :created
         end
 
         def find_employee
