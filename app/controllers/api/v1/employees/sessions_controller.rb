@@ -48,7 +48,6 @@ module Api
         end
 
         def render_successful_authentication(response)
-          employee = find_employee
           render json: { success: 'Logged In' }, status: :created
         end
 
