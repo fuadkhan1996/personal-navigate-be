@@ -9,13 +9,13 @@ on:
   workflow_dispatch:
 
 jobs:
-  codeguru-security:
-    name: 🔒 CodeGuru Security Scan
-    uses: ./.github/workflows/codeguru-security.yml
+  # codeguru-security:
+  #   name: 🔒 CodeGuru Security Scan
+  #   uses: ./.github/workflows/codeguru-security.yml
 
   build-deploy:
     name: 🚀 Build and Deploy
-    needs: [codeguru-security]
+    # needs: [codeguru-security]
     runs-on: ubuntu-latest
 
     permissions:

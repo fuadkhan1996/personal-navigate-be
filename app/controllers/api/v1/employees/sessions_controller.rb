@@ -47,7 +47,7 @@ module Api
           params.require(:session).permit(:refresh_token, :email)
         end
 
-        def render_successful_authentication(response)
+        def render_successful_authentication(_response)
           render json: { success: 'Logged In' }, status: :created
         end
 
