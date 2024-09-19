@@ -1,0 +1,31 @@
+name: CodeGuru Security Scan
+
+on:
+  workflow_call:
+
+permissions:
+  id-token: write
+  contents: read
+  actions: read
+  security-events: write
+
+jobs:
+  codeguru-security:
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⬇️ Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: 🔑 Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          role-to-assume: arn:aws:iam::141673609209:role/CodeGuruSecurityGitHubAccessRole
+          aws-region: us-east-1
+          role-session-name: GitHubActionScript
+      - name: 🛡️ Run CodeGuru Security
+        uses: aws-actions/codeguru-security@v1
+        with:
+          source_path: .
+          aws_region: us-east-1
+          fail_on_severity: Critical
