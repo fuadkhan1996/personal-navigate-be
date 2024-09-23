@@ -2,7 +2,6 @@
 
 module Dc
   class Employee < ApplicationRecord
-    include Dc::Api::Employee
     include Authable
 
     self.table_name = :dc_employees
@@ -16,7 +15,7 @@ module Dc
     has_many :companies, through: :company_employees
 
     def fullname
-      [first_name, last_name].joins(' ')
+      [first_name, last_name].join(' ')
     end
   end
 end

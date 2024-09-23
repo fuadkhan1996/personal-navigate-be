@@ -18,7 +18,5 @@ class Assessment < ApplicationRecord
            foreign_key: :nav_assessment_id,
            inverse_of: :assessment
 
-  # attr_accessor :dc_company_id, :dc_employee_id, :account_id
-
   validates :title, presence: true
 end

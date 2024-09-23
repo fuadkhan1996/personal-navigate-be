@@ -8,5 +8,9 @@ module Dc
              dependent: :restrict_with_exception,
              foreign_key: :comp_type_id,
              inverse_of: :company_type
+
+    def account?
+      name == 'Account'
+    end
   end
 end

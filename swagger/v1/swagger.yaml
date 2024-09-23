@@ -1105,6 +1105,98 @@ paths:
                     type: string
                 required:
                 - error
+    post:
+      summary: Create Company
+      tags:
+      - Companies
+      security:
+      - bearerAuth: []
+        apiKeyAuth: []
+      parameters: []
+      responses:
+        '201':
+          description: Company Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  title:
+                    type: string
+                  logo:
+                    type: string
+                  company_type_name:
+                    type: string
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    additionalProperties:
+                      type: array
+                      items:
+                        type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                company:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                    logo:
+                      type: string
+                    phone_number:
+                      type: string
+                    website:
+                      type: string
+                    company_type_name:
+                      type: string
+                    employee_attributes:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          first_name:
+                            type: string
+                          last_name:
+                            type: string
+                          email:
+                            type: string
+                        required:
+                        - first_name
+                        - last_name
+                        - email
+                  required:
+                  - title
+                  - company_type_name
+                  - employee_attributes
+              required:
+              - company
   "/api/v1/employees/session":
     post:
       summary: Create an Employee Session

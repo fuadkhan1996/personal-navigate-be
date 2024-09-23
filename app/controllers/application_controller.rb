@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::API
-  attr_accessor :current_employee, :current_company
-
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
   rescue_from ActionController::ParameterMissing, with: :parameter_missing
 
   before_action :set_current_company
   before_action :authenticate_request!
+
+  include CurrentContextHelper
 
   protected
 
@@ -27,8 +27,8 @@ class ApplicationController < ActionController::API
 
   def set_current_company
     company_id = request.headers['Company-Id']
-    self.current_company = Dc::Company.find_by(guid: company_id)
-    current_company || not_authorized
+    Current.company = Dc::Company.find_by(guid: company_id)
+    Current.company || not_authorized
   end
 
   def authenticate_request!
@@ -42,7 +42,7 @@ class ApplicationController < ActionController::API
     cognito_user = Cognito::Base.get_user(access_token: token.to_s)
     return if cognito_user.blank?
 
-    self.current_employee = current_company.company_employees_by_email(cognito_user[:email].to_s).first
+    Current.employee = current_company.company_employees_by_email(cognito_user[:email].to_s).first
   end
 
   def not_found(exception)

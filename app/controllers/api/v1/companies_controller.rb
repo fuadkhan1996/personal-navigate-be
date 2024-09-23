@@ -12,6 +12,28 @@ module Api
 
         render json: Dc::CompanyBlueprint.render(@companies), status: :ok
       end
+
+      def create
+        @company = CreateCompanyService.new(params: create_company_params).call
+        if @company.errors.any?
+          unprocessable_entity(@company.errors.messages)
+        else
+          render json: Dc::CompanyBlueprint.render(@company), status: :created
+        end
+      end
+
+      private
+
+      def create_company_params
+        params.require(:company).permit(
+          :title,
+          :logo,
+          :phone_number,
+          :website,
+          :company_type_name,
+          employee_attributes: %i[first_name last_name email]
+        )
+      end
     end
   end
 end
