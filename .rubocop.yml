@@ -47,7 +47,7 @@ Metrics/ModuleLength:
   Max: 150
 
 Style/FrozenStringLiteralComment:
-  Enabled: false
+  Enabled: true
 
 Style/Documentation:
   Enabled: false
