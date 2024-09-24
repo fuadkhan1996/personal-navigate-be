@@ -17,10 +17,9 @@ describe 'Api::V1::Assessments' do
             type: :object,
             properties: {
               title: { type: :string },
-              account_id: { type: :string },
               form_data: { type: :object }
             },
-            required: %w[title account_id form_data]
+            required: %w[title form_data]
           }
         },
         required: %w[assessment]
@@ -179,6 +178,7 @@ describe 'Api::V1::Assessments' do
             type: :object,
             properties: {
               title: { type: :string },
+              account_id: { type: :integer },
               form_data: { type: :object }
             },
             required: %w[title form_data]

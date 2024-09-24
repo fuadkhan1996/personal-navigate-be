@@ -51,16 +51,9 @@ module Api
       def update_assessment_params
         params.require(:assessment).permit(
           :title,
-          { form_data: {} },
-          :account_attributes
+          :account_id,
+          { form_data: {} }
         )
-      end
-
-      def account_attributes
-        [
-          :title,
-          { employee: %i[first_name last_name email] }
-        ]
       end
 
       def set_assessment

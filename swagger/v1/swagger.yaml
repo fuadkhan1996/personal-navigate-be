@@ -813,13 +813,10 @@ paths:
                   properties:
                     title:
                       type: string
-                    account_id:
-                      type: string
                     form_data:
                       type: object
                   required:
                   - title
-                  - account_id
                   - form_data
               required:
               - assessment
@@ -860,6 +857,8 @@ paths:
                         uuid:
                           type: string
                         title:
+                          type: string
+                        guid:
                           type: string
                         logo:
                           type: string
@@ -938,6 +937,8 @@ paths:
                       uuid:
                         type: string
                       title:
+                        type: string
+                      guid:
                         type: string
                       logo:
                         type: string
@@ -1044,6 +1045,8 @@ paths:
                   properties:
                     title:
                       type: string
+                    account_id:
+                      type: integer
                     form_data:
                       type: object
                   required:
@@ -1078,6 +1081,8 @@ paths:
                     id:
                       type: string
                     title:
+                      type: string
+                    guid:
                       type: string
                     logo:
                       type: string
@@ -1125,6 +1130,8 @@ paths:
                     type: integer
                   title:
                     type: string
+                  guid:
+                    type: string
                   logo:
                     type: string
                   company_type_name:
@@ -1169,8 +1176,6 @@ paths:
                     title:
                       type: string
                     logo:
-                      type: string
-                    guid:
                       type: string
                     phone_number:
                       type: string
@@ -1440,6 +1445,8 @@ paths:
                         type: string
                       title:
                         type: string
+                      guid:
+                        type: string
                       logo:
                         type: string
                       company_type_name:
@@ -1527,6 +1534,8 @@ paths:
                       id:
                         type: string
                       title:
+                        type: string
+                      guid:
                         type: string
                       logo:
                         type: string
