@@ -4,6 +4,7 @@ module Dc
   class CompanyEmployee < ApplicationRecord
     self.table_name = :dc_company_employees
 
+    include UuidGenerator
     include Invitable
 
     belongs_to :employee, foreign_key: :dc_employee_id, inverse_of: :company_employees

@@ -27,8 +27,9 @@ class ApplicationController < ActionController::API
 
   def set_current_company
     company_id = request.headers['Company-Id']
+    return if company_id.blank?
+
     Current.company = Dc::Company.find_by(guid: company_id)
-    Current.company || not_authorized
   end
 
   def authenticate_request!

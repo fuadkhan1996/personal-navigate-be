@@ -69,7 +69,6 @@ module Api
 
         def find_employee_without_entity_type
           Dc::CompanyEmployee.by_email(sign_in_params[:email].to_s)
-                             .company_type_not_in(['Account'])
                              .order_by_created_at
                              .first
         end

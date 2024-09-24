@@ -19,7 +19,7 @@ module Api
         if @assessment.save
           render json: { id: @assessment.id, message: 'Assessment Created Successfully.' }, status: :created
         else
-          unprocessable_entity(@action.errors.messages)
+          unprocessable_entity(@assessment.errors.messages)
         end
       end
 
@@ -27,7 +27,7 @@ module Api
         if @assessment.update(update_assessment_params)
           render json: ::AssessmentBlueprint.render(@assessment), status: :ok
         else
-          unprocessable_entity(@action.errors.messages)
+          unprocessable_entity(@assessment.errors.messages)
         end
       end
 
@@ -42,8 +42,8 @@ module Api
 
       def default_create_assessment_attributes
         {
-          dc_company_id: current_employee.company.id,
-          dc_company_employee_id: current_employee.company_employee_id,
+          dc_company_id: current_company.id,
+          dc_company_employee_id: current_employee.id,
           nav_questionnaire_id: Questionnaire.first.try(:id)
         }
       end

@@ -4,6 +4,8 @@ module Dc
   class Company < ApplicationRecord
     self.table_name = :dc_companies
 
+    include UuidGenerator
+
     belongs_to :company_type, foreign_key: :comp_type_id, inverse_of: :companies
     has_many :company_employees,
              dependent: :restrict_with_exception,
@@ -30,6 +32,12 @@ module Dc
              foreign_key: :dc_partner_company_id,
              inverse_of: :partner_company
 
+    has_many :assessments,
+             dependent: :restrict_with_exception,
+             class_name: '::Assessment',
+             foreign_key: :dc_company_id,
+             inverse_of: :company
+
     validates :title, presence: true
     validates :title, uniqueness: { case_sensitive: false }, unless: :company_type_account?
     validates_associated :partner_company_connections, on: :create, if: :company_type_account?
@@ -38,6 +46,7 @@ module Dc
     accepts_nested_attributes_for :company_employees, reject_if: :blank?, allow_destroy: true
     accepts_nested_attributes_for :partner_company_connections, reject_if: :blank?, allow_destroy: true
 
+    before_validation :set_guid, on: :create
     before_create :set_company_code
 
     scope :by_company_type, lambda { |company_type_name|
@@ -73,6 +82,10 @@ module Dc
       end
 
       company_code
+    end
+
+    def set_guid
+      self.guid = SecureRandom.uuid
     end
   end
 end

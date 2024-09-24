@@ -31,5 +31,11 @@ namespace :api do
         resources :triggers, only: %i[index]
       end
     end
+
+    namespace :company_employees do
+      resource :invitation, only: %i[show update]
+    end
+
+    resources :company_employees, only: %i[update]
   end
 end

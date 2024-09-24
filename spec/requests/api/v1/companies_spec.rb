@@ -2,7 +2,7 @@
 
 require 'swagger_helper'
 
-describe 'Api::V1::Companies' do
+describe 'Api::V1::CompaniesController' do
   path '/api/v1/companies' do
     get 'Get Linked Companies' do
       tags 'Companies'
@@ -18,6 +18,7 @@ describe 'Api::V1::Companies' do
                  properties: {
                    id: { type: :string },
                    title: { type: :string },
+                   guid: { type: :string },
                    logo: { type: :string },
                    company_type_name: { type: :string },
                    created_at: { type: :string },
@@ -81,6 +82,7 @@ describe 'Api::V1::Companies' do
                properties: {
                  id: { type: :integer },
                  title: { type: :string },
+                 guid: { type: :string },
                  logo: { type: :string },
                  company_type_name: { type: :string },
                  created_at: { type: :string },

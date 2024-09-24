@@ -5,7 +5,7 @@ class Assessment < ApplicationRecord
 
   belongs_to :questionnaire, foreign_key: :nav_questionnaire_id, inverse_of: :assessments
   belongs_to :company, class_name: 'Dc::Company', foreign_key: :dc_company_id, inverse_of: :assessments
-  belongs_to :account, class_name: 'Dc::Company', inverse_of: :assessments
+  belongs_to :account, class_name: 'Dc::Company', inverse_of: :assessments, optional: true
   belongs_to :company_employee,
              class_name: 'Dc::CompanyEmployee',
              foreign_key: :dc_company_employee_id,

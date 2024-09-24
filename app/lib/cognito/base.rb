@@ -11,10 +11,8 @@ module Cognito
     include Cognito::Authentication
 
     def initialize(user_object: nil, access_token: nil, refresh_token: nil)
-      credentials = Aws::Credentials.new(client_id.to_s, client_secret.to_s)
-      # rubocop:disable Style/HashSyntax
-      @cognito_client = Aws::CognitoIdentityProvider::Client.new(credentials: credentials)
-      # rubocop:enable Style/HashSyntax
+      # credentials = Aws::Credentials.new(client_id.to_s, client_secret.to_s)
+      @cognito_client = Aws::CognitoIdentityProvider::Client.new
       @user_object = user_object
       @access_token = access_token
       @refresh_token = refresh_token
@@ -37,6 +35,14 @@ module Cognito
       new(access_token: access_token.to_s).sign_out
     end
 
+    def self.admin_create_user(user_object:)
+      new(user_object:).admin_create_user
+    end
+
+    def self.admin_set_user_password(user_object:)
+      new(user_object:).admin_set_user_password
+    end
+
     def sign_out
       cognito_client.global_sign_out(access_token: access_token.to_s)
     end
@@ -46,6 +52,48 @@ module Cognito
       user_attrs = {}
       JSON.parse(user.user_attributes.to_json).each { |attr| user_attrs[attr['name'].to_sym] = attr['value'] }
       user_attrs
+    end
+
+    def admin_create_user
+      auth_object = {
+        user_pool_id:,
+        username: user_object[:username],
+        temporary_password: user_object[:password],
+        message_action: 'SUPPRESS',
+        user_attributes: create_user_attributes
+      }
+
+      cognito_client.admin_create_user(auth_object)
+    end
+
+    def admin_set_user_password
+      params = {
+        user_pool_id:,
+        username: user_object[:username],
+        password: user_object[:password],
+        permanent: user_object[:permanent] || true
+      }
+
+      cognito_client.admin_set_user_password(params)
+    end
+
+    private
+
+    def create_user_attributes
+      [
+        {
+          name: 'email',
+          value: user_object[:username]
+        },
+        {
+          name: 'email_verified',
+          value: 'True'
+        },
+        {
+          name: 'phone_number',
+          value: user_object[:phone_number] || ''
+        }
+      ]
     end
   end
 end
