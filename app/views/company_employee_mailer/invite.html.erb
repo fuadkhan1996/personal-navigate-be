@@ -1,0 +1,9 @@
+<% content_for :header, "You're Invited!" %>
+<% content_for :recipient_name, @company_employee.fullname %>
+<p>
+  You have been invited to join on our platform.
+  Please click the button below to accept the invitation and create your account.
+</p>
+
+<a href="https://navigate.mydatacrest.com/companies/invitation?invitation_token=<%= @raw_invitation_token %>" class="primary-btn">Accept Invitation</a>
+<p>If you did not expect this invitation, you can ignore this email.</p>

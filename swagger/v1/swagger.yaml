@@ -813,13 +813,10 @@ paths:
                   properties:
                     title:
                       type: string
-                    account_id:
-                      type: string
                     form_data:
                       type: object
                   required:
                   - title
-                  - account_id
                   - form_data
               required:
               - assessment
@@ -860,6 +857,8 @@ paths:
                         uuid:
                           type: string
                         title:
+                          type: string
+                        guid:
                           type: string
                         logo:
                           type: string
@@ -938,6 +937,8 @@ paths:
                       uuid:
                         type: string
                       title:
+                        type: string
+                      guid:
                         type: string
                       logo:
                         type: string
@@ -1044,6 +1045,8 @@ paths:
                   properties:
                     title:
                       type: string
+                    account_id:
+                      type: integer
                     form_data:
                       type: object
                   required:
@@ -1079,6 +1082,8 @@ paths:
                       type: string
                     title:
                       type: string
+                    guid:
+                      type: string
                     logo:
                       type: string
                     company_type_name:
@@ -1105,6 +1110,304 @@ paths:
                     type: string
                 required:
                 - error
+    post:
+      summary: Create Company
+      tags:
+      - Companies
+      security:
+      - bearerAuth: []
+        apiKeyAuth: []
+      parameters: []
+      responses:
+        '201':
+          description: Company Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  title:
+                    type: string
+                  guid:
+                    type: string
+                  logo:
+                    type: string
+                  company_type_name:
+                    type: string
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    additionalProperties:
+                      type: array
+                      items:
+                        type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                company:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                    logo:
+                      type: string
+                    phone_number:
+                      type: string
+                    website:
+                      type: string
+                    company_type_name:
+                      type: string
+                    employee_attributes:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          first_name:
+                            type: string
+                          last_name:
+                            type: string
+                          email:
+                            type: string
+                        required:
+                        - first_name
+                        - last_name
+                        - email
+                  required:
+                  - title
+                  - company_type_name
+                  - employee_attributes
+              required:
+              - company
+  "/api/v1/company_employees/invitation":
+    get:
+      summary: Get Company Employee by Invitation Token
+      tags:
+      - Companies
+      parameters:
+      - name: invitation_token
+        in: query
+      responses:
+        '200':
+          description: Company Employee Data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  first_name:
+                    type: string
+                  last_name:
+                    type: string
+                  uuid:
+                    type: string
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  company:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      title:
+                        type: string
+                      logo:
+                        type: string
+                      guid:
+                        type: string
+                      company_type_name:
+                        type: string
+                      created_at:
+                        type: string
+                      updated_at:
+                        type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
+    put:
+      summary: Accept Invitation
+      tags:
+      - Companies
+      parameters:
+      - name: invitation_token
+        in: query
+      responses:
+        '200':
+          description: Company Employee Data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  first_name:
+                    type: string
+                  last_name:
+                    type: string
+                  uuid:
+                    type: string
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  company:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      title:
+                        type: string
+                      guid:
+                        type: string
+                      logo:
+                        type: string
+                      company_type_name:
+                        type: string
+                      created_at:
+                        type: string
+                      updated_at:
+                        type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                employee:
+                  type: object
+                  properties:
+                    password:
+                      type: string
+                    password_confirmation:
+                      type: string
+                  required:
+                  - password
+                  - password_confirmation
+              required:
+              - employee
+  "/api/v1/company_employees/{id}":
+    put:
+      summary: Update Company Employee
+      tags:
+      - Companies
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Company Employee Data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  first_name:
+                    type: string
+                  last_name:
+                    type: string
+                  uuid:
+                    type: string
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  company:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      title:
+                        type: string
+                      guid:
+                        type: string
+                      logo:
+                        type: string
+                      company_type_name:
+                        type: string
+                      created_at:
+                        type: string
+                      updated_at:
+                        type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                company_employee:
+                  type: object
+                  properties:
+                    employee_attributes:
+                      type: object
+                      properties:
+                        first_name:
+                          type: string
+                        last_name:
+                          type: string
   "/api/v1/employees/session":
     post:
       summary: Create an Employee Session
@@ -1141,6 +1444,8 @@ paths:
                       id:
                         type: string
                       title:
+                        type: string
+                      guid:
                         type: string
                       logo:
                         type: string
@@ -1229,6 +1534,8 @@ paths:
                       id:
                         type: string
                       title:
+                        type: string
+                      guid:
                         type: string
                       logo:
                         type: string

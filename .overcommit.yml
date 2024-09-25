@@ -1,0 +1,6 @@
+PreCommit:
+  RuboCop:
+    enabled: true
+    command: ["bundle", "exec", "rubocop", "--parallel"]
+    on_warn: fail
+    required_executable: "rubocop"

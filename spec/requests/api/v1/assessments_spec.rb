@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'swagger_helper'
 
 describe 'Api::V1::Assessments' do
@@ -15,10 +17,9 @@ describe 'Api::V1::Assessments' do
             type: :object,
             properties: {
               title: { type: :string },
-              account_id: { type: :string },
               form_data: { type: :object }
             },
-            required: %w[title account_id form_data]
+            required: %w[title form_data]
           }
         },
         required: %w[assessment]
@@ -87,6 +88,7 @@ describe 'Api::V1::Assessments' do
                        id: { type: :integer },
                        uuid: { type: :string },
                        title: { type: :string },
+                       guid: { type: :string },
                        logo: { type: :string },
                        deleted_at: { type: :string },
                        created_at: { type: :string },
@@ -136,6 +138,7 @@ describe 'Api::V1::Assessments' do
                      id: { type: :integer },
                      uuid: { type: :string },
                      title: { type: :string },
+                     guid: { type: :string },
                      logo: { type: :string },
                      deleted_at: { type: :string },
                      created_at: { type: :string },
@@ -175,6 +178,7 @@ describe 'Api::V1::Assessments' do
             type: :object,
             properties: {
               title: { type: :string },
+              account_id: { type: :integer },
               form_data: { type: :object }
             },
             required: %w[title form_data]

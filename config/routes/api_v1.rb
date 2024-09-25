@@ -7,7 +7,7 @@ namespace :api do
     end
 
     resources :actions, only: %i[index]
-    resources :companies, only: %i[index]
+    resources :companies, only: %i[index create]
     resources :assessments, only: %i[create show update index] do
       scope module: :assessments do
         resources :triggers, only: [] do
@@ -31,5 +31,11 @@ namespace :api do
         resources :triggers, only: %i[index]
       end
     end
+
+    namespace :company_employees do
+      resource :invitation, only: %i[show update]
+    end
+
+    resources :company_employees, only: %i[update]
   end
 end
