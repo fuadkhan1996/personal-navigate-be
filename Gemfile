@@ -35,7 +35,6 @@ gem 'aws-sdk-cognitoidentity'
 gem 'aws-sdk-cognitoidentityprovider'
 gem 'aws-sdk-s3', require: false
 gem 'jsonapi-serializer'
-gem 'overcommit'
 gem 'rswag-api'
 gem 'rswag-ui'
 
@@ -51,6 +50,7 @@ gem 'ruby-lsp'
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem 'debug', platforms: %i[mri windows]
+  gem 'overcommit'
   gem 'rspec-rails'
   gem 'rswag-specs'
   gem 'rubocop', '~> 1.61', require: false
