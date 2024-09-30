@@ -3,6 +3,7 @@
 class ApplicationController < ActionController::API
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
   rescue_from ActionController::ParameterMissing, with: :parameter_missing
+  rescue_from CanCan::AccessDenied, with: :handle_access_denied
 
   before_action :set_current_company
   before_action :authenticate_request!
@@ -22,6 +23,10 @@ class ApplicationController < ActionController::API
 
   def not_authorized
     render json: { error: 'Not Authorized' }, status: :unauthorized
+  end
+
+  def handle_access_denied(exception)
+    render json: { error: "Access denied: #{exception.message}" }, status: :forbidden
   end
 
   private

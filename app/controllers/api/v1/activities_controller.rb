@@ -4,6 +4,7 @@ module Api
   module V1
     class ActivitiesController < ApplicationController
       before_action :set_activity, only: %i[show]
+      before_action :authorize_activity!, only: %i[show create]
 
       def index
         @activities = Activity.accessible_by(current_ability)
@@ -51,7 +52,13 @@ module Api
       end
 
       def set_activity
-        @activity = Activity.accessibly_by(current_ability).find(params[:id])
+        @activity = Activity.accessible_by(current_ability).find(params[:id])
+      end
+
+      def authorize_activity!
+        return authorize! :create, Activity if action_name == 'create'
+
+        authorize! :read, @activity
       end
     end
   end
