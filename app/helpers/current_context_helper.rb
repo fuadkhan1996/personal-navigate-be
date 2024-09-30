@@ -8,4 +8,8 @@ module CurrentContextHelper
   def current_employee
     Current.employee
   end
+
+  def current_ability
+    Current.ability
+  end
 end

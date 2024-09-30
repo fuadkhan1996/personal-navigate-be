@@ -43,6 +43,7 @@ gem 'rswag-ui'
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin Ajax possible
 gem 'blueprinter'
+gem 'cancancan'
 gem 'oj'
 gem 'rack-cors'
 gem 'ruby-lsp'

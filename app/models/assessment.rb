@@ -18,5 +18,8 @@ class Assessment < ApplicationRecord
            foreign_key: :nav_assessment_id,
            inverse_of: :assessment
 
+  has_many :activity_actions, through: :assessment_action_results
+  has_many :activities, through: :activity_actions, source: :activity
+
   validates :title, presence: true
 end
