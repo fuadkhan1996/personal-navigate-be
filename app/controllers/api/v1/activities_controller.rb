@@ -51,7 +51,7 @@ module Api
       end
 
       def set_activity
-        @activity = Ability.accessibly_by(current_ability).find(params[:id])
+        @activity = Activity.accessibly_by(current_ability).find(params[:id])
       end
     end
   end
