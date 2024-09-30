@@ -4,6 +4,7 @@ module Api
   module V1
     module Assessments
       class TriggersController < ApplicationController
+        before_action :authorize_assessment!
         before_action :set_trigger, only: %i[evaluate_trigger]
 
         def evaluate_triggers
@@ -25,11 +26,15 @@ module Api
         private
 
         def assessment
-          @assessment ||= Assessment.accessibly_by(current_ability).find(params[:assessment_id])
+          @assessment ||= Assessment.accessible_by(current_ability).find(params[:assessment_id])
         end
 
         def set_trigger
           @trigger = assessment.activity_triggers.find(params[:id])
+        end
+
+        def authorize_assessment!
+          authorize! :read, assessment
         end
       end
     end

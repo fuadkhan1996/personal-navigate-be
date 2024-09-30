@@ -4,9 +4,10 @@ module Api
   module V1
     class AssessmentsController < ApplicationController
       before_action :set_assessment, only: %i[show update]
+      before_action :authorize_assessment!, only: %i[show create update]
 
       def index
-        @assessments = Assessment.accessibly_by(current_ability).order(created_at: :desc)
+        @assessments = Assessment.accessible_by(current_ability).order(created_at: :desc)
         render json: ::AssessmentBlueprint.render(@assessments), status: :ok
       end
 
@@ -57,7 +58,14 @@ module Api
       end
 
       def set_assessment
-        @assessment = Assessment.accessibly_by(current_ability).find(params[:id])
+        @assessment = Assessment.accessible_by(current_ability).find(params[:id])
+      end
+
+      def authorize_assessment!
+        return authorize! :create, Assessment if action_name == 'create'
+        return authorize! :update, @assessment if action_name == 'update'
+
+        authorize! :read, @assessment
       end
     end
   end

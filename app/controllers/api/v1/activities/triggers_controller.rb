@@ -4,6 +4,7 @@ module Api
   module V1
     module Activities
       class TriggersController < ApplicationController
+        before_action :authorize_activity!
         before_action :set_trigger, only: %i[show]
 
         def index
@@ -27,7 +28,7 @@ module Api
         private
 
         def activity
-          @activity ||= Activity.accessibly_by(current_ability).find(params[:activity_id])
+          @activity ||= Activity.accessible_by(current_ability).find(params[:activity_id])
         end
 
         def set_trigger
@@ -57,6 +58,10 @@ module Api
           else
             criteria
           end
+        end
+
+        def authorize_activity!
+          authorize! :read, activity
         end
       end
     end
