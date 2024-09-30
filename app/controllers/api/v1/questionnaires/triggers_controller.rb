@@ -14,7 +14,7 @@ module Api
         private
 
         def questionnaire
-          @questionnaire ||= Questionnaire.find(params[:questionnaire_id])
+          @questionnaire ||= Questionnaire.first
         end
       end
     end

@@ -6,6 +6,7 @@ class ApplicationController < ActionController::API
 
   before_action :set_current_company
   before_action :authenticate_request!
+  before_action :set_current_ability
 
   include CurrentContextHelper
 
@@ -44,6 +45,10 @@ class ApplicationController < ActionController::API
     return if cognito_user.blank?
 
     Current.employee = current_company.company_employees_by_email(cognito_user[:email].to_s).first
+  end
+
+  def set_current_ability
+    Current.ability = Ability.new(current_employee) if current_employee.present?
   end
 
   def not_found(exception)

@@ -22,6 +22,9 @@ class Activity < ApplicationRecord
            foreign_key: :nav_activity_id,
            inverse_of: :activity
 
+  has_many :assessment_action_results, through: :activity_actions
+  has_many :assessments, through: :assessment_action_results
+
   accepts_nested_attributes_for :activity_actions
 
   validates :title, presence: true

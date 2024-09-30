@@ -6,7 +6,10 @@ module Api
       before_action :set_activity, only: %i[show]
 
       def index
-        @activities = current_company.activities.includes(activity_actions: :action).order(created_at: :desc)
+        @activities = Activity.accessible_by(current_ability)
+                              .includes(activity_actions: :action)
+                              .order(created_at: :desc)
+
         render json: ::ActivityBlueprint.render(@activities, view: :normal), status: :ok
       end
 
@@ -48,7 +51,7 @@ module Api
       end
 
       def set_activity
-        @activity = current_company.activities.find(params[:id])
+        @activity = Ability.accessibly_by(current_ability).find(params[:id])
       end
     end
   end

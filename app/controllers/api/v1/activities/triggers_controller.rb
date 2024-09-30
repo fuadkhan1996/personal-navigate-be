@@ -27,7 +27,7 @@ module Api
         private
 
         def activity
-          @activity ||= current_company.activities.find(params[:activity_id])
+          @activity ||= Activity.accessibly_by(current_ability).find(params[:activity_id])
         end
 
         def set_trigger
