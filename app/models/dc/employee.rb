@@ -20,7 +20,7 @@ module Dc
     validates :password, :password_confirmation, presence: true, if: :password_required?
     validates :password, confirmation: true, if: :password_required?
     validates :password, format: {
-      with: /\A(?=.{8,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)\z/,
+      with: /\A(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W]).{8,}\z/,
       message: I18n.t('activerecord.errors.models.employee.attributes.password.invalid_format')
     }, if: :password_required?
 
