@@ -4,8 +4,8 @@ module Api
   module V1
     module CompanyEmployees
       class InvitationsController < ApplicationController
-        skip_before_action :set_current_company, only: %i[show]
-        skip_before_action :authenticate_request!, only: %i[show]
+        skip_before_action :set_current_company, only: %i[show update]
+        skip_before_action :authenticate_request!, only: %i[show update]
         before_action :set_company_employee
 
         def show
