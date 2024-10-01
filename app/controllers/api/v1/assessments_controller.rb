@@ -58,7 +58,7 @@ module Api
       end
 
       def set_assessment
-        @assessment = Assessment.accessible_by(current_ability).find(params[:id])
+        @assessment = Assessment.accessible_by(current_ability).find_by(id: params[:id])
       end
 
       def authorize_assessment!

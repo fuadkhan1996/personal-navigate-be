@@ -52,7 +52,7 @@ module Api
       end
 
       def set_activity
-        @activity = Activity.accessible_by(current_ability).find(params[:id])
+        @activity = Activity.accessible_by(current_ability).find_by(id: params[:id])
       end
 
       def authorize_activity!

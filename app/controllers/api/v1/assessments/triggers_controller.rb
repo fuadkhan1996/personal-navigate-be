@@ -26,7 +26,7 @@ module Api
         private
 
         def assessment
-          @assessment ||= Assessment.accessible_by(current_ability).find(params[:assessment_id])
+          @assessment ||= Assessment.accessible_by(current_ability).find_by(id: params[:assessment_id])
         end
 
         def set_trigger
