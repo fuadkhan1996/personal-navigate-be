@@ -24,7 +24,7 @@ module Dc
       message: I18n.t('activerecord.errors.models.employee.attributes.password.invalid_format')
     }, if: :password_required?
 
-    after_save :update_email_in_cognito, if: :saved_change_to_email?
+    after_update :update_email_in_cognito, if: :saved_change_to_email?
 
     def fullname
       [first_name, last_name].join(' ')

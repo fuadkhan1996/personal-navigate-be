@@ -38,7 +38,7 @@ namespace :api do
     end
 
     namespace :company_employees do
-      resource :invitation, only: %i[show update]
+      resource :invitation, only: %i[show update create]
     end
 
     resources :company_employees, only: %i[update]

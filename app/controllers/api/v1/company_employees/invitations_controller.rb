@@ -16,6 +16,15 @@ module Api
           end
         end
 
+        def create
+          @company_employee = CreateEmployeeService.new(params: create_invitation_params).call
+          if @company_employee.errors.any?
+            unprocessable_entity(@company_employee.errors.messages)
+          else
+            render json: Dc::CompanyEmployeeBlueprint.render(@company_employee), status: :created
+          end
+        end
+
         def update
           employee.assign_attributes(accept_invitation_params)
           if employee.valid?
@@ -41,6 +50,13 @@ module Api
 
         def accept_invitation_params
           params.require(:employee).permit(:password, :password_confirmation)
+        end
+
+        def create_invitation_params
+          params.require(:company_employee).permit(
+            :employee_type,
+            employee_attributes: %i[first_name last_name email]
+          ).merge(dc_company_id: current_company.id)
         end
 
         def user_object
