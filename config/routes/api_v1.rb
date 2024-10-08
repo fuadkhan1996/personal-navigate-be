@@ -4,6 +4,11 @@ namespace :api do
       resource :session, only: %i[create show] do
         post :refresh, on: :collection
       end
+
+      resource :profile, only: [] do
+        patch :update_email
+        post  :verify_email_update
+      end
     end
 
     resources :actions, only: %i[index]

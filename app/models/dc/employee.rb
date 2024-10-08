@@ -24,6 +24,8 @@ module Dc
       message: I18n.t('activerecord.errors.models.employee.attributes.password.invalid_format')
     }, if: :password_required?
 
+    after_save :update_email_in_cognito, if: :saved_change_to_email?
+
     def fullname
       [first_name, last_name].join(' ')
     end
@@ -32,6 +34,10 @@ module Dc
 
     def password_required?
       password.present? || password_confirmation.present?
+    end
+
+    def update_email_in_cognito
+      Cognito::Base.update_email(user_object: { email: }, access_token: current_access_token)
     end
   end
 end

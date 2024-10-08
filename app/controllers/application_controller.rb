@@ -49,11 +49,12 @@ class ApplicationController < ActionController::API
     cognito_user = Cognito::Base.get_user(access_token: token.to_s)
     return if cognito_user.blank?
 
-    Current.employee = current_company.company_employees_by_email(cognito_user[:email].to_s).first
+    Current.company_employee = current_company.company_employees_by_email(cognito_user[:email].to_s).first
+    Current.access_token = token
   end
 
   def set_current_ability
-    Current.ability = Ability.new(current_employee) if current_employee.present?
+    Current.ability = Ability.new(current_company_employee) if current_company_employee.present?
   end
 
   def not_found(exception)

@@ -44,7 +44,7 @@ module Api
       def default_create_assessment_attributes
         {
           dc_company_id: current_company.id,
-          dc_company_employee_id: current_employee.id,
+          dc_company_employee_id: current_company_employee.id,
           nav_questionnaire_id: Questionnaire.first.try(:id)
         }
       end

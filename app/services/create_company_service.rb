@@ -20,7 +20,7 @@ class CreateCompanyService < ApplicationService
       raise ActiveRecord::Rollback if @company.errors.any?
     end
 
-    @company_employee&.invite!(current_employee) if @company.persisted?
+    @company_employee&.invite!(current_company_employee) if @company.persisted?
     @company
   end
 
