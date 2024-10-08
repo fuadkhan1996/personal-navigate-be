@@ -45,6 +45,7 @@ gem 'rswag-ui'
 gem 'blueprinter'
 gem 'cancancan'
 gem 'oj'
+gem 'premailer-rails'
 gem 'rack-cors'
 gem 'ruby-lsp'
 
