@@ -19,10 +19,22 @@ module Api
           render json: { error: e.message }, status: :unprocessable_entity
         end
 
+        def update
+          if current_employee.update(update_params)
+            render json: Dc::CompanyEmployeeBlueprint.render(current_company_employee), status: :ok
+          else
+            unprocessable_entity(current_employee.errors)
+          end
+        end
+
         private
 
         def update_email_params
           params.require(:employee).permit(:email)
+        end
+
+        def update_params
+          params.require(:employee).permit(:first_name, :last_name)
         end
 
         def confirmation_code

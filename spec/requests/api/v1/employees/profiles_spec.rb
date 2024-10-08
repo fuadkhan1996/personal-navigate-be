@@ -59,6 +59,16 @@ describe 'Api::V1::Employees::ProfilesController' do
 
         run_test!
       end
+
+      response '401', 'Unauthorized' do
+        schema type: :object,
+               properties: {
+                 error: { type: :string }
+               },
+               required: %w[error]
+
+        run_test!
+      end
     end
   end
 
@@ -89,6 +99,73 @@ describe 'Api::V1::Employees::ProfilesController' do
       end
 
       response '422', 'Unprocessable Entity' do
+        schema type: :object,
+               properties: {
+                 error: { type: :string }
+               },
+               required: %w[error]
+
+        run_test!
+      end
+
+      response '401', 'Unauthorized' do
+        schema type: :object,
+               properties: {
+                 error: { type: :string }
+               },
+               required: %w[error]
+
+        run_test!
+      end
+    end
+  end
+
+  path '/api/v1/employees/profile' do
+    put 'Update employee information' do
+      tags 'Sessions'
+      consumes 'application/json'
+      produces 'application/json'
+      parameter name: :employee, in: :body, schema: {
+        type: :object,
+        properties: {
+          employee: {
+            type: :object,
+            properties: {
+              first_name: { type: :string },
+              last_name: { type: :string }
+            }
+          }
+        }
+      }
+
+      response '200', 'Employee updated Successfully.' do
+        schema type: :object,
+               properties: {
+                 message: { type: :string }
+               }
+
+        run_test!
+      end
+
+      response '422', 'Unprocessable Entity' do
+        schema type: :object,
+               properties: {
+                 errors: {
+                   type: :object,
+                   additionalProperties: {
+                     type: :array,
+                     items: {
+                       type: :string
+                     }
+                   }
+                 }
+               },
+               required: %w[errors]
+
+        run_test!
+      end
+
+      response '401', 'Unauthorized' do
         schema type: :object,
                properties: {
                  error: { type: :string }

@@ -1482,6 +1482,17 @@ paths:
                     type: string
                 required:
                 - error
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
       requestBody:
         content:
           application/json:
@@ -1520,6 +1531,17 @@ paths:
                     type: string
                 required:
                 - error
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
       requestBody:
         content:
           application/json:
@@ -1530,6 +1552,61 @@ paths:
                   type: object
                   properties:
                     confirmation_code:
+                      type: string
+  "/api/v1/employees/profile":
+    put:
+      summary: Update employee information
+      tags:
+      - Sessions
+      parameters: []
+      responses:
+        '200':
+          description: Employee updated Successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    additionalProperties:
+                      type: array
+                      items:
+                        type: string
+                required:
+                - errors
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                employee:
+                  type: object
+                  properties:
+                    first_name:
+                      type: string
+                    last_name:
                       type: string
   "/api/v1/employees/session":
     post:

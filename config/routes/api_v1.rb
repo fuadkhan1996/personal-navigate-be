@@ -5,7 +5,7 @@ namespace :api do
         post :refresh, on: :collection
       end
 
-      resource :profile, only: [] do
+      resource :profile, only: %i[update] do
         patch :update_email
         post  :verify_email_update
       end
