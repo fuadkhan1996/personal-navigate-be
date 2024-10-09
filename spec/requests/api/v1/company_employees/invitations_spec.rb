@@ -47,9 +47,7 @@ describe 'Api::V1::CompanyEmployees::InvitationsController' do
         run_test!
       end
     end
-  end
 
-  path '/api/v1/company_employees/invitation' do
     put 'Accept Invitation' do
       tags 'Companies'
       consumes 'application/json'
@@ -93,6 +91,86 @@ describe 'Api::V1::CompanyEmployees::InvitationsController' do
                    }
                  }
                }
+
+        run_test!
+      end
+
+      response '401', 'Unauthorized' do
+        schema type: :object,
+               properties: {
+                 error: { type: :string }
+               },
+               required: %w[error]
+
+        run_test!
+      end
+    end
+
+    post 'Invite New Employee' do
+      tags 'Companies'
+      consumes 'application/json'
+      produces 'application/json'
+
+      parameter name: :company_employee, in: :body, schema: {
+        type: :object,
+        properties: {
+          company_employee: {
+            type: :object,
+            properties: {
+              employee_type: { type: :string },
+              employee_attributes: {
+                type: :object,
+                properties: {
+                  first_name: { type: :string },
+                  last_name: { type: :string },
+                  email: { type: :string }
+                }
+              }
+            }
+          }
+        }
+      }
+
+      response '200', 'Company Employee Data' do
+        schema type: :object,
+               properties: {
+                 id: { type: :integer },
+                 first_name: { type: :string },
+                 last_name: { type: :string },
+                 uuid: { type: :string },
+                 created_at: { type: :string },
+                 updated_at: { type: :string },
+                 company: {
+                   type: :object,
+                   properties: {
+                     id: { type: :string },
+                     title: { type: :string },
+                     guid: { type: :string },
+                     logo: { type: :string },
+                     company_type_name: { type: :string },
+                     created_at: { type: :string },
+                     updated_at: { type: :string }
+                   }
+                 }
+               }
+
+        run_test!
+      end
+
+      response '422', 'Unprocessable Entity' do
+        schema type: :object,
+               properties: {
+                 errors: {
+                   type: :object,
+                   additionalProperties: {
+                     type: :array,
+                     items: {
+                       type: :string
+                     }
+                   }
+                 }
+               },
+               required: %w[errors]
 
         run_test!
       end

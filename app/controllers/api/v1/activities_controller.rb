@@ -35,7 +35,7 @@ module Api
           :description,
           activity_actions_attributes: activity_actions_params
         ).merge(
-          dc_company_employee_id: current_employee.id,
+          dc_company_employee_id: current_company_employee.id,
           dc_company_id: current_company.id
         )
       end

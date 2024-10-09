@@ -43,6 +43,14 @@ module Cognito
       new(user_object:).admin_set_user_password
     end
 
+    def self.update_email(user_object:, access_token:)
+      new(user_object:, access_token:).update_email
+    end
+
+    def self.verify_email(user_object:, access_token:)
+      new(user_object:, access_token:).verify_email
+    end
+
     def sign_out
       cognito_client.global_sign_out(access_token: access_token.to_s)
     end
@@ -75,6 +83,25 @@ module Cognito
       }
 
       cognito_client.admin_set_user_password(params)
+    end
+
+    def update_email
+      params = {
+        access_token:,
+        user_attributes: [{ name: 'email', value: user_object[:email] }]
+      }
+
+      cognito_client.update_user_attributes(params)
+    end
+
+    def verify_email
+      params = {
+        access_token:,
+        attribute_name: 'email',
+        code: user_object[:confirmation_code]
+      }
+
+      cognito_client.verify_user_attribute(params)
     end
 
     private

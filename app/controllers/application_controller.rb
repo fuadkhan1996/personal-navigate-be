@@ -8,6 +8,7 @@ class ApplicationController < ActionController::API
   before_action :set_current_company
   before_action :authenticate_request!
   before_action :set_current_ability
+  before_action :prepare_exception_notifier
 
   include CurrentContextHelper
 
@@ -49,11 +50,12 @@ class ApplicationController < ActionController::API
     cognito_user = Cognito::Base.get_user(access_token: token.to_s)
     return if cognito_user.blank?
 
-    Current.employee = current_company.company_employees_by_email(cognito_user[:email].to_s).first
+    Current.company_employee = current_company.company_employees_by_email(cognito_user[:email].to_s).first
+    Current.access_token = token
   end
 
   def set_current_ability
-    Current.ability = Ability.new(current_employee) if current_employee.present?
+    Current.ability = Ability.new(current_company_employee) if current_company_employee.present?
   end
 
   def not_found(exception)
@@ -62,5 +64,16 @@ class ApplicationController < ActionController::API
 
   def parameter_missing(exception)
     render json: { error: "Parameter missing: #{exception.message}" }, status: :bad_request
+  end
+
+  def prepare_exception_notifier
+    request.env['exception_notifier.exception_data'] = {
+      CompanyId: current_company.try(:id) || 'Anonymous',
+      CompanyTitle: current_company.try(:title) || 'Anonymous',
+      CompanyEmployeeId: current_company_employee.try(:id) || 'Anonymous',
+      EmployeeId: current_company_employee.try(:dc_employee_id) || 'Anonymous',
+      Name: current_company_employee.try(:fullname) || 'Anonymous',
+      Email: current_company_employee.try(:email) || 'Anonymous'
+    }
   end
 end

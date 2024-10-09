@@ -24,7 +24,7 @@ module Dc
              foreign_key: :dc_company_employee_id,
              inverse_of: :company_employee
 
-    validates :dc_company_id, uniqueness: { scope: :dc_employee_id }
+    validates :dc_employee_id, uniqueness: { scope: :dc_company_id }
 
     accepts_nested_attributes_for :employee, reject_if: :blank?
 

@@ -4,6 +4,11 @@ namespace :api do
       resource :session, only: %i[create show] do
         post :refresh, on: :collection
       end
+
+      resource :profile, only: %i[update] do
+        patch :update_email
+        post  :verify_email_update
+      end
     end
 
     resources :actions, only: %i[index]
@@ -33,7 +38,7 @@ namespace :api do
     end
 
     namespace :company_employees do
-      resource :invitation, only: %i[show update]
+      resource :invitation, only: %i[show update create]
     end
 
     resources :company_employees, only: %i[update]

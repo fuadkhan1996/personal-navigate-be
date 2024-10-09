@@ -44,9 +44,12 @@ gem 'rswag-ui'
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin Ajax possible
 gem 'blueprinter'
 gem 'cancancan'
+gem 'exception_notification'
 gem 'oj'
+gem 'premailer-rails'
 gem 'rack-cors'
 gem 'ruby-lsp'
+gem 'slack-notifier'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
