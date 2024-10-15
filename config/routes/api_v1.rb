@@ -41,6 +41,6 @@ namespace :api do
       resource :invitation, only: %i[show update create]
     end
 
-    resources :company_employees, only: %i[update]
+    resources :company_employees, only: %i[update index]
   end
 end

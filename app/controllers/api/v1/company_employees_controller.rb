@@ -3,11 +3,16 @@
 module Api
   module V1
     class CompanyEmployeesController < ApplicationController
-      before_action :set_company_employee
+      before_action :set_company_employee, only: :update
+
+      def index
+        @company_employees = current_company.company_employees.active.order_by_created_at(:desc).includes(:employee)
+        render json: Dc::CompanyEmployeeBlueprint.render(@company_employees), status: :ok
+      end
 
       def update
         if @company_employee.update(update_params)
-          render json: Dc::CompanyEmployeeBlueprint.render(@company_employee), status: :ok
+          render json: Dc::CompanyEmployeeBlueprint.render(@company_employee, view: :extended), status: :ok
         else
           unprocessable_entity(@company_employee.errors.messages)
         end

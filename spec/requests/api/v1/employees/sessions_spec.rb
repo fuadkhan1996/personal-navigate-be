@@ -32,6 +32,8 @@ describe 'Api::V1::Employees::Sessions' do
                  email: { type: :string },
                  first_name: { type: :string },
                  last_name: { type: :string },
+                 invitation_sent_at: { type: :string },
+                 invitation_accepted_at: { type: :string },
                  access_token: { type: :string },
                  refresh_token: { type: :string },
                  token_expires_in: { type: :integer },
@@ -81,6 +83,9 @@ describe 'Api::V1::Employees::Sessions' do
                  email: { type: :string },
                  first_name: { type: :string },
                  last_name: { type: :string },
+                 invitation_sent_at: { type: :string },
+                 invitation_accepted_at: { type: :string },
+                 employee_type: { type: :string },
                  company: {
                    type: :object,
                    properties: {

@@ -10,7 +10,7 @@ module Api
 
         def show
           if @company_employee.present?
-            render json: Dc::CompanyEmployeeBlueprint.render(@company_employee), status: :ok
+            render json: Dc::CompanyEmployeeBlueprint.render(@company_employee, view: :extended), status: :ok
           else
             not_authorized
           end
@@ -21,7 +21,7 @@ module Api
           if @company_employee.errors.any?
             unprocessable_entity(@company_employee.errors.messages)
           else
-            render json: Dc::CompanyEmployeeBlueprint.render(@company_employee), status: :created
+            render json: Dc::CompanyEmployeeBlueprint.render(@company_employee, view: :extended), status: :created
           end
         end
 
@@ -30,7 +30,7 @@ module Api
           if employee.valid?
             create_cognito_user
             @company_employee.accept_invitation!
-            render json: Dc::CompanyEmployeeBlueprint.render(@company_employee), status: :ok
+            render json: Dc::CompanyEmployeeBlueprint.render(@company_employee, view: :extended), status: :ok
           else
             unprocessable_entity(employee.errors.messages)
           end

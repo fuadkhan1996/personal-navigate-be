@@ -6,7 +6,7 @@ module Api
       class ProfilesController < ApplicationController
         def update_email
           if current_employee.update(update_email_params)
-            render json: Dc::CompanyEmployeeBlueprint.render(current_company_employee), status: :ok
+            render json: Dc::CompanyEmployeeBlueprint.render(current_company_employee, view: :extended), status: :ok
           else
             unprocessable_entity(current_employee.errors)
           end
@@ -21,7 +21,7 @@ module Api
 
         def update
           if current_employee.update(update_params)
-            render json: Dc::CompanyEmployeeBlueprint.render(current_company_employee), status: :ok
+            render json: Dc::CompanyEmployeeBlueprint.render(current_company_employee, view: :extended), status: :ok
           else
             unprocessable_entity(current_employee.errors)
           end
