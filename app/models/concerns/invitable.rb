@@ -12,6 +12,10 @@ module Invitable
     Dc::CompanyEmployee.find(invited_by_id)
   end
 
+  def invitation_accepted?
+    invitation_accepted_at.present?
+  end
+
   def invite!(inviter)
     self.invited_by = inviter
     generate_invitation_token

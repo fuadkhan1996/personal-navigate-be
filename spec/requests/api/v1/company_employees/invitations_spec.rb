@@ -195,4 +195,54 @@ describe 'Api::V1::CompanyEmployees::InvitationsController' do
       end
     end
   end
+
+  path '/api/v1/company_employees/invitations/{id}/resend_invite' do
+    post 'Resend Invite to Employee' do
+      tags 'Companies'
+      consumes 'application/json'
+      produces 'application/json'
+      security [{ bearerAuth: [], apiKeyAuth: [] }]
+
+      parameter name: :id, in: :path, type: :string
+
+      response '200', 'Company Employee Data' do
+        schema type: :object,
+               properties: {
+                 id: { type: :integer },
+                 first_name: { type: :string },
+                 last_name: { type: :string },
+                 email: { type: :string },
+                 invitation_sent_at: { type: :string },
+                 invitation_accepted_at: { type: :string },
+                 uuid: { type: :string },
+                 created_at: { type: :string },
+                 updated_at: { type: :string },
+                 company: {
+                   type: :object,
+                   properties: {
+                     id: { type: :string },
+                     title: { type: :string },
+                     guid: { type: :string },
+                     logo: { type: :string },
+                     company_type_name: { type: :string },
+                     created_at: { type: :string },
+                     updated_at: { type: :string }
+                   }
+                 }
+               }
+
+        run_test!
+      end
+
+      response '422', 'Unauthorized' do
+        schema type: :object,
+               properties: {
+                 error: { type: :string }
+               },
+               required: %w[error]
+
+        run_test!
+      end
+    end
+  end
 end
