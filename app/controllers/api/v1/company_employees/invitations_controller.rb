@@ -6,11 +6,11 @@ module Api
       class InvitationsController < ApplicationController
         skip_before_action :set_current_company, only: %i[show update]
         skip_before_action :authenticate_request!, only: %i[show update]
-        before_action :set_company_employee
+        before_action :set_company_employee, only: %i[show update]
 
         def show
           if @company_employee.present?
-            render json: Dc::CompanyEmployeeBlueprint.render(@company_employee), status: :ok
+            render json: Dc::CompanyEmployeeBlueprint.render(@company_employee, view: :extended), status: :ok
           else
             not_authorized
           end
@@ -21,7 +21,7 @@ module Api
           if @company_employee.errors.any?
             unprocessable_entity(@company_employee.errors.messages)
           else
-            render json: Dc::CompanyEmployeeBlueprint.render(@company_employee), status: :created
+            render json: Dc::CompanyEmployeeBlueprint.render(@company_employee, view: :extended), status: :created
           end
         end
 
@@ -30,9 +30,19 @@ module Api
           if employee.valid?
             create_cognito_user
             @company_employee.accept_invitation!
-            render json: Dc::CompanyEmployeeBlueprint.render(@company_employee), status: :ok
+            render json: Dc::CompanyEmployeeBlueprint.render(@company_employee, view: :extended), status: :ok
           else
             unprocessable_entity(employee.errors.messages)
+          end
+        end
+
+        def resend_invite
+          @company_employee = Dc::CompanyEmployee.find_by(id: params[:id])
+          if @company_employee.invitation_accepted?
+            render json: { error: 'Invitation Accepted Already.' }, status: :unprocessable_entity
+          else
+            @company_employee.invite!(current_company_employee)
+            render json: Dc::CompanyEmployeeBlueprint.render(@company_employee), status: :ok
           end
         end
 

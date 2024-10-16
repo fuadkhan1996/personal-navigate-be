@@ -1226,6 +1226,12 @@ paths:
                     type: string
                   last_name:
                     type: string
+                  email:
+                    type: string
+                  invitation_sent_at:
+                    type: string
+                  invitation_accepted_at:
+                    type: string
                   uuid:
                     type: string
                   created_at:
@@ -1280,6 +1286,12 @@ paths:
                   first_name:
                     type: string
                   last_name:
+                    type: string
+                  email:
+                    type: string
+                  invitation_sent_at:
+                    type: string
+                  invitation_accepted_at:
                     type: string
                   uuid:
                     type: string
@@ -1352,6 +1364,12 @@ paths:
                     type: string
                   last_name:
                     type: string
+                  email:
+                    type: string
+                  invitation_sent_at:
+                    type: string
+                  invitation_accepted_at:
+                    type: string
                   uuid:
                     type: string
                   created_at:
@@ -1421,6 +1439,74 @@ paths:
                           type: string
                         email:
                           type: string
+  "/api/v1/company_employees/invitations/{id}/resend_invite":
+    post:
+      summary: Resend Invite to Employee
+      tags:
+      - Companies
+      security:
+      - bearerAuth: []
+        apiKeyAuth: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Company Employee Data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  first_name:
+                    type: string
+                  last_name:
+                    type: string
+                  email:
+                    type: string
+                  invitation_sent_at:
+                    type: string
+                  invitation_accepted_at:
+                    type: string
+                  uuid:
+                    type: string
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  company:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      title:
+                        type: string
+                      guid:
+                        type: string
+                      logo:
+                        type: string
+                      company_type_name:
+                        type: string
+                      created_at:
+                        type: string
+                      updated_at:
+                        type: string
+        '422':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
   "/api/v1/company_employees/{id}":
     put:
       summary: Update Company Employee
@@ -1445,6 +1531,12 @@ paths:
                   first_name:
                     type: string
                   last_name:
+                    type: string
+                  email:
+                    type: string
+                  invitation_sent_at:
+                    type: string
+                  invitation_accepted_at:
                     type: string
                   uuid:
                     type: string
@@ -1496,6 +1588,67 @@ paths:
                           type: string
                         last_name:
                           type: string
+  "/api/v1/company_employees":
+    get:
+      summary: List of Company Employees
+      tags:
+      - Companies
+      responses:
+        '200':
+          description: Company Employee Data
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    first_name:
+                      type: string
+                    last_name:
+                      type: string
+                    email:
+                      type: string
+                    invitation_sent_at:
+                      type: string
+                    invitation_accepted_at:
+                      type: string
+                    uuid:
+                      type: string
+                    created_at:
+                      type: string
+                    updated_at:
+                      type: string
+                    company:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        title:
+                          type: string
+                        guid:
+                          type: string
+                        logo:
+                          type: string
+                        company_type_name:
+                          type: string
+                        created_at:
+                          type: string
+                        updated_at:
+                          type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
   "/api/v1/employees/profile/update_email":
     patch:
       summary: Update employee email
@@ -1519,6 +1672,12 @@ paths:
                   first_name:
                     type: string
                   last_name:
+                    type: string
+                  invitation_sent_at:
+                    type: string
+                  invitation_accepted_at:
+                    type: string
+                  employee_type:
                     type: string
                   access_token:
                     type: string
@@ -1720,6 +1879,10 @@ paths:
                     type: string
                   last_name:
                     type: string
+                  invitation_sent_at:
+                    type: string
+                  invitation_accepted_at:
+                    type: string
                   access_token:
                     type: string
                   refresh_token:
@@ -1815,6 +1978,12 @@ paths:
                   first_name:
                     type: string
                   last_name:
+                    type: string
+                  invitation_sent_at:
+                    type: string
+                  invitation_accepted_at:
+                    type: string
+                  employee_type:
                     type: string
                   company:
                     type: object

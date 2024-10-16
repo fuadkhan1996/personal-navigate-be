@@ -40,6 +40,7 @@ module Dc
     }
 
     scope :order_by_created_at, ->(order = :asc) { order("dc_company_employees.created_at #{order}") }
+    scope :active, -> { where(dc_company_employees: { deleted_at: nil }) }
 
     delegate :fullname, :first_name, :last_name, :email, to: :employee
     delegate :name, to: :company_type, prefix: true

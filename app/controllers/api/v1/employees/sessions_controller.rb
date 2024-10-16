@@ -8,7 +8,7 @@ module Api
         skip_before_action :authenticate_request!, only: %i[create refresh]
 
         def show
-          render json: Dc::CompanyEmployeeBlueprint.render(current_company_employee), status: :ok
+          render json: Dc::CompanyEmployeeBlueprint.render(current_company_employee, view: :extended), status: :ok
         end
 
         def create
@@ -49,7 +49,8 @@ module Api
 
         def render_successful_authentication(response)
           employee = find_employee
-          render json: Dc::CompanyEmployeeBlueprint.render_as_hash(employee).merge(response), status: :created
+          render json: Dc::CompanyEmployeeBlueprint.render_as_hash(employee, view: :extended).merge(response),
+                 status: :created
         end
 
         def find_employee

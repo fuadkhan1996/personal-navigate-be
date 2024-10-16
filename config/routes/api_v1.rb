@@ -39,8 +39,11 @@ namespace :api do
 
     namespace :company_employees do
       resource :invitation, only: %i[show update create]
+      resources :invitations, only: [] do
+        post :resend_invite, on: :member
+      end
     end
 
-    resources :company_employees, only: %i[update]
+    resources :company_employees, only: %i[update index]
   end
 end
