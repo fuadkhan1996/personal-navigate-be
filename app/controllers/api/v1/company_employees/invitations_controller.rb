@@ -72,13 +72,9 @@ module Api
         def user_object
           {
             username: @company_employee.email,
-            password: fetch_password,
+            password: accept_invitation_params[:password],
             phone_number: '+15555551234'
           }
-        end
-        
-        def fetch_password
-          accept_invitation_params[:password]
         end
 
         def create_cognito_user
