@@ -69,10 +69,11 @@ module Api
           ).merge(dc_company_id: current_company.id)
         end
 
+        # CodeGuru: Suppress CWE-798 - Password is dynamically provided via user input
         def user_object
           {
             username: @company_employee.email,
-            password: accept_invitation_params[:password],
+            password: accept_invitation_params[:password], # Not hardcoded
             phone_number: '+15555551234'
           }
         end

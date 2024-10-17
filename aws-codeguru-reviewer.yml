@@ -1,3 +1,5 @@
+version: 1.0
+
 suppressions:
   - cwe: "CWE-798"
     files:
