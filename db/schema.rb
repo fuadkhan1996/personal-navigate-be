@@ -10,10 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_25_165419) do
+ActiveRecord::Schema[7.1].define(version: 2024_10_17_185848) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
+  enable_extension "uuid-ossp"
 
   create_table "nav_action_types", force: :cascade do |t|
     t.string "title"
@@ -125,6 +126,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_25_165419) do
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "tis_order_id"
+    t.datetime "completed_at"
     t.index ["account_id"], name: "index_nav_assessments_on_account_id"
     t.index ["dc_company_employee_id"], name: "index_nav_assessments_on_dc_company_employee_id"
     t.index ["dc_company_id"], name: "index_nav_assessments_on_dc_company_id"

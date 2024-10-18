@@ -37,6 +37,7 @@ module Api
       def create_assessment_params
         params.require(:assessment).permit(
           :title,
+          :tis_order_id,
           { form_data: {} }
         ).merge(default_create_assessment_attributes)
       end

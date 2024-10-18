@@ -17,6 +17,7 @@ describe 'Api::V1::Assessments' do
             type: :object,
             properties: {
               title: { type: :string },
+              tis_order_id: { type: :string },
               form_data: { type: :object }
             },
             required: %w[title form_data]
@@ -78,6 +79,9 @@ describe 'Api::V1::Assessments' do
                  properties: {
                    id: { type: :integer },
                    title: { type: :string },
+                   tis_order_id: { type: :string },
+                   status: { type: :string },
+                   completed_at: { type: :string },
                    form_data: { type: :object },
                    deleted_at: { type: :string },
                    created_at: { type: :string },
@@ -128,6 +132,9 @@ describe 'Api::V1::Assessments' do
                properties: {
                  id: { type: :integer },
                  title: { type: :string },
+                 tis_order_id: { type: :string },
+                 status: { type: :string },
+                 completed_at: { type: :string },
                  form_data: { type: :object },
                  deleted_at: { type: :string },
                  created_at: { type: :string },

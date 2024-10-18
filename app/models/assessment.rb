@@ -22,4 +22,8 @@ class Assessment < ApplicationRecord
   has_many :activities, through: :activity_actions, source: :activity
 
   validates :title, presence: true
+
+  def status
+    completed_at.present? ? 'Complete' : 'New'
+  end
 end
