@@ -1,0 +1,11 @@
+version: 1.0
+
+suppressions:
+  - cwe: 'CWE-798'
+    files:
+      - 'app/controllers/api/v1/company_employees/invitations_controller.rb'
+      - 'app/models/concerns/authable.rb'
+      - 'app/lib/cognito/auth_helper.rb'
+      - 'app/lib/cognito/base.rb'
+      - 'config/environments/production.rb'
+    reason: 'The password is user input, not a hardcoded credential.'
