@@ -23,7 +23,13 @@ class Assessment < ApplicationRecord
 
   validates :title, presence: true
 
+  scope :incomplete, -> { where(completed_at: nil) }
+
   def status
     completed_at.present? ? 'Complete' : 'New'
+  end
+
+  def questionnaire_id
+    nav_questionnaire_id
   end
 end
