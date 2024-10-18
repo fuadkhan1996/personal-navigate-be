@@ -813,6 +813,8 @@ paths:
                   properties:
                     title:
                       type: string
+                    tis_order_id:
+                      type: string
                     form_data:
                       type: object
                   required:
@@ -840,6 +842,12 @@ paths:
                     id:
                       type: integer
                     title:
+                      type: string
+                    tis_order_id:
+                      type: string
+                    status:
+                      type: string
+                    completed_at:
                       type: string
                     form_data:
                       type: object
@@ -920,6 +928,12 @@ paths:
                   id:
                     type: integer
                   title:
+                    type: string
+                  tis_order_id:
+                    type: string
+                  status:
+                    type: string
+                  completed_at:
                     type: string
                   form_data:
                     type: object

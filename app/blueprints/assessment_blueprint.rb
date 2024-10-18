@@ -3,7 +3,7 @@
 class AssessmentBlueprint < Blueprinter::Base
   identifier :id
 
-  fields :id, :title, :form_data, :deleted_at, :created_at, :updated_at
+  fields :id, :title, :tis_order_id, :completed_at, :status, :form_data, :deleted_at, :created_at, :updated_at
   association :account, blueprint: Dc::CompanyBlueprint
 
   view :extended do
