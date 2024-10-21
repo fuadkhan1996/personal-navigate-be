@@ -234,4 +234,43 @@ describe 'Api::V1::Assessments' do
       end
     end
   end
+
+  path '/api/v1/assessments/trigger_tis_api' do
+    post 'Call TIS APIs' do
+      tags 'Assessments'
+      consumes 'application/json'
+      produces 'application/json'
+      security [{ bearerAuth: [], apiKeyAuth: [] }]
+
+      response '200', 'Assessment Processed Successfully.' do
+        schema type: :object,
+               properties: {
+                 status: { type: :string },
+                 message: { type: :string }
+               }
+
+        run_test!
+      end
+
+      response '422', 'Unprocessable Entity' do
+        schema type: :object,
+               properties: {
+                 status: { type: :string },
+                 message: { type: :string }
+               }
+
+        run_test!
+      end
+
+      response '401', 'Unauthorized' do
+        schema type: :object,
+               properties: {
+                 error: { type: :string }
+               },
+               required: %w[error]
+
+        run_test!
+      end
+    end
+  end
 end

@@ -1,0 +1,9 @@
+<% content_for :header, "Your Assessment is Ready!" %>
+<% content_for :recipient_name, @company_employee.fullname %>
+<p>
+  Your assessment titled "<%= @assessment.title %>" is now complete and ready for processing.
+  Please click the button below to log in to your account and view the details.
+</p>
+
+<a href="https://navigate.mydatacrest.com/dashboard/questionnaires/<%= @assessment.questionnaire_id %>/assessments/<%= @assessment.id %>" class="primary-btn">View Assessment</a>
+<p>If you did not expect this email, you can ignore it.</p>

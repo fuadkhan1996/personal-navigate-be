@@ -14,6 +14,7 @@ namespace :api do
     resources :actions, only: %i[index]
     resources :companies, only: %i[index create]
     resources :assessments, only: %i[create show update index] do
+      post :trigger_tis_api, on: :collection
       scope module: :assessments do
         resources :triggers, only: [] do
           post :evaluate_trigger, on: :member
