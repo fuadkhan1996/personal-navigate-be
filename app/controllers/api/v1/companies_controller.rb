@@ -11,7 +11,7 @@ module Api
                 end
 
         @companies = scope.includes(:company_type).order(created_at: :desc)
-        render json: Dc::CompanyBlueprint.render(@companies), status: :ok
+        render json: Dc::CompanyBlueprint.render(@companies, view: :with_primary_company_employee), status: :ok
       end
 
       def create
@@ -19,7 +19,7 @@ module Api
         if @company.errors.any?
           unprocessable_entity(@company.errors.messages)
         else
-          render json: Dc::CompanyBlueprint.render(@company), status: :created
+          render json: Dc::CompanyBlueprint.render(@company, view: :with_primary_company_employee), status: :created
         end
       end
 
