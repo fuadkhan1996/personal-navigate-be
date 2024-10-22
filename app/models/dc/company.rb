@@ -55,6 +55,7 @@ module Dc
     }
 
     delegate :name, :account?, to: :company_type, prefix: true, allow_nil: true
+    delegate :account?, to: :company_type, allow_nil: true
     delegate :by_email, to: :company_employees, prefix: true, allow_nil: true
     delegate :email, to: :company_employees, allow_nil: true
     delegate :by_company_type, to: :linked_companies, prefix: true, allow_nil: true
@@ -66,10 +67,18 @@ module Dc
     end
 
     def assessments
-      if company_type_name == 'Account'
+      if account?
         Assessment.where(account_id: id)
       else
         Assessment.where(dc_company_id: id)
+      end
+    end
+
+    def primary_company_employee
+      if account?
+        company_employees.where(employee_type: 'Insured').order(created_at: :asc).first
+      else
+        company_employees.where(employee_type: 'Admin/Owner').order(created_at: :asc).first
       end
     end
 

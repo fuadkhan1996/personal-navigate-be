@@ -22,9 +22,21 @@ describe 'Api::V1::CompaniesController' do
                    logo: { type: :string },
                    company_type_name: { type: :string },
                    created_at: { type: :string },
-                   updated_at: { type: :string }
-                 },
-                 required: %w[id title logo company_type_name created_at updated_at]
+                   updated_at: { type: :string },
+                   primary_company_employee: {
+                     type: :object,
+                     properties: {
+                       id: { type: :string },
+                       uuid: { type: :string },
+                       email: { type: :string },
+                       first_name: { type: :string },
+                       last_name: { type: :string },
+                       invitation_sent_at: { type: :string },
+                       invitation_accepted_at: { type: :string },
+                       employee_type: { type: :string }
+                     }
+                   }
+                 }
                }
 
         run_test!
