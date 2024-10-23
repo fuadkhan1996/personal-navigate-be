@@ -43,12 +43,20 @@ module Cognito
       new(user_object:).admin_set_user_password
     end
 
+    def self.admin_update_email(user_object:)
+      new(user_object:).admin_update_email
+    end
+
     def self.update_email(user_object:, access_token:)
       new(user_object:, access_token:).update_email
     end
 
     def self.verify_email(user_object:, access_token:)
       new(user_object:, access_token:).verify_email
+    end
+
+    def self.admin_get_user(user_object:)
+      new(user_object:).admin_get_user
     end
 
     def sign_out
@@ -102,6 +110,29 @@ module Cognito
       }
 
       cognito_client.verify_user_attribute(params)
+    end
+
+    def admin_update_email
+      cognito_user = admin_get_user
+      params = {
+        user_pool_id:,
+        username: cognito_user.username,
+        user_attributes: [
+          { name: 'email', value: user_object[:proposed_email] },
+          { name: 'email_verified', value: 'True' }
+        ]
+      }
+
+      cognito_client.admin_update_user_attributes(params)
+    end
+
+    def admin_get_user
+      auth_object = {
+        user_pool_id:,
+        username: user_object[:email]
+      }
+
+      cognito_client.admin_get_user(auth_object)
     end
 
     private

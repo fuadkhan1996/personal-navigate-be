@@ -37,7 +37,8 @@ module Dc
     end
 
     def update_email_in_cognito
-      Cognito::Base.update_email(user_object: { email: }, access_token: current_access_token)
+      previous_email, current_email = saved_change_to_email
+      Cognito::Base.admin_update_email(user_object: { email: previous_email, proposed_email: current_email })
     end
   end
 end
