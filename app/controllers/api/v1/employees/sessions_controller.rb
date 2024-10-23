@@ -37,6 +37,14 @@ module Api
           end
         end
 
+        def update_password
+          if current_employee.update_password(update_password_params)
+            render json: { message: 'Password updated successfully' }, status: :ok
+          else
+            unprocessable_entity(current_employee.errors.messages)
+          end
+        end
+
         private
 
         def sign_in_params
@@ -45,6 +53,10 @@ module Api
 
         def refresh_params
           params.require(:session).permit(:refresh_token, :email)
+        end
+
+        def update_password_params
+          params.require(:employee).permit(:current_password, :password, :password_confirmation)
         end
 
         def render_successful_authentication(response)
