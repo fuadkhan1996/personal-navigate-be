@@ -2155,6 +2155,48 @@ paths:
                   type: string
               required:
               - refresh_token
+  "/api/v1/employees/session/update_password":
+    post:
+      summary: Update Current Employee Password
+      tags:
+      - Sessions
+      parameters: []
+      responses:
+        '200':
+          description: Authentication successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                employee:
+                  type: object
+                  properties:
+                    current_password:
+                      type: string
+                    password:
+                      type: string
+                    password_confirmation:
+                      type: string
   "/api/v1/questionnaires/{questionnaire_id}/triggers":
     get:
       summary: Get Questionnaire Triggers

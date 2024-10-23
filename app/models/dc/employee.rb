@@ -7,7 +7,8 @@ module Dc
 
     self.table_name = :dc_employees
 
-    attr_accessor :password
+    attr_accessor :password,
+                  :current_password # Only use to update password
 
     has_many :company_employees,
              dependent: :restrict_with_exception,
@@ -30,6 +31,19 @@ module Dc
       [first_name, last_name].join(' ')
     end
 
+    def update_password(password_params)
+      self.current_password = password_params[:current_password]
+      self.password = password_params[:password]
+      self.password_confirmation = password_params[:password_confirmation]
+      return false unless valid?
+
+      response = update_cognito_password
+      return true if response.status == 'success'
+
+      errors.add(response.attribute, message: response.message)
+      false
+    end
+
     private
 
     def password_required?
@@ -39,6 +53,14 @@ module Dc
     def update_email_in_cognito
       previous_email, current_email = saved_change_to_email
       Cognito::Base.admin_update_email(user_object: { email: previous_email, proposed_email: current_email })
+    end
+
+    def update_cognito_password
+      params = {
+        current_password: current_employee.current_password,
+        new_password: current_employee.password
+      }
+      Cognito::Base.update_password(**params)
     end
   end
 end

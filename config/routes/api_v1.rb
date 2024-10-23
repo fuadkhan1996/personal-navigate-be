@@ -3,6 +3,7 @@ namespace :api do
     namespace :employees do
       resource :session, only: %i[create show] do
         post :refresh, on: :collection
+        post :update_password, on: :member
       end
 
       resource :profile, only: %i[update] do
