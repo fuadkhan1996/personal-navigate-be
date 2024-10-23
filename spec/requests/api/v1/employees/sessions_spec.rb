@@ -161,4 +161,44 @@ describe 'Api::V1::Employees::Sessions' do
       end
     end
   end
+
+  path '/api/v1/employees/session/update_password' do
+    post 'Update Current Employee Password' do
+      tags 'Sessions'
+      consumes 'application/json'
+      produces 'application/json'
+      parameter name: :session, in: :body, schema: {
+        type: :object,
+        properties: {
+          employee: {
+            type: :object,
+            properties: {
+              current_password: { type: :string },
+              password: { type: :string },
+              password_confirmation: { type: :string }
+            }
+          }
+        }
+      }
+
+      response '200', 'Authentication successful' do
+        schema type: :object,
+               properties: {
+                 message: { type: :string }
+               }
+
+        run_test!
+      end
+
+      response '401', 'Unauthorized' do
+        schema type: :object,
+               properties: {
+                 error: { type: :string }
+               },
+               required: %w[error]
+
+        run_test!
+      end
+    end
+  end
 end

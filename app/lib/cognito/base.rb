@@ -1,16 +1,19 @@
 # frozen_string_literal: true
 
+ResponseStruct = Struct.new(:status, :attribute, :message, keyword_init: true)
 module Cognito
-  class Base
+  class Base < ApplicationLib
     attr_accessor :cognito_client,
                   :user_object,
                   :access_token,
                   :refresh_token
 
-    include Cognito::Credentials
-    include Cognito::Authentication
+    include Credentials
+    include Authentication
+    include Password
 
     def initialize(user_object: nil, access_token: nil, refresh_token: nil)
+      super()
       # credentials = Aws::Credentials.new(client_id.to_s, client_secret.to_s)
       @cognito_client = Aws::CognitoIdentityProvider::Client.new
       @user_object = user_object
@@ -49,6 +52,10 @@ module Cognito
 
     def self.verify_email(user_object:, access_token:)
       new(user_object:, access_token:).verify_email
+    end
+
+    def self.update_password(current_password:, new_password:)
+      new(user_object: { current_password:, new_password: }).update_password
     end
 
     def sign_out
