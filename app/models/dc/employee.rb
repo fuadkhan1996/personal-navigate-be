@@ -18,6 +18,7 @@ module Dc
 
     has_many :companies, through: :company_employees
 
+    validates :first_name, :last_name, presence: true
     validates :password, :password_confirmation, presence: true, if: :password_required?
     validates :password, confirmation: true, if: :password_required?
     validates :password, format: {

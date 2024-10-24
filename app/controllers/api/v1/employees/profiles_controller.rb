@@ -8,7 +8,7 @@ module Api
           if current_employee.update(update_email_params)
             render json: Dc::CompanyEmployeeBlueprint.render(current_company_employee, view: :extended), status: :ok
           else
-            unprocessable_entity(current_employee.errors)
+            unprocessable_entity(current_employee.errors.messages)
           end
         end
 
@@ -23,7 +23,7 @@ module Api
           if current_employee.update(update_params)
             render json: Dc::CompanyEmployeeBlueprint.render(current_company_employee, view: :extended), status: :ok
           else
-            unprocessable_entity(current_employee.errors)
+            unprocessable_entity(current_employee.errors.messages)
           end
         end
 
