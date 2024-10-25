@@ -1,0 +1,51 @@
+name: Build and Deploy QA
+
+on:
+  push:
+    branches:
+      - QA
+    paths-ignore:
+      - "**.md"
+  workflow_dispatch:
+
+jobs:
+  build-deploy:
+    name: 🚀 Build and Deploy QA
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: ⬇️ Checkout Repo
+        uses: actions/checkout@v4
+      - name: 💎 Set up Ruby 3.2.2
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.2.2
+      - name: 📦 Install Bundler
+        run: gem install bundler
+      - name: 📥 Install Dependencies
+        run: |
+          echo "Installing gem dependencies..."
+          bundle install
+      - name: 👮‍♂️ Run RuboCop
+        run: |
+          echo "Running bundle exec rubocop..."
+          bundle exec rubocop
+      - name: 🧪 Run Tests
+        run: |
+          echo "Running tests..."
+          # Replace with your actual test command
+          # e.g., bundle exec rspec
+      - name: 🏗️ Build Artifact
+        run: |
+          echo "Building artifact..."
+          zip -r deploy.zip . -x '*.git*' 'vendor/bundle/*' 'log/*' 'tmp/*' 'test/*' 'spec/*'
+      - name: 🚀 Deploy to Elastic Beanstalk
+        uses: einaregilsson/beanstalk-deploy@v22
+        with:
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          application_name: Navigate-api
+          environment_name: Navigate-qa-api-env
+          version_label: ${{ github.sha }}
+          region: us-east-1
+          deployment_package: deploy.zip
