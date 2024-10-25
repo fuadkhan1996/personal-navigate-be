@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths-ignore:
-      - '**.md'
+      - "**.md"
   workflow_dispatch:
 
 jobs:
@@ -50,6 +50,8 @@ jobs:
         run: |
           echo "Building artifact..."
           zip -r deploy.zip . -x '*.git*' 'vendor/bundle/*' 'log/*' 'tmp/*' 'test/*' 'spec/*'
+      - name: 🔄 Generate Version Label
+        run: echo "VERSION_LABEL=${GITHUB_SHA}-$(($RANDOM % 100))" >> $GITHUB_ENV
       - name: 🚀 Deploy to Elastic Beanstalk
         uses: einaregilsson/beanstalk-deploy@v22
         with:
@@ -57,6 +59,6 @@ jobs:
           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           application_name: Navigate-api
           environment_name: Navigate-api-env
-          version_label: ${{ github.sha }}
+          version_label: ${{ env.VERSION_LABEL }}
           region: us-east-1
           deployment_package: deploy.zip
