@@ -92,3 +92,11 @@ production:
   username: <%= Rails.application.credentials.dig(:database_username) %>
   password: <%= Rails.application.credentials.dig(:database_password) %>
   database: <%= Rails.application.credentials.dig(:database_name) %>
+
+qa:
+  <<: *default
+  host: <%= Rails.application.credentials.dig(:database_host) %>
+  port: <%= Rails.application.credentials.dig(:database_port) %>
+  username: <%= Rails.application.credentials.dig(:database_username) %>
+  password: <%= Rails.application.credentials.dig(:database_password) %>
+  database: <%= Rails.application.credentials.dig(:database_name) %>
