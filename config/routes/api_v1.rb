@@ -21,6 +21,8 @@ namespace :api do
           post :evaluate_trigger, on: :member
           post :evaluate_triggers, on: :collection
         end
+
+        resources :action_results, only: %i[update]
       end
     end
 

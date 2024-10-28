@@ -9,6 +9,8 @@ class Assessment
            :activity_trigger_id,
            :result_data,
            :deleted_at,
+           :completed_at,
+           :status,
            :created_at,
            :updated_at
 

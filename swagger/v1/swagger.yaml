@@ -579,9 +579,9 @@ paths:
                     type: string
                 required:
                 - error
-  "/api/v1/assessments/{assessment_id}/triggers/{id}/evaluate_trigger":
-    post:
-      summary: Evaluate Trigger
+  "/api/v1/assessments/{assessment_id}/action_results/{id}":
+    put:
+      summary: Evaluate Action Result
       tags:
       - Assessments
       security:
@@ -600,7 +600,97 @@ paths:
           type: string
       responses:
         '200':
-          description: Trigger Evaluated Successfully.
+          description: Action Result Updated Successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    activity_action_id:
+                      type: integer
+                    completed_at:
+                      type: string
+                    status:
+                      type: string
+                    assessment_id:
+                      type: integer
+                    activity_trigger_id:
+                      type: integer
+                    result_data:
+                      type: object
+                    deleted_at:
+                      type: string
+                    created_at:
+                      type: string
+                    updated_at:
+                      type: string
+                    activity:
+                      type: object
+                    activity_trigger:
+                      type: object
+                    activity_action:
+                      type: object
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: false
+                  message:
+                    type: string
+                required:
+                - success
+                - message
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                action_result:
+                  type: object
+                  properties:
+                    result_data:
+                      data:
+                        type: array
+                        items:
+                          type: object
+  "/api/v1/assessments/{assessment_id}/triggers/evaluate_triggers":
+    post:
+      summary: Evaluate Trigger
+      tags:
+      - Assessments
+      security:
+      - bearerAuth: []
+        apiKeyAuth: []
+      parameters:
+      - name: assessment_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Triggers Evaluated Successfully.
           content:
             application/json:
               schema:
@@ -630,6 +720,10 @@ paths:
                       type: object
                     activity_action:
                       type: object
+                    completed_at:
+                      type: string
+                    status:
+                      type: string
                   required:
                   - id
                   - activity_action_id
@@ -668,7 +762,7 @@ paths:
                     type: string
                 required:
                 - error
-  "/api/v1/assessments/{assessment_id}/triggers/evaluate_triggers":
+  "/api/v1/assessments/{assessment_id}/triggers/{id}/evaluate_trigger":
     post:
       summary: Evaluate Trigger
       tags:
@@ -682,9 +776,14 @@ paths:
         required: true
         schema:
           type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
       responses:
         '200':
-          description: Triggers Evaluated Successfully.
+          description: Trigger Evaluated Successfully.
           content:
             application/json:
               schema:
@@ -696,6 +795,10 @@ paths:
                       type: integer
                     activity_action_id:
                       type: integer
+                    completed_at:
+                      type: string
+                    status:
+                      type: string
                     assessment_id:
                       type: integer
                     activity_trigger_id:
