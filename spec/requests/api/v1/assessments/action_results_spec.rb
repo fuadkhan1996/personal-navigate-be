@@ -2,9 +2,9 @@
 
 require 'swagger_helper'
 
-describe 'Api::V1::Assessments::TriggersController' do
-  path '/api/v1/assessments/{assessment_id}/triggers/{id}/evaluate_trigger' do
-    post 'Evaluate Trigger' do
+describe 'Api::V1::Assessments::ActionResultsController' do
+  path '/api/v1/assessments/{assessment_id}/action_results/{id}' do
+    put 'Evaluate Action Result' do
       tags 'Assessments'
       consumes 'application/json'
       produces 'application/json'
@@ -12,8 +12,27 @@ describe 'Api::V1::Assessments::TriggersController' do
 
       parameter name: :assessment_id, in: :path, type: :string
       parameter name: :id, in: :path, type: :string
+      parameter name: :action_result, in: :body, schema: {
+        type: :object,
+        properties: {
+          action_result: {
+            type: :object,
+            properties: {
+              result_data: {
+                type: :object,
+                properties: {
+                  data: {
+                    type: :array,
+                    items: { type: :object }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
 
-      response '200', 'Trigger Evaluated Successfully.' do
+      response '200', 'Action Result Updated Successfully.' do
         schema type: :array,
                items: {
                  type: :object,
@@ -31,20 +50,7 @@ describe 'Api::V1::Assessments::TriggersController' do
                    activity: { type: :object },
                    activity_trigger: { type: :object },
                    activity_action: { type: :object }
-                 },
-                 required: %w[
-                   id
-                   activity_action_id
-                   assessment_id
-                   activity_trigger_id
-                   result_data
-                   deleted_at
-                   created_at
-                   updated_at
-                   activity
-                   activity_trigger
-                   activity_action
-                 ]
+                 }
                }
 
         run_test!
@@ -88,8 +94,6 @@ describe 'Api::V1::Assessments::TriggersController' do
                  properties: {
                    id: { type: :integer },
                    activity_action_id: { type: :integer },
-                   completed_at: { type: :string },
-                   status: { type: :string },
                    assessment_id: { type: :integer },
                    activity_trigger_id: { type: :integer },
                    result_data: { type: :object },
