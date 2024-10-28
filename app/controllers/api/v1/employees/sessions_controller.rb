@@ -48,11 +48,15 @@ module Api
         private
 
         def sign_in_params
-          params.require(:employee).permit(:email, :password, :entity_type)
+          params.require(:employee).permit(:email, :password, :entity_type).tap do |employee_params|
+            employee_params[:email]&.downcase!
+          end
         end
 
         def refresh_params
-          params.require(:session).permit(:refresh_token, :email)
+          params.require(:session).permit(:refresh_token, :email).tap do |employee_params|
+            employee_params[:email]&.downcase!
+          end
         end
 
         def update_password_params

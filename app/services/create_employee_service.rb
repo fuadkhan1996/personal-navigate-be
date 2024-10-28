@@ -26,7 +26,9 @@ class CreateEmployeeService < ApplicationService
   end
 
   def employee_attributes
-    @employee_attributes ||= params[:employee_attributes]
+    @employee_attributes ||= params[:employee_attributes].tap do |employee_attributes|
+      employee_attributes[:email]&.downcase!
+    end
   end
 
   def employee_params
