@@ -30,7 +30,9 @@ module Api
         private
 
         def update_email_params
-          params.require(:employee).permit(:email)
+          params.require(:employee).permit(:email).tap do |employee_params|
+            employee_params[:email]&.downcase!
+          end
         end
 
         def update_params

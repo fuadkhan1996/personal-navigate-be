@@ -26,6 +26,7 @@ module Dc
       message: I18n.t('activerecord.errors.models.employee.attributes.password.invalid_format')
     }, if: :password_required?
 
+    before_validation :downcase_email, if: :will_save_change_to_email?
     after_update :update_email_in_cognito, if: :saved_change_to_email?
 
     def fullname
@@ -62,6 +63,10 @@ module Dc
         new_password: current_employee.password
       }
       Cognito::Base.update_password(**params)
+    end
+
+    def downcase_email
+      self.email = email.try(:downcase)
     end
   end
 end
