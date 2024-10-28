@@ -18,6 +18,7 @@ ExceptionNotification.configure do |config|
 
   # Email notifier sends notifications by email.
   config.add_notifier :slack, {
+    blocks: [{ type: 'section', text: { type: 'mrkdwn', text: Rails.env.humanize }}],
     webhook_url: 'https://hooks.slack.com/services/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',
     channel: '#navigate-exception-notifier',
     additional_parameters: {
