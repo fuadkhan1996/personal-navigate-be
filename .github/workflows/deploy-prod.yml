@@ -1,4 +1,4 @@
-name: Build and Deploy
+name: Build and Deploy Prod
 
 on:
   push:
@@ -9,20 +9,9 @@ on:
   workflow_dispatch:
 
 jobs:
-  codeguru-security:
-    name: 🔒 CodeGuru Security Scan
-    uses: ./.github/workflows/codeguru-security.yml
-
   build-deploy:
-    name: 🚀 Build and Deploy
-    needs: [codeguru-security]
+    name: 🚀 Build and Deploy Prod
     runs-on: ubuntu-latest
-
-    permissions:
-      id-token: write
-      contents: read
-      actions: read
-      security-events: write
 
     steps:
       - name: ⬇️ Checkout Repo
