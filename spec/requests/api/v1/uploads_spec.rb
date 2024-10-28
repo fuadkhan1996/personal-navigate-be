@@ -40,4 +40,44 @@ describe 'Api::V1::UploadsController' do
       end
     end
   end
+
+  path '/api/v1/uploads/download/{key}' do
+    get 'Download File' do
+      tags 'Upload'
+      consumes 'multipart/form-data'
+      produces 'application/json'
+      security [{ bearerAuth: [], apiKeyAuth: [] }]
+
+      parameter name: :key, in: :path, type: :string
+
+      response '200', 'File downloaded successfully.' do
+        schema type: :object,
+               properties: {
+                 url: { type: :string }
+               }
+
+        run_test!
+      end
+
+      response '404', 'Not Found' do
+        schema type: :object,
+               properties: {
+                 error: { type: :string }
+               },
+               required: %w[error]
+
+        run_test!
+      end
+
+      response '401', 'Unauthorized' do
+        schema type: :object,
+               properties: {
+                 error: { type: :string }
+               },
+               required: %w[error]
+
+        run_test!
+      end
+    end
+  end
 end

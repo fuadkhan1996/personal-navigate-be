@@ -13,6 +13,13 @@ module Api
         render json: { key: blob.key }, status: :created
       end
 
+      def download
+        blob = ActiveStorage::Blob.find_by(key: params[:key])
+        raise ActiveRecord::RecordNotFound, "Blob with Key #{params[:key]} not found" if blob.blank?
+
+        render json: { url: url_for(blob) }, status: :ok
+      end
+
       private
 
       def upload_params

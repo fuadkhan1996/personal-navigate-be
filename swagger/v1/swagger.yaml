@@ -670,10 +670,12 @@ paths:
                   type: object
                   properties:
                     result_data:
-                      data:
-                        type: array
-                        items:
-                          type: object
+                      type: object
+                      properties:
+                        data:
+                          type: array
+                          items:
+                            type: object
   "/api/v1/assessments/{assessment_id}/triggers/evaluate_triggers":
     post:
       summary: Evaluate Trigger
@@ -2423,6 +2425,52 @@ paths:
                   type: string
                   format: binary
         required: true
+  "/api/v1/uploads/download/{key}":
+    get:
+      summary: Download File
+      tags:
+      - Upload
+      security:
+      - bearerAuth: []
+        apiKeyAuth: []
+      parameters:
+      - name: key
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: File downloaded successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  url:
+                    type: string
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
 components:
   securitySchemes:
     bearerAuth:

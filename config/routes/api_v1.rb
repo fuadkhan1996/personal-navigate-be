@@ -27,7 +27,9 @@ namespace :api do
     end
 
     resources :activities, only: %i[create show index]
-    resources :uploads, only: :create
+    resources :uploads, only: :create do
+      get 'download/:key', on: :collection, action: :download, as: 'download'
+    end
 
     scope module: :activities do
       resources :activities, only: [] do
