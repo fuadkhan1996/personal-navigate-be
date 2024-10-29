@@ -9,7 +9,10 @@ module Api
 
         def evaluate_triggers
           if Assessment::Evaluator.call(assessment:, triggers: assessment.activity_triggers)
-            render json: ::Assessment::ActionResultBlueprint.render(assessment.assessment_action_results), status: :ok
+            render json: ::Assessment::ActionResultBlueprint.render(
+              assessment.assessment_action_results,
+              view: :with_activity
+            ), status: :ok
           else
             render json: { success: false, message: 'Criteria not met or action failed' }, status: :unprocessable_entity
           end
@@ -17,7 +20,10 @@ module Api
 
         def evaluate_trigger
           if Assessment::Evaluator.call(assessment:, triggers: @trigger)
-            render json: ::Assessment::ActionResultBlueprint.render(assessment.assessment_action_results), status: :ok
+            render json: ::Assessment::ActionResultBlueprint.render(
+              assessment.assessment_action_results,
+              view: :with_activity
+            ), status: :ok
           else
             render json: { success: false, message: 'Criteria not met or action failed' }, status: :unprocessable_entity
           end

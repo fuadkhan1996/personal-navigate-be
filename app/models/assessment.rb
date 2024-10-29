@@ -23,6 +23,8 @@ class Assessment < ApplicationRecord
 
   validates :title, presence: true
 
+  delegate :with_assessment_action_results, to: :activities, prefix: true, allow_nil: true
+
   scope :incomplete, -> { where(completed_at: nil) }
 
   def status

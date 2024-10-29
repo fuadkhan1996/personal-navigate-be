@@ -31,4 +31,17 @@ class Activity < ApplicationRecord
   validates :title, uniqueness: { case_sensitive: false, scope: :dc_company_id }
   validates :activity_actions, presence: true, on: :create
   validates_associated :activity_actions
+
+  scope :with_assessment_action_results, lambda {
+    joins(:assessment_action_results)
+      .select(
+        "nav_activities.*,
+         nav_assessment_action_results.nav_assessment_id AS assessment_id,
+         CASE
+           WHEN nav_assessment_action_results.completed_at IS NOT NULL
+           THEN 'Complete'
+           ELSE 'InComplete'
+         END AS status"
+      )
+  }
 end
