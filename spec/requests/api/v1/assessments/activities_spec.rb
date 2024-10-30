@@ -4,7 +4,7 @@ require 'swagger_helper'
 
 describe 'Api::V1::Assessments::ActivitiesController' do
   path '/api/v1/assessments/activities' do
-    get 'Get Activities with Action Results' do
+    get 'Get Activities' do
       tags 'Assessments'
       consumes 'application/json'
       produces 'application/json'
@@ -23,25 +23,28 @@ describe 'Api::V1::Assessments::ActivitiesController' do
                    deleted_at: { type: :string },
                    created_at: { type: :string },
                    updated_at: { type: :string },
-                   assessment_action_results: {
-                     type: :array,
-                     items: {
-                       type: :object,
-                       properties: {
-                         id: { type: :integer },
-                         activity_action_id: { type: :integer },
-                         completed_at: { type: :string },
-                         status: { type: :string },
-                         assessment_id: { type: :integer },
-                         activity_trigger_id: { type: :integer },
-                         result_data: { type: :object },
-                         deleted_at: { type: :string },
-                         created_at: { type: :string },
-                         updated_at: { type: :string },
-                         activity: { type: :object },
-                         activity_trigger: { type: :object },
-                         activity_action: { type: :object }
-                       }
+                   company: {
+                     type: :object,
+                     properties: {
+                       id: { type: :string },
+                       title: { type: :string },
+                       guid: { type: :string },
+                       logo: { type: :string },
+                       company_type_name: { type: :string },
+                       created_at: { type: :string },
+                       updated_at: { type: :string }
+                     }
+                   },
+                   company_employee: {
+                     type: :object,
+                     properties: {
+                       id: { type: :string },
+                       uuid: { type: :string },
+                       email: { type: :string },
+                       first_name: { type: :string },
+                       last_name: { type: :string },
+                       invitation_sent_at: { type: :string },
+                       invitation_accepted_at: { type: :string }
                      }
                    }
                  }
@@ -83,25 +86,28 @@ describe 'Api::V1::Assessments::ActivitiesController' do
                    deleted_at: { type: :string },
                    created_at: { type: :string },
                    updated_at: { type: :string },
-                   assessment_action_results: {
-                     type: :array,
-                     items: {
-                       type: :object,
-                       properties: {
-                         id: { type: :integer },
-                         activity_action_id: { type: :integer },
-                         completed_at: { type: :string },
-                         status: { type: :string },
-                         assessment_id: { type: :integer },
-                         activity_trigger_id: { type: :integer },
-                         result_data: { type: :object },
-                         deleted_at: { type: :string },
-                         created_at: { type: :string },
-                         updated_at: { type: :string },
-                         activity: { type: :object },
-                         activity_trigger: { type: :object },
-                         activity_action: { type: :object }
-                       }
+                   company: {
+                     type: :object,
+                     properties: {
+                       id: { type: :string },
+                       title: { type: :string },
+                       guid: { type: :string },
+                       logo: { type: :string },
+                       company_type_name: { type: :string },
+                       created_at: { type: :string },
+                       updated_at: { type: :string }
+                     }
+                   },
+                   company_employee: {
+                     type: :object,
+                     properties: {
+                       id: { type: :string },
+                       uuid: { type: :string },
+                       email: { type: :string },
+                       first_name: { type: :string },
+                       last_name: { type: :string },
+                       invitation_sent_at: { type: :string },
+                       invitation_accepted_at: { type: :string }
                      }
                    }
                  }
@@ -161,6 +167,30 @@ describe 'Api::V1::Assessments::ActivitiesController' do
                        activity_trigger: { type: :object },
                        activity_action: { type: :object }
                      }
+                   }
+                 },
+                 company: {
+                   type: :object,
+                   properties: {
+                     id: { type: :string },
+                     title: { type: :string },
+                     guid: { type: :string },
+                     logo: { type: :string },
+                     company_type_name: { type: :string },
+                     created_at: { type: :string },
+                     updated_at: { type: :string }
+                   }
+                 },
+                 company_employee: {
+                   type: :object,
+                   properties: {
+                     id: { type: :string },
+                     uuid: { type: :string },
+                     email: { type: :string },
+                     first_name: { type: :string },
+                     last_name: { type: :string },
+                     invitation_sent_at: { type: :string },
+                     invitation_accepted_at: { type: :string }
                    }
                  }
                }

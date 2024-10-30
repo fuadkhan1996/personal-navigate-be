@@ -766,7 +766,7 @@ paths:
                 - error
   "/api/v1/assessments/activities":
     get:
-      summary: Get Activities with Action Results
+      summary: Get Activities
       tags:
       - Assessments
       security:
@@ -798,37 +798,40 @@ paths:
                       type: string
                     updated_at:
                       type: string
-                    assessment_action_results:
-                      type: array
-                      items:
-                        type: object
-                        properties:
-                          id:
-                            type: integer
-                          activity_action_id:
-                            type: integer
-                          completed_at:
-                            type: string
-                          status:
-                            type: string
-                          assessment_id:
-                            type: integer
-                          activity_trigger_id:
-                            type: integer
-                          result_data:
-                            type: object
-                          deleted_at:
-                            type: string
-                          created_at:
-                            type: string
-                          updated_at:
-                            type: string
-                          activity:
-                            type: object
-                          activity_trigger:
-                            type: object
-                          activity_action:
-                            type: object
+                    company:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        title:
+                          type: string
+                        guid:
+                          type: string
+                        logo:
+                          type: string
+                        company_type_name:
+                          type: string
+                        created_at:
+                          type: string
+                        updated_at:
+                          type: string
+                    company_employee:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        uuid:
+                          type: string
+                        email:
+                          type: string
+                        first_name:
+                          type: string
+                        last_name:
+                          type: string
+                        invitation_sent_at:
+                          type: string
+                        invitation_accepted_at:
+                          type: string
         '401':
           description: Unauthorized
           content:
@@ -880,37 +883,40 @@ paths:
                       type: string
                     updated_at:
                       type: string
-                    assessment_action_results:
-                      type: array
-                      items:
-                        type: object
-                        properties:
-                          id:
-                            type: integer
-                          activity_action_id:
-                            type: integer
-                          completed_at:
-                            type: string
-                          status:
-                            type: string
-                          assessment_id:
-                            type: integer
-                          activity_trigger_id:
-                            type: integer
-                          result_data:
-                            type: object
-                          deleted_at:
-                            type: string
-                          created_at:
-                            type: string
-                          updated_at:
-                            type: string
-                          activity:
-                            type: object
-                          activity_trigger:
-                            type: object
-                          activity_action:
-                            type: object
+                    company:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        title:
+                          type: string
+                        guid:
+                          type: string
+                        logo:
+                          type: string
+                        company_type_name:
+                          type: string
+                        created_at:
+                          type: string
+                        updated_at:
+                          type: string
+                    company_employee:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        uuid:
+                          type: string
+                        email:
+                          type: string
+                        first_name:
+                          type: string
+                        last_name:
+                          type: string
+                        invitation_sent_at:
+                          type: string
+                        invitation_accepted_at:
+                          type: string
         '401':
           description: Unauthorized
           content:
@@ -996,6 +1002,40 @@ paths:
                           type: object
                         activity_action:
                           type: object
+                  company:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      title:
+                        type: string
+                      guid:
+                        type: string
+                      logo:
+                        type: string
+                      company_type_name:
+                        type: string
+                      created_at:
+                        type: string
+                      updated_at:
+                        type: string
+                  company_employee:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      uuid:
+                        type: string
+                      email:
+                        type: string
+                      first_name:
+                        type: string
+                      last_name:
+                        type: string
+                      invitation_sent_at:
+                        type: string
+                      invitation_accepted_at:
+                        type: string
         '401':
           description: Unauthorized
           content:

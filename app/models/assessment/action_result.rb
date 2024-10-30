@@ -32,6 +32,8 @@ class Assessment
     delegate :action_kind, to: :action
     delegate :details, to: :activity_action, prefix: true
 
+    scope :by_assessments, ->(assessment_ids) { where(nav_assessment_id: assessment_ids) }
+
     def activity_action_id
       nav_activity_action_id
     end
