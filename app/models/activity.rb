@@ -36,12 +36,15 @@ class Activity < ApplicationRecord
     joins(:assessment_action_results)
       .select(
         "nav_activities.*,
-         nav_assessment_action_results.nav_assessment_id AS assessment_id,
-         CASE
-           WHEN nav_assessment_action_results.completed_at IS NOT NULL
+       nav_assessment_action_results.nav_assessment_id AS assessment_id,
+       CASE
+         WHEN COUNT(nav_assessment_action_results.id) = COUNT(nav_assessment_action_results.completed_at)
            THEN 'Complete'
-           ELSE 'InComplete'
-         END AS status"
+         WHEN COUNT(nav_assessment_action_results.completed_at) > 0
+           THEN 'In Progress'
+         ELSE 'InComplete'
+       END AS status"
       )
+      .group('nav_activities.id', 'nav_assessment_action_results.nav_assessment_id')
   }
 end
