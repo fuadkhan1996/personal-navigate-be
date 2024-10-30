@@ -58,6 +58,7 @@ class CreateCompanyService < ApplicationService
     else
       attrs.merge(company_employees_attributes: [
                     {
+                      employee_type: 'Insured',
                       employee_attributes:
                     }
                   ])
