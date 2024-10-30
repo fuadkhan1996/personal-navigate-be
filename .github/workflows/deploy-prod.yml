@@ -2,20 +2,41 @@ name: Build and Deploy Prod
 
 on:
   push:
-    branches:
-      - main
-    paths-ignore:
-      - "**.md"
-  workflow_dispatch:
+    tags:
+      - v[0-9].[0-9]+.[0-9]+
+concurrency:
+  group: "main"
+  cancel-in-progress: true
 
 jobs:
+  check-branch:
+    name: 🪵 Get current branch
+    runs-on: ubuntu-latest
+    outputs:
+      branch: ${{ steps.branch-name.outputs.branch }}
+    steps:
+      - name: Checkout main branch
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Get branch name
+        id: branch-name
+        run: |
+          raw=$(git branch -r --contains ${{ github.ref }})
+          branch=${raw##*/}
+          echo "{name}=branch" >> $GITHUB_OUTPUT
+          echo "Current Branch is $branch."
   build-deploy:
     name: 🚀 Build and Deploy Prod
+    needs: check-branch
     runs-on: ubuntu-latest
 
     steps:
-      - name: ⬇️ Checkout Repo
+      - name: ⬇️ Checkout main branch
         uses: actions/checkout@v4
+        with:
+          ref: main
       - name: 💎 Set up Ruby 3.2.2
         uses: ruby/setup-ruby@v1
         with:

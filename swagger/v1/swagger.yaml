@@ -579,9 +579,9 @@ paths:
                     type: string
                 required:
                 - error
-  "/api/v1/assessments/{assessment_id}/triggers/{id}/evaluate_trigger":
-    post:
-      summary: Evaluate Trigger
+  "/api/v1/assessments/{assessment_id}/action_results/{id}":
+    put:
+      summary: Evaluate Action Result
       tags:
       - Assessments
       security:
@@ -600,7 +600,99 @@ paths:
           type: string
       responses:
         '200':
-          description: Trigger Evaluated Successfully.
+          description: Action Result Updated Successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    activity_action_id:
+                      type: integer
+                    completed_at:
+                      type: string
+                    status:
+                      type: string
+                    assessment_id:
+                      type: integer
+                    activity_trigger_id:
+                      type: integer
+                    result_data:
+                      type: object
+                    deleted_at:
+                      type: string
+                    created_at:
+                      type: string
+                    updated_at:
+                      type: string
+                    activity:
+                      type: object
+                    activity_trigger:
+                      type: object
+                    activity_action:
+                      type: object
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: false
+                  message:
+                    type: string
+                required:
+                - success
+                - message
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                action_result:
+                  type: object
+                  properties:
+                    result_data:
+                      type: object
+                      properties:
+                        data:
+                          type: array
+                          items:
+                            type: object
+  "/api/v1/assessments/{assessment_id}/triggers/evaluate_triggers":
+    post:
+      summary: Evaluate Trigger
+      tags:
+      - Assessments
+      security:
+      - bearerAuth: []
+        apiKeyAuth: []
+      parameters:
+      - name: assessment_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Triggers Evaluated Successfully.
           content:
             application/json:
               schema:
@@ -630,6 +722,10 @@ paths:
                       type: object
                     activity_action:
                       type: object
+                    completed_at:
+                      type: string
+                    status:
+                      type: string
                   required:
                   - id
                   - activity_action_id
@@ -668,9 +764,85 @@ paths:
                     type: string
                 required:
                 - error
-  "/api/v1/assessments/{assessment_id}/triggers/evaluate_triggers":
-    post:
-      summary: Evaluate Trigger
+  "/api/v1/assessments/activities":
+    get:
+      summary: Get Activities with Action Results
+      tags:
+      - Assessments
+      security:
+      - bearerAuth: []
+        apiKeyAuth: []
+      responses:
+        '200':
+          description: Activities List
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    title:
+                      type: string
+                    description:
+                      type: string
+                    assessment_id:
+                      type: string
+                    status:
+                      type: string
+                    deleted_at:
+                      type: string
+                    created_at:
+                      type: string
+                    updated_at:
+                      type: string
+                    assessment_action_results:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          activity_action_id:
+                            type: integer
+                          completed_at:
+                            type: string
+                          status:
+                            type: string
+                          assessment_id:
+                            type: integer
+                          activity_trigger_id:
+                            type: integer
+                          result_data:
+                            type: object
+                          deleted_at:
+                            type: string
+                          created_at:
+                            type: string
+                          updated_at:
+                            type: string
+                          activity:
+                            type: object
+                          activity_trigger:
+                            type: object
+                          activity_action:
+                            type: object
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
+  "/api/v1/assessments/{assessment_id}/activities":
+    get:
+      summary: Get Activities for an assessment with Action Results
       tags:
       - Assessments
       security:
@@ -684,7 +856,179 @@ paths:
           type: string
       responses:
         '200':
-          description: Triggers Evaluated Successfully.
+          description: Activities List
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    title:
+                      type: string
+                    description:
+                      type: string
+                    assessment_id:
+                      type: string
+                    status:
+                      type: string
+                    deleted_at:
+                      type: string
+                    created_at:
+                      type: string
+                    updated_at:
+                      type: string
+                    assessment_action_results:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          activity_action_id:
+                            type: integer
+                          completed_at:
+                            type: string
+                          status:
+                            type: string
+                          assessment_id:
+                            type: integer
+                          activity_trigger_id:
+                            type: integer
+                          result_data:
+                            type: object
+                          deleted_at:
+                            type: string
+                          created_at:
+                            type: string
+                          updated_at:
+                            type: string
+                          activity:
+                            type: object
+                          activity_trigger:
+                            type: object
+                          activity_action:
+                            type: object
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
+  "/api/v1/assessments/{assessment_id}/activities/{id}":
+    get:
+      summary: Get Activity for an assessment with Action Results
+      tags:
+      - Assessments
+      security:
+      - bearerAuth: []
+        apiKeyAuth: []
+      parameters:
+      - name: assessment_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Activity Data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  title:
+                    type: string
+                  description:
+                    type: string
+                  assessment_id:
+                    type: string
+                  status:
+                    type: string
+                  deleted_at:
+                    type: string
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  assessment_action_results:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        activity_action_id:
+                          type: integer
+                        completed_at:
+                          type: string
+                        status:
+                          type: string
+                        assessment_id:
+                          type: integer
+                        activity_trigger_id:
+                          type: integer
+                        result_data:
+                          type: object
+                        deleted_at:
+                          type: string
+                        created_at:
+                          type: string
+                        updated_at:
+                          type: string
+                        activity:
+                          type: object
+                        activity_trigger:
+                          type: object
+                        activity_action:
+                          type: object
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
+  "/api/v1/assessments/{assessment_id}/triggers/{id}/evaluate_trigger":
+    post:
+      summary: Evaluate Trigger
+      tags:
+      - Assessments
+      security:
+      - bearerAuth: []
+        apiKeyAuth: []
+      parameters:
+      - name: assessment_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Trigger Evaluated Successfully.
           content:
             application/json:
               schema:
@@ -696,6 +1040,10 @@ paths:
                       type: integer
                     activity_action_id:
                       type: integer
+                    completed_at:
+                      type: string
+                    status:
+                      type: string
                     assessment_id:
                       type: integer
                     activity_trigger_id:
@@ -2320,6 +2668,52 @@ paths:
                   type: string
                   format: binary
         required: true
+  "/api/v1/uploads/download/{key}":
+    get:
+      summary: Download File
+      tags:
+      - Upload
+      security:
+      - bearerAuth: []
+        apiKeyAuth: []
+      parameters:
+      - name: key
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: File downloaded successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  url:
+                    type: string
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
 components:
   securitySchemes:
     bearerAuth:

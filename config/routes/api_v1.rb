@@ -15,17 +15,26 @@ namespace :api do
     resources :actions, only: %i[index]
     resources :companies, only: %i[index create]
     resources :assessments, only: %i[create show update index] do
-      post :trigger_tis_api, on: :collection
+      collection do
+        post :trigger_tis_api
+        get :activities, to: 'assessments/activities#index'
+      end
+
       scope module: :assessments do
         resources :triggers, only: [] do
           post :evaluate_trigger, on: :member
           post :evaluate_triggers, on: :collection
         end
+
+        resources :action_results, only: %i[update]
+        resources :activities, only: %i[index show]
       end
     end
 
     resources :activities, only: %i[create show index]
-    resources :uploads, only: :create
+    resources :uploads, only: :create do
+      get 'download/:key', on: :collection, action: :download, as: 'download'
+    end
 
     scope module: :activities do
       resources :activities, only: [] do

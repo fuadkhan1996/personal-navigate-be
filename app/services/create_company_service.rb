@@ -34,7 +34,9 @@ class CreateCompanyService < ApplicationService
   end
 
   def employee_attributes
-    params[:employee_attributes].try(:first) || {}
+    attributes = params[:employee_attributes].try(:first) || {}
+    attributes[:email] = attributes[:email].try(:downcase) if attributes[:email].present?
+    attributes
   end
 
   def account_exist?
