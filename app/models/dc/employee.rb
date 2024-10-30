@@ -46,6 +46,10 @@ module Dc
       false
     end
 
+    def cognito_username
+      @cognito_username ||= Cognito::Base.admin_get_user(user_object: { email: }).try(:username)
+    end
+
     private
 
     def password_required?
