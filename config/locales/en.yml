@@ -4,5 +4,7 @@ en:
       models:
         employee:
           attributes:
+            email:
+              invalid_format: "must be a valid email address."
             password:
               invalid_format: "must contain at least 8 characters and at least 3 of the following: one number, one uppercase letter, one lowercase letter, and/or one special character."

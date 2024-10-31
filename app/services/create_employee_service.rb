@@ -32,9 +32,6 @@ class CreateEmployeeService < ApplicationService
   end
 
   def employee_params
-    @employee = Dc::Employee.find_by(email: employee_attributes[:email])
-    return { dc_employee_id: @employee.id } if @employee.present?
-
     { employee_attributes: employee_attributes || {} }
   end
 

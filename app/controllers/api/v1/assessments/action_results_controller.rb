@@ -15,7 +15,7 @@ module Api
           if @action_result.errors.any?
             unprocessable_entity(@action_result.errors.messages)
           else
-            render json: ::Assessment::ActionResultBlueprint.render(@action_result, view: :with_activity), status: :ok
+            render json: ::Assessment::ActionResultBlueprint.render(@action_result, view: :with_activities), status: :ok
           end
         end
 

@@ -7,6 +7,6 @@ class AssessmentBlueprint < Blueprinter::Base
   association :account, blueprint: Dc::CompanyBlueprint, with: :with_primary_company_employee
 
   view :extended do
-    association :assessment_action_results, blueprint: Assessment::ActionResultBlueprint, view: :with_activity
+    association :assessment_action_results, blueprint: Assessment::ActionResultBlueprint, view: :with_activities
   end
 end

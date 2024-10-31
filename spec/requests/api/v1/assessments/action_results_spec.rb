@@ -42,13 +42,15 @@ describe 'Api::V1::Assessments::ActionResultsController' do
                    completed_at: { type: :string },
                    status: { type: :string },
                    assessment_id: { type: :integer },
-                   activity_trigger_id: { type: :integer },
                    result_data: { type: :object },
                    deleted_at: { type: :string },
                    created_at: { type: :string },
                    updated_at: { type: :string },
                    activity: { type: :object },
-                   activity_trigger: { type: :object },
+                   activity_triggers: {
+                     type: :array,
+                     items: { type: :object }
+                   },
                    activity_action: { type: :object }
                  }
                }
@@ -95,28 +97,17 @@ describe 'Api::V1::Assessments::ActionResultsController' do
                    id: { type: :integer },
                    activity_action_id: { type: :integer },
                    assessment_id: { type: :integer },
-                   activity_trigger_id: { type: :integer },
                    result_data: { type: :object },
                    deleted_at: { type: :string },
                    created_at: { type: :string },
                    updated_at: { type: :string },
                    activity: { type: :object },
-                   activity_trigger: { type: :object },
+                   activity_triggers: {
+                     type: :array,
+                     items: { type: :object }
+                   },
                    activity_action: { type: :object }
-                 },
-                 required: %w[
-                   id
-                   activity_action_id
-                   assessment_id
-                   activity_trigger_id
-                   result_data
-                   deleted_at
-                   created_at
-                   updated_at
-                   activity
-                   activity_trigger
-                   activity_action
-                 ]
+                 }
                }
 
         run_test!

@@ -52,17 +52,12 @@ class CreateCompanyService < ApplicationService
   end
 
   def merge_employee_attributes(attrs)
-    @employee = Dc::Employee.find_by(email: employee_attributes[:email])
-    if @employee.present?
-      attrs.merge(company_employees_attributes: [{ dc_employee_id: @employee.id, employee_type: 'Insured' }])
-    else
-      attrs.merge(company_employees_attributes: [
-                    {
-                      employee_type: 'Insured',
-                      employee_attributes:
-                    }
-                  ])
-    end
+    attrs.merge(company_employees_attributes: [
+                  {
+                    employee_type: 'Insured',
+                    employee_attributes:
+                  }
+                ])
   end
 
   def company_type

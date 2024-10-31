@@ -16,11 +16,13 @@ class Activity
                foreign_key: :nav_questionnaire_id,
                inverse_of: :activity_triggers
 
-    has_many :assessment_action_results,
-             dependent: :restrict_with_exception,
-             class_name: '::Assessment::ActionResult',
-             foreign_key: :nav_activity_trigger_id,
+    has_many :assessment_action_result_triggers,
+             dependent: :destroy,
+             class_name: 'Assessment::ActionResultTrigger',
+             foreign_key: :activity_trigger_id,
              inverse_of: :activity_trigger
+
+    has_many :assessment_action_results, through: :assessment_action_result_triggers
 
     delegate :title, to: :questionnaire, prefix: true
 
