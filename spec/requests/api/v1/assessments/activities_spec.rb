@@ -158,13 +158,15 @@ describe 'Api::V1::Assessments::ActivitiesController' do
                        completed_at: { type: :string },
                        status: { type: :string },
                        assessment_id: { type: :integer },
-                       activity_trigger_id: { type: :integer },
                        result_data: { type: :object },
                        deleted_at: { type: :string },
                        created_at: { type: :string },
                        updated_at: { type: :string },
                        activity: { type: :object },
-                       activity_trigger: { type: :object },
+                       activity_triggers: {
+                         type: :array,
+                         items: { type: :object }
+                       },
                        activity_action: { type: :object }
                      }
                    }

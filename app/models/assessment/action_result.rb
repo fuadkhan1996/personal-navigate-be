@@ -16,13 +16,15 @@ class Assessment
                foreign_key: :nav_assessment_id,
                inverse_of: :assessment_action_results
 
-    belongs_to :activity_trigger,
-               class_name: '::Activity::Trigger',
-               foreign_key: :nav_activity_trigger_id,
-               inverse_of: :assessment_action_results
-
-    has_one :activity, through: :activity_trigger
     has_one :action, through: :activity_action
+    has_many :assessment_action_result_triggers,
+             dependent: :destroy,
+             class_name: 'Assessment::ActionResultTrigger',
+             foreign_key: :assessment_action_result_id,
+             inverse_of: :assessment_action_result
+
+    has_many :activity_triggers, through: :assessment_action_result_triggers
+    has_many :activities, through: :activity_triggers
 
     validate :result_data_structure, on: :update
     validate :result_data_format, on: :update
@@ -40,10 +42,6 @@ class Assessment
 
     def assessment_id
       nav_assessment_id
-    end
-
-    def activity_trigger_id
-      nav_activity_trigger_id
     end
 
     def status

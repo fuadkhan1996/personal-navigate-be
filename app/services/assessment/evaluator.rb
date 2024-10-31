@@ -65,10 +65,14 @@ class Assessment
 
     def create_action_results
       activity.activity_actions.each do |activity_action|
-        Assessment::ActionResult.find_or_create_by!(
-          nav_activity_trigger_id: trigger.id,
+        action_result = Assessment::ActionResult.find_or_create_by!(
           nav_assessment_id: assessment.id,
           nav_activity_action_id: activity_action.id
+        )
+
+        Assessment::ActionResultTrigger.find_or_create_by!(
+          assessment_action_result_id: action_result.id,
+          activity_trigger_id: trigger.id
         )
       end
     end
