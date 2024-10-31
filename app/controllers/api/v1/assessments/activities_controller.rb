@@ -26,7 +26,7 @@ module Api
           render json: ::ActivityBlueprint.render(
             @activity,
             view: :with_assessment_action_results,
-            assessment_ids: assessments.ids
+            assessment_ids: [assessment.id]
           ), status: :ok
         end
 
