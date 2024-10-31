@@ -4,6 +4,7 @@ class ApplicationController < ActionController::API
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
   rescue_from ActionController::ParameterMissing, with: :parameter_missing
   rescue_from CanCan::AccessDenied, with: :handle_access_denied
+  rescue_from Aws::CognitoIdentityProvider::Errors::NotAuthorizedException, with: :not_authorized
 
   before_action :set_current_company
   before_action :authenticate_request!

@@ -36,7 +36,7 @@ class ActivityBlueprint < Blueprinter::Base
       assessment_ids = options[:assessment_ids]
       activity.assessment_action_results
               .by_assessments(assessment_ids)
-              .includes(:activity_trigger, :activity_action)
+              .includes(:activity_triggers, :activity_action)
     end
   end
 end

@@ -6,7 +6,6 @@ class Assessment
 
     fields :activity_action_id,
            :assessment_id,
-           :activity_trigger_id,
            :result_data,
            :deleted_at,
            :completed_at,
@@ -14,11 +13,11 @@ class Assessment
            :created_at,
            :updated_at
 
-    association :activity_trigger, blueprint: Activity::TriggerBlueprint
+    association :activity_triggers, blueprint: Activity::TriggerBlueprint
     association :activity_action, blueprint: Activity::ActionBlueprint
 
-    view :with_activity do
-      association :activity, blueprint: ActivityBlueprint, view: :extended
+    view :with_activities do
+      association :activities, blueprint: ActivityBlueprint, view: :extended
     end
   end
 end

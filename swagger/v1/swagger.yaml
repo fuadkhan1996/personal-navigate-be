@@ -618,8 +618,6 @@ paths:
                       type: string
                     assessment_id:
                       type: integer
-                    activity_trigger_id:
-                      type: integer
                     result_data:
                       type: object
                     deleted_at:
@@ -630,8 +628,10 @@ paths:
                       type: string
                     activity:
                       type: object
-                    activity_trigger:
-                      type: object
+                    activity_triggers:
+                      type: array
+                      items:
+                        type: object
                     activity_action:
                       type: object
         '422':
@@ -706,8 +706,6 @@ paths:
                       type: integer
                     assessment_id:
                       type: integer
-                    activity_trigger_id:
-                      type: integer
                     result_data:
                       type: object
                     deleted_at:
@@ -718,26 +716,16 @@ paths:
                       type: string
                     activity:
                       type: object
-                    activity_trigger:
-                      type: object
+                    activity_triggers:
+                      type: array
+                      items:
+                        type: object
                     activity_action:
                       type: object
                     completed_at:
                       type: string
                     status:
                       type: string
-                  required:
-                  - id
-                  - activity_action_id
-                  - assessment_id
-                  - activity_trigger_id
-                  - result_data
-                  - deleted_at
-                  - created_at
-                  - updated_at
-                  - activity
-                  - activity_trigger
-                  - activity_action
         '422':
           description: Unprocessable Entity
           content:
@@ -986,8 +974,6 @@ paths:
                           type: string
                         assessment_id:
                           type: integer
-                        activity_trigger_id:
-                          type: integer
                         result_data:
                           type: object
                         deleted_at:
@@ -998,8 +984,10 @@ paths:
                           type: string
                         activity:
                           type: object
-                        activity_trigger:
-                          type: object
+                        activity_triggers:
+                          type: array
+                          items:
+                            type: object
                         activity_action:
                           type: object
                   company:
@@ -1086,8 +1074,6 @@ paths:
                       type: string
                     assessment_id:
                       type: integer
-                    activity_trigger_id:
-                      type: integer
                     result_data:
                       type: object
                     deleted_at:
@@ -1098,22 +1084,12 @@ paths:
                       type: string
                     activity:
                       type: object
-                    activity_trigger:
-                      type: object
+                    activity_triggers:
+                      type: array
+                      items:
+                        type: object
                     activity_action:
                       type: object
-                  required:
-                  - id
-                  - activity_action_id
-                  - assessment_id
-                  - activity_trigger_id
-                  - result_data
-                  - deleted_at
-                  - created_at
-                  - updated_at
-                  - activity
-                  - activity_trigger
-                  - activity_action
         '422':
           description: Unprocessable Entity
           content:
