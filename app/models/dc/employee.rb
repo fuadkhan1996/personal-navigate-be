@@ -20,6 +20,11 @@ module Dc
 
     validates :first_name, :last_name, presence: true
     validates :password, :password_confirmation, presence: true, if: :password_required?
+    validates :email, uniqueness: { case_sensitive: false }
+    validates :email, format: {
+      with: URI::MailTo::EMAIL_REGEXP,
+      message: I18n.t('activerecord.errors.models.employee.attributes.email.invalid_format')
+    }
     validates :password, confirmation: true, if: :password_required?
     validates :password, format: {
       with: /\A(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W]).{8,}\z/,
