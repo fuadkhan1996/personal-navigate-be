@@ -26,7 +26,7 @@ class Assessment
     private
 
     def action_result_params
-      { result_data: { data: result_data_params }, completed_at: DateTime.current }
+      { result_data: { data: result_data_params } }
     end
 
     def result_data_params

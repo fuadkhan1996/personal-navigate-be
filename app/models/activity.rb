@@ -35,6 +35,7 @@ class Activity < ApplicationRecord
   scope :with_assessment_action_results, lambda { |assessment_ids|
     joins(:assessment_action_results)
       .where(nav_assessment_action_results: { nav_assessment_id: assessment_ids })
+      .where(nav_assessment_action_results: { deleted_at: nil })
       .select(
         "nav_activities.*,
        nav_assessment_action_results.nav_assessment_id AS assessment_id,

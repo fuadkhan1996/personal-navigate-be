@@ -4,6 +4,8 @@ class Assessment
   class ActionResult < ApplicationRecord
     self.table_name = :nav_assessment_action_results
 
+    include SoftDeletable
+
     FILE_UPLOAD_REQUIRED_KEYS = %w[active_storage_blob_id key filename size content_type].freeze
 
     belongs_to :activity_action,
@@ -26,15 +28,18 @@ class Assessment
     has_many :activity_triggers, through: :assessment_action_result_triggers
     has_many :activities, through: :activity_triggers
 
-    validate :result_data_structure, on: :update
-    validate :result_data_format, on: :update
-    validate :activity_action_details_max_files, on: :update
-    validate :activity_action_details_file_types, on: :update
+    validate :result_data_structure, on: :update, if: :saved_change_to_result_data?
+    validate :result_data_format, on: :update, if: :saved_change_to_result_data?
+    validate :activity_action_details_max_files, on: :update, if: :saved_change_to_result_data?
+    validate :activity_action_details_file_types, on: :update, if: :saved_change_to_result_data?
+
+    before_update :set_completed_at, unless: :deleted?
 
     delegate :action_kind, to: :action
     delegate :details, to: :activity_action, prefix: true
 
     scope :by_assessments, ->(assessment_ids) { where(nav_assessment_id: assessment_ids) }
+    scope :ids_not_in, ->(ids) { where.not(nav_assessment_action_results: { id: ids }) }
 
     def activity_action_id
       nav_activity_action_id
@@ -49,6 +54,12 @@ class Assessment
     end
 
     private
+
+    def set_completed_at
+      return unless saved_change_to_result_data?
+
+      self.completed_at = result_data.present? ? Time.current : nil
+    end
 
     def result_data_structure
       return if result_data.is_a?(Hash) && result_data['data'].is_a?(Array)
