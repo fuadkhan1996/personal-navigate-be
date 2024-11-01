@@ -37,6 +37,7 @@ class ActivityBlueprint < ApplicationBlueprint
     association :assessment_action_results, blueprint: Assessment::ActionResultBlueprint do |activity, options|
       assessment_ids = options[:assessment_ids]
       activity.assessment_action_results
+              .active
               .by_assessments(assessment_ids)
               .includes(:activity_triggers, :activity_action)
     end

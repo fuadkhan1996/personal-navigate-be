@@ -25,4 +25,20 @@ module SoftDeletable
   def deleted?
     deleted_at.present?
   end
+
+  def self.included(base)
+    base.extend(ClassMethods)
+  end
+
+  module ClassMethods
+    # Soft delete the records by setting deleted_at
+    def soft_delete
+      all.update(deleted_at: Time.current)
+    end
+
+    # Restore a soft-deleted records
+    def restore
+      all.update(deleted_at: nil)
+    end
+  end
 end
