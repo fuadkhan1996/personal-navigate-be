@@ -196,5 +196,54 @@ describe 'Api::V1::Activities::TriggersController' do
         run_test!
       end
     end
+
+    delete 'Delete Activity Trigger' do
+      tags 'Activities'
+      consumes 'application/json'
+      produces 'application/json'
+      security [{ bearerAuth: [], apiKeyAuth: [] }]
+
+      parameter name: :activity_id, in: :path, type: :string
+      parameter name: :id, in: :path, type: :string
+
+      response '200', 'Activity trigger Deleted Successfully.' do
+        schema type: :object,
+               properties: {
+                 id: { type: :integer },
+                 message: { type: :string }
+               },
+               required: %w[id message]
+
+        run_test!
+      end
+
+      response '422', 'Unprocessable Entity' do
+        schema type: :object,
+               properties: {
+                 errors: {
+                   type: :object,
+                   additionalProperties: {
+                     type: :array,
+                     items: {
+                       type: :string
+                     }
+                   }
+                 }
+               },
+               required: %w[errors]
+
+        run_test!
+      end
+
+      response '401', 'Unauthorized' do
+        schema type: :object,
+               properties: {
+                 error: { type: :string }
+               },
+               required: %w[error]
+
+        run_test!
+      end
+    end
   end
 end

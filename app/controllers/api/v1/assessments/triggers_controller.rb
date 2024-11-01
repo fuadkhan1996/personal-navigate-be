@@ -8,7 +8,7 @@ module Api
         before_action :set_trigger, only: %i[evaluate_trigger]
 
         def evaluate_triggers
-          if Assessment::Evaluator.call(assessment:, triggers: assessment.activity_triggers)
+          if Assessment::Evaluator.call(assessment:, triggers: assessment.activity_triggers.active)
             render json: ::Assessment::ActionResultBlueprint.render(
               assessment.assessment_action_results.includes(:activity_action, :activity_triggers, :activities),
               view: :with_activities
@@ -36,7 +36,7 @@ module Api
         end
 
         def set_trigger
-          @trigger = assessment.activity_triggers.find(params[:id])
+          @trigger = assessment.activity_triggers.active.find(params[:id])
         end
 
         def authorize_assessment!

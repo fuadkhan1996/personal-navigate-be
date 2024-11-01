@@ -322,6 +322,65 @@ paths:
                     type: string
                 required:
                 - error
+    delete:
+      summary: Delete Activity Trigger
+      tags:
+      - Activities
+      security:
+      - bearerAuth: []
+        apiKeyAuth: []
+      parameters:
+      - name: activity_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Activity trigger Deleted Successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  message:
+                    type: string
+                required:
+                - id
+                - message
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    additionalProperties:
+                      type: array
+                      items:
+                        type: string
+                required:
+                - errors
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
   "/api/v1/activities":
     get:
       summary: Get Activities
