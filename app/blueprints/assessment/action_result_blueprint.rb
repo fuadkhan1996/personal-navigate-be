@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Assessment
-  class ActionResultBlueprint < Blueprinter::Base
+  class ActionResultBlueprint < ApplicationBlueprint
     identifier :id
 
     fields :activity_action_id,
@@ -14,7 +14,7 @@ class Assessment
            :updated_at
 
     association :activity_triggers, blueprint: Activity::TriggerBlueprint
-    association :activity_action, blueprint: Activity::ActionBlueprint
+    association :activity_action, blueprint: Activity::ActionBlueprint, view: :with_supporting_documents
 
     view :with_activities do
       association :activities, blueprint: ActivityBlueprint, view: :extended
