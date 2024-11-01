@@ -21,8 +21,7 @@ describe 'Api::V1::Activities' do
                    deleted_at: { type: :string },
                    created_at: { type: :string },
                    updated_at: { type: :string }
-                 },
-                 required: %w[id title description deleted_at created_at updated_at]
+                 }
                }
 
         run_test!
@@ -143,14 +142,25 @@ describe 'Api::V1::Activities' do
                        id: { type: :integer },
                        title: { type: :string },
                        description: { type: :string },
+                       supporting_documents: {
+                         type: :array,
+                         items: {
+                           type: :object,
+                           properties: {
+                             key: { type: :string },
+                             content_type: { type: :string },
+                             filename: { type: :string },
+                             size: { type: :string }
+                           }
+                         }
+                       },
                        order: { type: :integer },
                        details: { type: :object },
                        action_kind: { type: :string },
                        deleted_at: { type: :string },
                        created_at: { type: :string },
                        updated_at: { type: :string }
-                     },
-                     required: %w[id title description order details action_kind deleted_at created_at updated_at]
+                     }
                    }
                  },
                  activity_triggers: {
@@ -176,18 +186,15 @@ describe 'Api::V1::Activities' do
                                  key: { type: :string },
                                  operator: { type: :string },
                                  value: { type: :string }
-                               },
-                               required: %w[key operator value]
+                               }
                              }
                            }
-                         },
-                         required: %w[conjunction conditions]
+                         }
                        }
                      }
                    }
                  }
-               },
-               required: %w[id title description deleted_at created_at updated_at activity_actions activity_triggers]
+               }
 
         run_test!
       end

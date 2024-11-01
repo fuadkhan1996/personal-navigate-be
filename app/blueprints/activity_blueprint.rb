@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ActivityBlueprint < Blueprinter::Base
+class ActivityBlueprint < ApplicationBlueprint
   identifier :id
 
   view :normal do
@@ -11,7 +11,7 @@ class ActivityBlueprint < Blueprinter::Base
 
   view :extended do
     include_view :normal
-    association :activity_actions, blueprint: Activity::ActionBlueprint
+    association :activity_actions, blueprint: Activity::ActionBlueprint, view: :with_supporting_documents
     association :activity_triggers, blueprint: Activity::TriggerBlueprint
   end
 
