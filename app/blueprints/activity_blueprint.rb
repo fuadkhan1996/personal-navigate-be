@@ -12,7 +12,9 @@ class ActivityBlueprint < ApplicationBlueprint
   view :extended do
     include_view :normal
     association :activity_actions, blueprint: Activity::ActionBlueprint, view: :with_supporting_documents
-    association :activity_triggers, blueprint: Activity::TriggerBlueprint
+    association :activity_triggers, blueprint: Activity::TriggerBlueprint do |activity, _options|
+      activity.activity_triggers.active
+    end
   end
 
   view :with_assessment_id_and_status do
