@@ -95,14 +95,20 @@ class Assessment
       return if errors[:result_data].any?
       return unless action_kind == 'file_upload'
       return if activity_action_details.blank?
-      return if valid_file_types?
 
-      errors.add('result_data.data', "file types allowed are #{activity_action_details['allowed_file_types']}")
+      allowed_types = allowed_file_types_from_details
+      return if allowed_types.empty? || valid_file_types?(allowed_types)
+
+      errors.add('result_data.data', "file types allowed are #{allowed_types.join(', ')}")
     end
 
-    def valid_file_types?
+    def allowed_file_types_from_details
+      (activity_action_details['allowed_file_types'] || '').split(',').map(&:strip)
+    end
+
+    def valid_file_types?(allowed_types)
       content_types = result_data['data'].pluck('content_type')
-      (content_types - [activity_action_details['allowed_file_types']].flatten).empty?
+      content_types.all? { |type| allowed_types.include?(type) }
     end
   end
 end
