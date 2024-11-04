@@ -19,6 +19,7 @@ class Assessment
                inverse_of: :assessment_action_results
 
     has_one :action, through: :activity_action
+    has_one :associated_activity, through: :activity_action, source: :activity
     has_many :assessment_action_result_triggers,
              dependent: :destroy,
              class_name: 'Assessment::ActionResultTrigger',
