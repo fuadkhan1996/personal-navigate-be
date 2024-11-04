@@ -30,7 +30,7 @@ module Api
         end
 
         def set_action_result
-          @action_result = assessment.assessment_action_results.find_by(id: params[:id])
+          @action_result = assessment.assessment_action_results.active.find_by(id: params[:id])
         end
       end
     end

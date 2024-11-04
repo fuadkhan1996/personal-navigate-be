@@ -1,12 +1,14 @@
 # frozen_string_literal: true
 
 class Assessment
-  class Evaluator
-    attr_reader :assessment, :triggers, :trigger
+  class Evaluator < ApplicationService
+    attr_reader :assessment, :triggers, :trigger, :retained_action_results
 
     def initialize(assessment, triggers)
+      super()
       @assessment = assessment
       @triggers = Array(triggers)
+      @retained_action_results = []
     end
 
     def call
@@ -22,6 +24,8 @@ class Assessment
 
         raise ActiveRecord::Rollback unless criteria_met
       end
+
+      soft_delete_unretained_action_results if criteria_met
 
       criteria_met
     end
@@ -70,11 +74,17 @@ class Assessment
           nav_activity_action_id: activity_action.id
         )
 
+        retained_action_results << action_result
+
         Assessment::ActionResultTrigger.find_or_create_by!(
           assessment_action_result_id: action_result.id,
           activity_trigger_id: trigger.id
         )
       end
+    end
+
+    def soft_delete_unretained_action_results
+      unretained_action_results.soft_delete
     end
 
     def activity
@@ -95,6 +105,10 @@ class Assessment
 
     def form_data
       assessment.form_data
+    end
+
+    def unretained_action_results
+      Assessment::ActionResult.by_assessments([assessment.id]).ids_not_in(retained_action_results.map(&:id))
     end
   end
 end

@@ -4,6 +4,8 @@ class Activity
   class Trigger < ApplicationRecord
     self.table_name = :nav_activity_triggers
 
+    include SoftDeletable
+
     OPERATORS = %w[eq lt gt gteq lteq].freeze
 
     belongs_to :activity,
@@ -27,7 +29,7 @@ class Activity
     delegate :title, to: :questionnaire, prefix: true
 
     validates :title, :criteria, presence: true
-    validate :validate_criteria
+    validate :validate_criteria, unless: :deleted?
 
     scope :for_company, ->(company_id) { joins(:activity).where(nav_activities: { dc_company_id: company_id }) }
 

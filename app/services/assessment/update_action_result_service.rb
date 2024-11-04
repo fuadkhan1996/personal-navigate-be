@@ -20,13 +20,15 @@ class Assessment
       return action_result if action_result.errors.any?
 
       action_result.update(action_result_params)
+      send_notification_if_complete
+
       action_result
     end
 
     private
 
     def action_result_params
-      { result_data: { data: result_data_params }, completed_at: DateTime.current }
+      { result_data: { data: result_data_params } }
     end
 
     def result_data_params
@@ -57,12 +59,23 @@ class Assessment
       action_result.errors.add(:result_data, 'each item in :data must be a hash with only the :key attribute')
     end
 
+    def send_notification_if_complete
+      return if action_result.errors.any?
+      return unless activity&.complete_for_assessment?(action_result.assessment_id)
+
+      Assessment::ActionResultMailer.notify_update(action_result_id: action_result.id).deliver_later
+    end
+
     def result_data
       params[:result_data]
     end
 
     def action_kind
       action_result.action_kind
+    end
+
+    def activity
+      @activity ||= action_result.associated_activity
     end
   end
 end

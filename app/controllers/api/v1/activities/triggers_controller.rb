@@ -5,10 +5,10 @@ module Api
     module Activities
       class TriggersController < ApplicationController
         before_action :authorize_activity!
-        before_action :set_trigger, only: %i[show]
+        before_action :set_trigger, only: %i[show destroy]
 
         def index
-          @triggers = activity.activity_triggers.order(created_at: :desc)
+          @triggers = activity.activity_triggers.active.order(created_at: :desc)
           render json: ::Activity::TriggerBlueprint.render(@triggers), status: :ok
         end
 
@@ -25,6 +25,14 @@ module Api
           end
         end
 
+        def destroy
+          if @trigger.soft_delete
+            render json: { id: @trigger.id, message: 'Activity trigger deleted Successfully.' }, status: :ok
+          else
+            unprocessable_entity(@trigger.errors.messages)
+          end
+        end
+
         private
 
         def activity
@@ -32,7 +40,7 @@ module Api
         end
 
         def set_trigger
-          @trigger = activity.activity_triggers.find(params[:id])
+          @trigger = activity.activity_triggers.active.find(params[:id])
         end
 
         def trigger_create_params

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ActivityBlueprint < Blueprinter::Base
+class ActivityBlueprint < ApplicationBlueprint
   identifier :id
 
   view :normal do
@@ -11,8 +11,10 @@ class ActivityBlueprint < Blueprinter::Base
 
   view :extended do
     include_view :normal
-    association :activity_actions, blueprint: Activity::ActionBlueprint
-    association :activity_triggers, blueprint: Activity::TriggerBlueprint
+    association :activity_actions, blueprint: Activity::ActionBlueprint, view: :with_supporting_documents
+    association :activity_triggers, blueprint: Activity::TriggerBlueprint do |activity, _options|
+      activity.activity_triggers.active
+    end
   end
 
   view :with_assessment_id_and_status do
@@ -35,6 +37,7 @@ class ActivityBlueprint < Blueprinter::Base
     association :assessment_action_results, blueprint: Assessment::ActionResultBlueprint do |activity, options|
       assessment_ids = options[:assessment_ids]
       activity.assessment_action_results
+              .active
               .by_assessments(assessment_ids)
               .includes(:activity_triggers, :activity_action)
     end
