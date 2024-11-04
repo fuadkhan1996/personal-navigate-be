@@ -49,4 +49,10 @@ class Activity < ApplicationRecord
       )
       .group('nav_activities.id', 'nav_assessment_action_results.nav_assessment_id')
   }
+
+  # Checks if the assessment associated with this activity is complete
+  def complete_for_assessment?(assessment_id)
+    action_results = assessment_action_results.where(nav_assessment_id: assessment_id)
+    action_results.empty? || action_results.all?(&:completed_at)
+  end
 end

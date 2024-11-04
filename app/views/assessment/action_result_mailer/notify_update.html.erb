@@ -1,0 +1,9 @@
+<% content_for :header, "Your Assessment Update!" %>
+<% content_for :recipient_name, @company_employee.fullname %>
+<p>
+  The account "<%= @account.title %>" has completed the activity titled "<%= @activity.title %>" as part of your assessment "<%= @assessment.title %>".
+  You can review the latest updates using the link below.
+</p>
+
+<a href="<%= host %>/dashboard/questionnaires/<%= @assessment.questionnaire_id %>/assessments/<%= @assessment.id %>" class="primary-btn">View Assessment</a>
+<p>If you did not expect this email, you can ignore it.</p>
