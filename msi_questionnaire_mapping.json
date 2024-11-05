@@ -1,0 +1,86 @@
+{
+  "F10320358": {
+    "mapped_to": "firm_name"
+  },
+  "F10709023": {
+    "mapped_to": "underwriter"
+  },
+  "F10709024": {
+    "mapped_to": "uw_phone"
+  },
+  "F10709026": {
+    "mapped_to": "uw_email"
+  },
+  "F10320361": {
+    "mapped_to": "broker_agency"
+  },
+  "F10709027": {
+    "mapped_to": "broker_contact"
+  },
+  "F10320362": {
+    "mapped_to": "broker_telephone"
+  },
+  "F10510056": {
+    "mapped_to": "broker_email"
+  },
+  "F11048729": {
+    "mapped_to": "retail_broker_agency"
+  },
+  "F11048730": {
+    "mapped_to": "retail_broker_telephone"
+  },
+  "F10320374": {
+    "mapped_to": "request_is",
+    "split": "|"
+  },
+  "F10400951": {
+    "mapped_to": "rush_order"
+  },
+  "F10530175": {
+    "mapped_to": "due_date"
+  },
+  "F10319937": {
+    "mapped_to": "photos_required"
+  },
+  "F10386040": {
+    "mapped_to": "diagram_required"
+  },
+  "F10861881": {
+    "mapped_to": "is_itv_required"
+  },
+  "F10320368": {
+    "mapped_to": "nature_of_business"
+  },
+  "F11139647": {
+    "mapped_to": "required_survey_form"
+  },
+  "F10769528": {
+    "mapped_to": "coverage",
+    "split": "|"
+  },
+  "F10320391": {
+    "mapped_to": "liability_coverage",
+    "split": "|"
+  },
+  "F10320400": {
+    "mapped_to": "employee_dishonesty_amount"
+  },
+  "F10320401": {
+    "mapped_to": "robbery_mon_sec_amount"
+  },
+  "F10320402": {
+    "mapped_to": "burglary_amount"
+  },
+  "F10320403": {
+    "mapped_to": "theft_amount"
+  },
+  "F10320405": {
+    "mapped_to": "inland_ocean_marine_description"
+  },
+  "F10320406": {
+    "mapped_to": "additional_instructions"
+  },
+  "F10400965": {
+    "mapped_to": "earlier_recommendations"
+  }
+}
