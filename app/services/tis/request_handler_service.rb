@@ -29,7 +29,8 @@ module Tis
       status = fetch_status(assessment.tis_order_id)
       return if status == 'New'
 
-      assessment.update!(completed_at: DateTime.current)
+      report = fetch_report(assessment.tis_order_id)
+      assessment.update!(completed_at: DateTime.current, form_data: report)
       @processed_assessment_ids << assessment.id
     end
 
@@ -39,6 +40,11 @@ module Tis
 
     def fetch_status(order_id)
       status_service = StatusService.new(order_id:)
+      status_service.fetch_data
+    end
+
+    def fetch_report(order_id)
+      status_service = ReportService.new(order_id:)
       status_service.fetch_data
     end
 
