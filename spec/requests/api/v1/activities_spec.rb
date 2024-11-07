@@ -123,7 +123,7 @@ describe 'Api::V1::Activities' do
       tags 'Activities'
       consumes 'application/json'
       produces 'application/json'
-      security [{ bearerAuth: [], apiKeyAuth: [] }]
+      security [{ bearerAuth: [], apiKeyAuth: [], xApiKey: [] }]
 
       parameter name: :id, in: :path, type: :string
       response '200', 'Activity Data' do

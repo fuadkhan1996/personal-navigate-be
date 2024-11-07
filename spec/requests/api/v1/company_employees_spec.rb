@@ -8,6 +8,7 @@ describe 'Api::V1::CompanyEmployeesController' do
       tags 'Companies'
       consumes 'application/json'
       produces 'application/json'
+      security [{ xApiKey: [] }]
 
       parameter name: :id, in: :path, type: :string
       parameter name: :company_employee, in: :body, schema: {

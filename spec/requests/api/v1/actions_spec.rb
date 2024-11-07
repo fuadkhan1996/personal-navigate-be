@@ -8,7 +8,7 @@ describe 'Api::V1::ActionsController' do
       tags 'Actions'
       consumes 'application/json'
       produces 'application/json'
-      security [{ bearerAuth: [], apiKeyAuth: [] }]
+      security [{ bearerAuth: [], apiKeyAuth: [], xApiKey: [] }]
 
       response '200', 'Actions List' do
         schema type: :array,

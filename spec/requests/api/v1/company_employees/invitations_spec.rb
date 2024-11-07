@@ -8,6 +8,7 @@ describe 'Api::V1::CompanyEmployees::InvitationsController' do
       tags 'Companies'
       consumes 'application/json'
       produces 'application/json'
+      security [{ xApiKey: [] }]
 
       parameter name: :invitation_token, in: :query
 
@@ -55,6 +56,7 @@ describe 'Api::V1::CompanyEmployees::InvitationsController' do
       tags 'Companies'
       consumes 'application/json'
       produces 'application/json'
+      security [{ xApiKey: [] }]
 
       parameter name: :invitation_token, in: :query
       parameter name: :employee, in: :body, schema: {
@@ -116,6 +118,7 @@ describe 'Api::V1::CompanyEmployees::InvitationsController' do
       tags 'Companies'
       consumes 'application/json'
       produces 'application/json'
+      security [{ xApiKey: [] }]
 
       parameter name: :company_employee, in: :body, schema: {
         type: :object,
@@ -201,7 +204,7 @@ describe 'Api::V1::CompanyEmployees::InvitationsController' do
       tags 'Companies'
       consumes 'application/json'
       produces 'application/json'
-      security [{ bearerAuth: [], apiKeyAuth: [] }]
+      security [{ bearerAuth: [], apiKeyAuth: [], xApiKey: [] }]
 
       parameter name: :id, in: :path, type: :string
 

@@ -8,6 +8,7 @@ describe 'Api::V1::Employees::Sessions' do
       tags 'Sessions'
       consumes 'application/json'
       produces 'application/json'
+      security [{ xApiKey: [] }]
       parameter name: :session, in: :body, schema: {
         type: :object,
         properties: {
@@ -73,7 +74,7 @@ describe 'Api::V1::Employees::Sessions' do
       tags 'Sessions'
       consumes 'application/json'
       produces 'application/json'
-      security [{ bearerAuth: [], apiKeyAuth: [] }]
+      security [{ bearerAuth: [], apiKeyAuth: [], xApiKey: [] }]
 
       response '200', 'Logged In Employee Data' do
         schema type: :object,
@@ -123,6 +124,8 @@ describe 'Api::V1::Employees::Sessions' do
       tags 'Sessions'
       consumes 'application/json'
       produces 'application/json'
+      security [{ xApiKey: [] }]
+
       parameter name: :refresh_access_token, in: :body, schema: {
         type: :object,
         properties: {
@@ -167,6 +170,8 @@ describe 'Api::V1::Employees::Sessions' do
       tags 'Sessions'
       consumes 'application/json'
       produces 'application/json'
+      security [{ bearerAuth: [], apiKeyAuth: [], xApiKey: [] }]
+
       parameter name: :session, in: :body, schema: {
         type: :object,
         properties: {

@@ -8,7 +8,7 @@ describe 'Api::V1::CompaniesController' do
       tags 'Companies'
       consumes 'application/json'
       produces 'application/json'
-      security [{ bearerAuth: [], apiKeyAuth: [] }]
+      security [{ bearerAuth: [], apiKeyAuth: [], xApiKey: [] }]
 
       parameter name: :company_type, in: :query, type: :string, description: 'Account/Carrier/Wholesaler/SubAgency'
       response '200', 'Companies List' do

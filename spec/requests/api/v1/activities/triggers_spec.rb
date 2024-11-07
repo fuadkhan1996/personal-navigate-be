@@ -8,7 +8,7 @@ describe 'Api::V1::Activities::TriggersController' do
       tags 'Activities'
       consumes 'application/json'
       produces 'application/json'
-      security [{ bearerAuth: [], apiKeyAuth: [] }]
+      security [{ bearerAuth: [], apiKeyAuth: [], xApiKey: [] }]
 
       parameter name: :activity_id, in: :path, type: :string
       parameter name: :activity_trigger, in: :body, schema: {
@@ -90,7 +90,7 @@ describe 'Api::V1::Activities::TriggersController' do
       tags 'Activities'
       consumes 'application/json'
       produces 'application/json'
-      security [{ bearerAuth: [], apiKeyAuth: [] }]
+      security [{ bearerAuth: [], apiKeyAuth: [], xApiKey: [] }]
 
       parameter name: :activity_id, in: :path, type: :string
       response '200', 'Activity triggers List' do
@@ -147,7 +147,7 @@ describe 'Api::V1::Activities::TriggersController' do
       tags 'Activities'
       consumes 'application/json'
       produces 'application/json'
-      security [{ bearerAuth: [], apiKeyAuth: [] }]
+      security [{ bearerAuth: [], apiKeyAuth: [], xApiKey: [] }]
 
       parameter name: :activity_id, in: :path, type: :string
       parameter name: :id, in: :path, type: :string
@@ -201,7 +201,7 @@ describe 'Api::V1::Activities::TriggersController' do
       tags 'Activities'
       consumes 'application/json'
       produces 'application/json'
-      security [{ bearerAuth: [], apiKeyAuth: [] }]
+      security [{ bearerAuth: [], apiKeyAuth: [], xApiKey: [] }]
 
       parameter name: :activity_id, in: :path, type: :string
       parameter name: :id, in: :path, type: :string
