@@ -8,7 +8,7 @@ describe 'Api::V1::Questionnaires::TriggersController' do
       tags 'Questionnaires'
       consumes 'application/json'
       produces 'application/json'
-      security [{ bearerAuth: [], apiKeyAuth: [] }]
+      security [{ bearerAuth: [], apiKeyAuth: [], xApiKey: [] }]
 
       parameter name: :questionnaire_id, in: :path, type: :string
       response '200', 'Questionnaire triggers List' do

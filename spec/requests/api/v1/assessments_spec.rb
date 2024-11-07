@@ -8,7 +8,7 @@ describe 'Api::V1::Assessments' do
       tags 'Assessments'
       consumes 'application/json'
       produces 'application/json'
-      security [{ bearerAuth: [], apiKeyAuth: [] }]
+      security [{ bearerAuth: [], apiKeyAuth: [], xApiKey: [] }]
 
       parameter name: :assessment, in: :body, schema: {
         type: :object,

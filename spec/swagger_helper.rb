@@ -24,12 +24,18 @@ RSpec.configure do |config|
             type: :apiKey,
             name: 'Company-Id',
             in: :header
+          },
+          xApiKey: {
+            type: :apiKey,
+            name: 'x-api-key',
+            in: :header
           }
         }
       },
       security: [
         { bearerAuth: [] },
-        { apiKeyAuth: [] }
+        { apiKeyAuth: [] },
+        { xApiKey: [] }
       ]
     }
   }

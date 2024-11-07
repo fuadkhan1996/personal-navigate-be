@@ -8,6 +8,7 @@ describe 'Api::V1::Employees::ProfilesController' do
       tags 'Sessions'
       consumes 'application/json'
       produces 'application/json'
+      security [{ bearerAuth: [], apiKeyAuth: [], xApiKey: [] }]
       parameter name: :employee, in: :body, schema: {
         type: :object,
         properties: {
@@ -80,6 +81,7 @@ describe 'Api::V1::Employees::ProfilesController' do
       tags 'Sessions'
       consumes 'application/json'
       produces 'application/json'
+      security [{ bearerAuth: [], apiKeyAuth: [], xApiKey: [] }]
       parameter name: :employee, in: :body, schema: {
         type: :object,
         properties: {
@@ -128,6 +130,7 @@ describe 'Api::V1::Employees::ProfilesController' do
       tags 'Sessions'
       consumes 'application/json'
       produces 'application/json'
+      security [{ bearerAuth: [], apiKeyAuth: [], xApiKey: [] }]
       parameter name: :employee, in: :body, schema: {
         type: :object,
         properties: {

@@ -12,6 +12,7 @@ paths:
       security:
       - bearerAuth: []
         apiKeyAuth: []
+        xApiKey: []
       responses:
         '200':
           description: Actions List
@@ -63,6 +64,7 @@ paths:
       security:
       - bearerAuth: []
         apiKeyAuth: []
+        xApiKey: []
       parameters:
       - name: activity_id
         in: path
@@ -168,6 +170,7 @@ paths:
       security:
       - bearerAuth: []
         apiKeyAuth: []
+        xApiKey: []
       parameters:
       - name: activity_id
         in: path
@@ -246,6 +249,7 @@ paths:
       security:
       - bearerAuth: []
         apiKeyAuth: []
+        xApiKey: []
       parameters:
       - name: activity_id
         in: path
@@ -329,6 +333,7 @@ paths:
       security:
       - bearerAuth: []
         apiKeyAuth: []
+        xApiKey: []
       parameters:
       - name: activity_id
         in: path
@@ -513,6 +518,7 @@ paths:
       security:
       - bearerAuth: []
         apiKeyAuth: []
+        xApiKey: []
       parameters:
       - name: id
         in: path
@@ -626,6 +632,7 @@ paths:
       security:
       - bearerAuth: []
         apiKeyAuth: []
+        xApiKey: []
       parameters:
       - name: assessment_id
         in: path
@@ -723,6 +730,7 @@ paths:
       security:
       - bearerAuth: []
         apiKeyAuth: []
+        xApiKey: []
       parameters:
       - name: assessment_id
         in: path
@@ -799,6 +807,7 @@ paths:
       security:
       - bearerAuth: []
         apiKeyAuth: []
+        xApiKey: []
       responses:
         '200':
           description: Activities List
@@ -878,6 +887,7 @@ paths:
       security:
       - bearerAuth: []
         apiKeyAuth: []
+        xApiKey: []
       parameters:
       - name: assessment_id
         in: path
@@ -963,6 +973,7 @@ paths:
       security:
       - bearerAuth: []
         apiKeyAuth: []
+        xApiKey: []
       parameters:
       - name: assessment_id
         in: path
@@ -1082,6 +1093,7 @@ paths:
       security:
       - bearerAuth: []
         apiKeyAuth: []
+        xApiKey: []
       parameters:
       - name: assessment_id
         in: path
@@ -1163,6 +1175,7 @@ paths:
       security:
       - bearerAuth: []
         apiKeyAuth: []
+        xApiKey: []
       parameters: []
       responses:
         '201':
@@ -1526,6 +1539,7 @@ paths:
       security:
       - bearerAuth: []
         apiKeyAuth: []
+        xApiKey: []
       parameters:
       - name: company_type
         in: query
@@ -1685,6 +1699,8 @@ paths:
       summary: Get Company Employee by Invitation Token
       tags:
       - Companies
+      security:
+      - xApiKey: []
       parameters:
       - name: invitation_token
         in: query
@@ -1746,6 +1762,8 @@ paths:
       summary: Accept Invitation
       tags:
       - Companies
+      security:
+      - xApiKey: []
       parameters:
       - name: invitation_token
         in: query
@@ -1825,6 +1843,8 @@ paths:
       summary: Invite New Employee
       tags:
       - Companies
+      security:
+      - xApiKey: []
       parameters: []
       responses:
         '200':
@@ -1923,6 +1943,7 @@ paths:
       security:
       - bearerAuth: []
         apiKeyAuth: []
+        xApiKey: []
       parameters:
       - name: id
         in: path
@@ -1988,6 +2009,8 @@ paths:
       summary: Update Company Employee
       tags:
       - Companies
+      security:
+      - xApiKey: []
       parameters:
       - name: id
         in: path
@@ -2130,6 +2153,10 @@ paths:
       summary: Update employee email
       tags:
       - Sessions
+      security:
+      - bearerAuth: []
+        apiKeyAuth: []
+        xApiKey: []
       parameters: []
       responses:
         '200':
@@ -2232,6 +2259,10 @@ paths:
       summary: Update employee email update
       tags:
       - Sessions
+      security:
+      - bearerAuth: []
+        apiKeyAuth: []
+        xApiKey: []
       parameters: []
       responses:
         '200':
@@ -2281,6 +2312,10 @@ paths:
       summary: Update employee information
       tags:
       - Sessions
+      security:
+      - bearerAuth: []
+        apiKeyAuth: []
+        xApiKey: []
       parameters: []
       responses:
         '200':
@@ -2336,6 +2371,8 @@ paths:
       summary: Create an Employee Session
       tags:
       - Sessions
+      security:
+      - xApiKey: []
       parameters: []
       responses:
         '201':
@@ -2437,6 +2474,7 @@ paths:
       security:
       - bearerAuth: []
         apiKeyAuth: []
+        xApiKey: []
       responses:
         '200':
           description: Logged In Employee Data
@@ -2511,6 +2549,8 @@ paths:
       summary: Refresh an Employee Session
       tags:
       - Sessions
+      security:
+      - xApiKey: []
       parameters: []
       responses:
         '201':
@@ -2563,6 +2603,10 @@ paths:
       summary: Update Current Employee Password
       tags:
       - Sessions
+      security:
+      - bearerAuth: []
+        apiKeyAuth: []
+        xApiKey: []
       parameters: []
       responses:
         '200':
@@ -2608,6 +2652,7 @@ paths:
       security:
       - bearerAuth: []
         apiKeyAuth: []
+        xApiKey: []
       parameters:
       - name: questionnaire_id
         in: path
@@ -2731,6 +2776,7 @@ paths:
       security:
       - bearerAuth: []
         apiKeyAuth: []
+        xApiKey: []
       parameters:
       - name: key
         in: path
@@ -2779,6 +2825,11 @@ components:
       type: apiKey
       name: Company-Id
       in: header
+    xApiKey:
+      type: apiKey
+      name: x-api-key
+      in: header
 security:
 - bearerAuth: []
 - apiKeyAuth: []
+- xApiKey: []
