@@ -63,7 +63,7 @@ class Assessment
     end
 
     def result_data_structure
-      return if result_data.is_a?(Hash) && result_data['data'].is_a?(Array)
+      return if result_data.is_a?(Hash) && result_data['data'].is_a?(Array) && result_data['data'].size.positive?
 
       errors.add(:result_data, 'must be a hash with a :data key containing an array')
     end
