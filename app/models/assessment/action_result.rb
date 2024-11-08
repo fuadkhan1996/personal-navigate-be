@@ -29,10 +29,10 @@ class Assessment
     has_many :activity_triggers, through: :assessment_action_result_triggers
     has_many :activities, through: :activity_triggers
 
-    validate :result_data_structure, on: :update, if: :saved_change_to_result_data?
-    validate :result_data_format, on: :update, if: :saved_change_to_result_data?
-    validate :activity_action_details_max_files, on: :update, if: :saved_change_to_result_data?
-    validate :activity_action_details_file_types, on: :update, if: :saved_change_to_result_data?
+    validate :result_data_structure, on: :update, if: :will_save_change_to_result_data?
+    validate :result_data_format, on: :update, if: :will_save_change_to_result_data?
+    validate :activity_action_details_max_files, on: :update, if: :will_save_change_to_result_data?
+    validate :activity_action_details_file_types, on: :update, if: :will_save_change_to_result_data?
 
     before_update :set_completed_at, unless: :deleted?
 
@@ -57,7 +57,7 @@ class Assessment
     private
 
     def set_completed_at
-      return unless saved_change_to_result_data?
+      return unless will_save_change_to_result_data?
 
       self.completed_at = result_data.present? ? Time.current : nil
     end
