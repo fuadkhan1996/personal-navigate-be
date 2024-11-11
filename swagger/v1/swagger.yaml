@@ -394,6 +394,7 @@ paths:
       security:
       - bearerAuth: []
         apiKeyAuth: []
+        xApiKey: []
       responses:
         '200':
           description: Activity List
@@ -434,6 +435,7 @@ paths:
       security:
       - bearerAuth: []
         apiKeyAuth: []
+        xApiKey: []
       parameters: []
       responses:
         '201':
@@ -1245,6 +1247,12 @@ paths:
       security:
       - bearerAuth: []
         apiKeyAuth: []
+        xApiKey: []
+      parameters:
+      - name: account_id
+        in: query
+        schema:
+          type: string
       responses:
         '200':
           description: Assessment List
@@ -1330,6 +1338,7 @@ paths:
       security:
       - bearerAuth: []
         apiKeyAuth: []
+        xApiKey: []
       parameters:
       - name: id
         in: path
@@ -1422,6 +1431,7 @@ paths:
       security:
       - bearerAuth: []
         apiKeyAuth: []
+        xApiKey: []
       parameters:
       - name: id
         in: path
@@ -1497,6 +1507,7 @@ paths:
       security:
       - bearerAuth: []
         apiKeyAuth: []
+        xApiKey: []
       responses:
         '200':
           description: Assessment Processed Successfully.
@@ -1607,6 +1618,7 @@ paths:
       security:
       - bearerAuth: []
         apiKeyAuth: []
+        xApiKey: []
       parameters: []
       responses:
         '201':
@@ -1694,6 +1706,84 @@ paths:
                   - employee_attributes
               required:
               - company
+  "/api/v1/companies/{id}":
+    get:
+      summary: Get Linked Company
+      tags:
+      - Companies
+      security:
+      - bearerAuth: []
+        apiKeyAuth: []
+        xApiKey: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Company Data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  title:
+                    type: string
+                  guid:
+                    type: string
+                  logo:
+                    type: string
+                  company_type_name:
+                    type: string
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  primary_company_employee:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      uuid:
+                        type: string
+                      email:
+                        type: string
+                      first_name:
+                        type: string
+                      last_name:
+                        type: string
+                      invitation_sent_at:
+                        type: string
+                      invitation_accepted_at:
+                        type: string
+                      employee_type:
+                        type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
   "/api/v1/company_employees/invitation":
     get:
       summary: Get Company Employee by Invitation Token
@@ -2736,6 +2826,7 @@ paths:
       security:
       - bearerAuth: []
         apiKeyAuth: []
+        xApiKey: []
       parameters: []
       responses:
         '200':

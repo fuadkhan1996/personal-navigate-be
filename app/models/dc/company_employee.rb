@@ -48,5 +48,9 @@ module Dc
     def self.find_for_email_and_company_type(email:, company_type_name:)
       all.by_email(email).by_company_type(company_type_name).order_by_created_at.first
     end
+
+    def ability
+      Ability.new(self)
+    end
   end
 end

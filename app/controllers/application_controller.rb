@@ -56,7 +56,7 @@ class ApplicationController < ActionController::API
   end
 
   def set_current_ability
-    Current.ability = Ability.new(current_company_employee) if current_company_employee.present?
+    Current.ability = current_company_employee.try(:ability)
   end
 
   def not_found(exception)

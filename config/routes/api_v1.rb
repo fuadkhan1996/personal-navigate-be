@@ -13,7 +13,7 @@ namespace :api do
     end
 
     resources :actions, only: %i[index]
-    resources :companies, only: %i[index create]
+    resources :companies, only: %i[index create show]
     resources :assessments, only: %i[create show update index] do
       collection do
         post :trigger_tis_api

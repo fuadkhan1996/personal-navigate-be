@@ -70,8 +70,9 @@ describe 'Api::V1::Assessments' do
       tags 'Assessments'
       consumes 'application/json'
       produces 'application/json'
-      security [{ bearerAuth: [], apiKeyAuth: [] }]
+      security [{ bearerAuth: [], apiKeyAuth: [], xApiKey: [] }]
 
+      parameter name: :account_id, in: :query, type: :string
       response '200', 'Assessment List' do
         schema type: :array,
                items: {
@@ -135,7 +136,7 @@ describe 'Api::V1::Assessments' do
       tags 'Assessments'
       consumes 'application/json'
       produces 'application/json'
-      security [{ bearerAuth: [], apiKeyAuth: [] }]
+      security [{ bearerAuth: [], apiKeyAuth: [], xApiKey: [] }]
 
       parameter name: :id, in: :path, type: :string
       response '200', 'Assessment Data' do
@@ -197,7 +198,7 @@ describe 'Api::V1::Assessments' do
       tags 'Assessments'
       consumes 'application/json'
       produces 'application/json'
-      security [{ bearerAuth: [], apiKeyAuth: [] }]
+      security [{ bearerAuth: [], apiKeyAuth: [], xApiKey: [] }]
 
       parameter name: :id, in: :path, type: :string
       parameter name: :assessment, in: :body, schema: {
@@ -262,7 +263,7 @@ describe 'Api::V1::Assessments' do
       tags 'Assessments'
       consumes 'application/json'
       produces 'application/json'
-      security [{ bearerAuth: [], apiKeyAuth: [] }]
+      security [{ bearerAuth: [], apiKeyAuth: [], xApiKey: [] }]
 
       response '200', 'Assessment Processed Successfully.' do
         schema type: :object,

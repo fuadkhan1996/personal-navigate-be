@@ -57,7 +57,7 @@ describe 'Api::V1::CompaniesController' do
       tags 'Companies'
       consumes 'application/json'
       produces 'application/json'
-      security [{ bearerAuth: [], apiKeyAuth: [] }]
+      security [{ bearerAuth: [], apiKeyAuth: [], xApiKey: [] }]
 
       parameter name: :company, in: :body, schema: {
         type: :object,
@@ -122,6 +122,64 @@ describe 'Api::V1::CompaniesController' do
       end
 
       response '401', 'Unauthorized' do
+        schema type: :object,
+               properties: {
+                 error: { type: :string }
+               },
+               required: %w[error]
+
+        run_test!
+      end
+    end
+  end
+
+  path '/api/v1/companies/{id}' do
+    get 'Get Linked Company' do
+      tags 'Companies'
+      consumes 'application/json'
+      produces 'application/json'
+      security [{ bearerAuth: [], apiKeyAuth: [], xApiKey: [] }]
+
+      parameter name: :id, in: :path, type: :string
+      response '200', 'Company Data' do
+        schema type: :object,
+               properties: {
+                 id: { type: :string },
+                 title: { type: :string },
+                 guid: { type: :string },
+                 logo: { type: :string },
+                 company_type_name: { type: :string },
+                 created_at: { type: :string },
+                 updated_at: { type: :string },
+                 primary_company_employee: {
+                   type: :object,
+                   properties: {
+                     id: { type: :string },
+                     uuid: { type: :string },
+                     email: { type: :string },
+                     first_name: { type: :string },
+                     last_name: { type: :string },
+                     invitation_sent_at: { type: :string },
+                     invitation_accepted_at: { type: :string },
+                     employee_type: { type: :string }
+                   }
+                 }
+               }
+
+        run_test!
+      end
+
+      response '401', 'Unauthorized' do
+        schema type: :object,
+               properties: {
+                 error: { type: :string }
+               },
+               required: %w[error]
+
+        run_test!
+      end
+
+      response '404', 'Not Found' do
         schema type: :object,
                properties: {
                  error: { type: :string }
