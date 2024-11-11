@@ -3,6 +3,8 @@
 module Api
   module V1
     class CompaniesController < ApplicationController
+      before_action :set_company, only: %i[show]
+
       def index
         scope = if params[:company_type].present?
                   current_company.linked_companies_by_company_type(params[:company_type])
@@ -12,6 +14,10 @@ module Api
 
         @companies = scope.includes(:company_type).order(created_at: :desc)
         render json: Dc::CompanyBlueprint.render(@companies, view: :with_primary_company_employee), status: :ok
+      end
+
+      def show
+        render json: Dc::CompanyBlueprint.render(@company, view: :with_primary_company_employee), status: :ok
       end
 
       def create
@@ -34,6 +40,11 @@ module Api
           :company_type_name,
           employee_attributes: %i[first_name last_name email]
         )
+      end
+
+      def set_company
+        @company = current_company.linked_companies.find_by(id: params[:id])
+        raise ActiveRecord::RecordNotFound, "Company with ID #{params[:id]}" if @company.blank?
       end
     end
   end
