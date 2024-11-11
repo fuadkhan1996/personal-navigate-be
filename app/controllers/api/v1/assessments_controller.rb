@@ -5,6 +5,7 @@ module Api
     class AssessmentsController < ApplicationController
       skip_before_action :set_current_company, only: %i[trigger_tis_api]
       skip_before_action :authenticate_request!, only: %i[trigger_tis_api]
+      before_action :set_account, only: %i[index]
       before_action :set_assessment, only: %i[show update]
       before_action :authorize_assessment!, only: %i[show create update]
 
@@ -16,6 +17,7 @@ module Api
 
       def index
         @assessments = Assessment.accessible_by(current_ability).order(created_at: :desc)
+        @assessments = @assessments.where(account_id: @account.id) if @account.present?
         render json: ::AssessmentBlueprint.render(@assessments), status: :ok
       end
 
@@ -68,6 +70,13 @@ module Api
 
       def set_assessment
         @assessment = Assessment.accessible_by(current_ability).find_by(id: params[:id])
+      end
+
+      def set_account
+        return if params[:account_id].blank?
+
+        @account = current_company.linked_companies_by_company_type('Account').find_by(id: params[:account_id])
+        raise ActiveRecord::RecordNotFound, "Account with ID #{params[:account_id]}" if @account.blank?
       end
 
       def authorize_assessment!

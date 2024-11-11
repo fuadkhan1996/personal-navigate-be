@@ -394,6 +394,7 @@ paths:
       security:
       - bearerAuth: []
         apiKeyAuth: []
+        xApiKey: []
       responses:
         '200':
           description: Activity List
@@ -434,6 +435,7 @@ paths:
       security:
       - bearerAuth: []
         apiKeyAuth: []
+        xApiKey: []
       parameters: []
       responses:
         '201':
@@ -1245,6 +1247,12 @@ paths:
       security:
       - bearerAuth: []
         apiKeyAuth: []
+        xApiKey: []
+      parameters:
+      - name: account_id
+        in: query
+        schema:
+          type: string
       responses:
         '200':
           description: Assessment List
@@ -1330,6 +1338,7 @@ paths:
       security:
       - bearerAuth: []
         apiKeyAuth: []
+        xApiKey: []
       parameters:
       - name: id
         in: path
@@ -1422,6 +1431,7 @@ paths:
       security:
       - bearerAuth: []
         apiKeyAuth: []
+        xApiKey: []
       parameters:
       - name: id
         in: path
@@ -1497,6 +1507,7 @@ paths:
       security:
       - bearerAuth: []
         apiKeyAuth: []
+        xApiKey: []
       responses:
         '200':
           description: Assessment Processed Successfully.
@@ -1607,6 +1618,7 @@ paths:
       security:
       - bearerAuth: []
         apiKeyAuth: []
+        xApiKey: []
       parameters: []
       responses:
         '201':
@@ -2814,6 +2826,7 @@ paths:
       security:
       - bearerAuth: []
         apiKeyAuth: []
+        xApiKey: []
       parameters: []
       responses:
         '200':

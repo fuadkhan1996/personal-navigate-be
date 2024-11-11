@@ -8,7 +8,7 @@ describe 'Api::V1::UploadsController' do
       tags 'Upload'
       consumes 'multipart/form-data'
       produces 'application/json'
-      security [{ bearerAuth: [], apiKeyAuth: [] }]
+      security [{ bearerAuth: [], apiKeyAuth: [], xApiKey: [] }]
 
       parameter name: :file, in: :formData, schema: {
         type: :object,

@@ -57,7 +57,7 @@ describe 'Api::V1::CompaniesController' do
       tags 'Companies'
       consumes 'application/json'
       produces 'application/json'
-      security [{ bearerAuth: [], apiKeyAuth: [] }]
+      security [{ bearerAuth: [], apiKeyAuth: [], xApiKey: [] }]
 
       parameter name: :company, in: :body, schema: {
         type: :object,
