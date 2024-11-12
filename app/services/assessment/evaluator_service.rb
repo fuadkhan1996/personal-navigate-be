@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Assessment
-  class Evaluator < ApplicationService
+  class EvaluatorService < ApplicationService
     attr_reader :assessment, :triggers, :trigger, :retained_action_results
 
     def initialize(assessment, triggers)
