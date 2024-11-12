@@ -11,6 +11,9 @@
   "F10709026": {
     "mapped_to": "uw_email"
   },
+  "F10320365": {
+    "mapped_to": "policy_number"
+  },
   "F10320361": {
     "mapped_to": "broker_agency"
   },
@@ -36,14 +39,47 @@
   "F10400951": {
     "mapped_to": "rush_order"
   },
-  "F10530175": {
+  "F10320371": {
     "mapped_to": "due_date"
+  },
+  "F10530175": {
+    "mapped_to": "delayed_due_date"
+  },
+  "F10709070": {
+    "mapped_to": "eff_date"
+  },
+  "F10320364": {
+    "mapped_to": "insured"
+  },
+  "F10902662": {
+    "mapped_to": "dba"
+  },
+  "F10320369": {
+    "mapped_to": "inspection_contact"
+  },
+  "F10320370": {
+    "mapped_to": "contact_telephone"
+  },
+  "F10832210": {
+    "mapped_to": "contact_mobile"
+  },
+  "F10709025": {
+    "mapped_to": "contact_email"
+  },
+  "F11048731": {
+    "mapped_to": "alternate_inspection_contact_info"
   },
   "F10319937": {
     "mapped_to": "photos_required"
   },
   "F10386040": {
     "mapped_to": "diagram_required"
+  },
+  "F10319933": {
+    "mapped_to": "enter_full_address_per_line_with_5_digit_zip_use_main_address_only_for_complexes"
+  },
+  "F10864355": {
+    "mapped_to": "list_addresses_to_be_surveyed_with_main_location_above"
   },
   "F10861881": {
     "mapped_to": "is_itv_required"
@@ -52,14 +88,14 @@
     "mapped_to": "nature_of_business"
   },
   "F11139647": {
-    "mapped_to": "required_survey_form"
+    "mapped_to": "climatic_perils_supplements"
   },
   "F10769528": {
     "mapped_to": "coverage",
     "split": "|"
   },
   "F10320391": {
-    "mapped_to": "liability_coverage",
+    "mapped_to": "liabilities",
     "split": "|"
   },
   "F10320400": {
