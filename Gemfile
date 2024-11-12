@@ -34,7 +34,6 @@ gem 'bootsnap', require: false
 gem 'aws-sdk-cognitoidentity'
 gem 'aws-sdk-cognitoidentityprovider'
 gem 'aws-sdk-s3', require: false
-gem 'jsonapi-serializer'
 gem 'rswag-api'
 gem 'rswag-ui'
 
