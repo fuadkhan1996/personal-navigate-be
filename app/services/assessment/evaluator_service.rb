@@ -4,6 +4,15 @@ class Assessment
   class EvaluatorService < ApplicationService
     attr_reader :assessment, :triggers, :trigger, :retained_action_results
 
+    OPERATIONS = {
+      'eq' => ->(data, condition) { data.to_s == condition.to_s },
+      'lt' => ->(data, condition) { data.to_f < condition.to_f },
+      'gt' => ->(data, condition) { data.to_f > condition.to_f },
+      'gteq' => ->(data, condition) { data.to_f >= condition.to_f },
+      'lteq' => ->(data, condition) { data.to_f <= condition.to_f },
+      'cont' => ->(data, condition) { condition.all? { |value| data.include?(value) } }
+    }.freeze
+
     def initialize(assessment, triggers)
       super()
       @assessment = assessment
@@ -46,20 +55,8 @@ class Assessment
     end
 
     def compare_values(data_value, operator, condition_value)
-      case operator
-      when 'eq'
-        data_value.to_s == condition_value.to_s
-      when 'lt'
-        data_value.to_f < condition_value.to_f
-      when 'gt'
-        data_value.to_f > condition_value.to_f
-      when 'gteq'
-        data_value.to_f >= condition_value.to_f
-      when 'lteq'
-        data_value.to_f <= condition_value.to_f
-      else
-        false
-      end
+      operation = OPERATIONS[operator]
+      operation ? operation.call(data_value, condition_value) : false
     end
 
     def criteria_met?
