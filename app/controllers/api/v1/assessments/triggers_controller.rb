@@ -8,7 +8,7 @@ module Api
         before_action :set_trigger, only: %i[evaluate_trigger]
 
         def evaluate_triggers
-          if Assessment::Evaluator.call(assessment:, triggers: assessment.activity_triggers.active)
+          if Assessment::EvaluatorService.call(assessment:, triggers: assessment.activity_triggers.active)
             render json: ::Assessment::ActionResultBlueprint.render(
               assessment.assessment_action_results.includes(:activity_action, :activity_triggers, :activities),
               view: :with_activities
@@ -19,7 +19,7 @@ module Api
         end
 
         def evaluate_trigger
-          if Assessment::Evaluator.call(assessment:, triggers: @trigger)
+          if Assessment::EvaluatorService.call(assessment:, triggers: @trigger)
             render json: ::Assessment::ActionResultBlueprint.render(
               assessment.assessment_action_results.includes(:activity_action, :activity_triggers, :activities),
               view: :with_activities

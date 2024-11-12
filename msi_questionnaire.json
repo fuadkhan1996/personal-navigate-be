@@ -10,132 +10,251 @@
           "type": "text",
           "label": "Firm Name",
           "required": true,
-          "span": "HALF_ROW"
+          "span": 6
         },
         {
           "key": "underwriter",
           "type": "text",
           "label": "Underwriter",
           "required": true,
-          "span": "HALF_ROW"
+          "span": 6
         },
         {
           "key": "uw_phone",
           "type": "text",
           "label": "UW Phone (optional)",
-          "span": "HALF_ROW"
+          "span": 6
         },
         {
           "key": "uw_email",
           "type": "text",
           "label": "UW Email",
           "required": true,
-          "span": "HALF_ROW"
+          "span": 6
+        },
+        {
+          "key": "policy_number",
+          "type": "text",
+          "label": "Policy Number",
+          "span": 12
         },
         {
           "key": "broker_agency",
           "type": "textarea",
           "label": "Broker/Agency",
-          "span": "FULL_ROW"
+          "span": 12
         },
         {
           "key": "broker_contact",
           "type": "text",
           "label": "Broker Contact",
-          "span": "HALF_ROW"
+          "span": 6
         },
         {
           "key": "broker_telephone",
           "type": "text",
           "label": "Broker Telephone",
-          "span": "HALF_ROW"
+          "span": 6
         },
         {
           "key": "broker_email",
           "type": "text",
           "label": "Broker Email (optional)",
-          "span": "HALF_ROW"
+          "span": 6
         },
         {
           "key": "retail_broker_agency",
           "type": "text",
           "label": "Retail Broker/Agency",
-          "span": "HALF_ROW"
+          "span": 6
         },
         {
           "key": "retail_broker_telephone",
           "type": "text",
           "label": "Retail Broker Telephone",
-          "span": "HALF_ROW"
+          "span": 6
         },
         {
           "key": "request_is",
           "type": "checkbox",
-          "label": "Request is",
+          "label": "Request is:",
           "options": [
-            { "label": "New", "value": "New" },
-            { "label": "Renewal", "value": "Renewal" },
-            { "label": "Recommendation Check", "value": "Recommendation Check" },
-            { "label": "Telephone survey only", "value": "Telephone survey only" },
-            { "label": "Virtual survey", "value": "Virtual survey" },
-            { "label": "Sidewalk Only Survey", "value": "Sidewalk Only Survey" }
+            {
+              "label": "New",
+              "value": "New"
+            },
+            {
+              "label": "Renewal",
+              "value": "Renewal"
+            },
+            {
+              "label": "Recommendation Check",
+              "value": "Recommendation Check"
+            },
+            {
+              "label": "Telephone survey only",
+              "value": "Telephone survey only"
+            },
+            {
+              "label": "Virtual survey",
+              "value": "Virtual survey"
+            },
+            {
+              "label": "Sidewalk Only Survey",
+              "value": "Sidewalk Only Survey"
+            }
           ],
-          "span": "HALF_ROW"
+          "span": 6
         },
         {
           "key": "rush_order",
           "type": "checkbox",
           "label": "Rush Order",
-          "span": "HALF_ROW",
-          "options": [{ "label": "Rush Order", "value": "Yes" }]
+          "span": 6,
+          "options": [
+            {
+              "label": "Rush Order",
+              "value": "Yes"
+            }
+          ]
         },
         {
           "key": "due_date",
           "type": "radio",
-          "label": "Due Date",
+          "label": "Due Date:",
           "options": [
-            { "label": "30 Days", "value": "30 Days" },
-            { "label": "21 Days", "value": "21 Days" },
-            { "label": "7-10 Days (Rush Orders)", "value": "7-10 Days (Rush Orders)" }
+            {
+              "label": "30 Days",
+              "value": "30 Days"
+            },
+            {
+              "label": "21 Days",
+              "value": "21 Days"
+            },
+            {
+              "label": "7-10 Days (ONLY on Rush Orders-see above)",
+              "value": "7-10 Days (ONLY on Rush Orders-see above)"
+            }
           ],
-          "span": "HALF_ROW"
+          "span": 6
+        },
+        {
+          "key": "delayed_due_date",
+          "type": "text",
+          "label": "Delayed Due Date (enter the requested service date range)",
+          "span": 6
+        },
+        {
+          "key": "eff_date",
+          "type": "text",
+          "label": "EFF. date (optional)",
+          "span": 6
+        },
+        {
+          "key": "insured",
+          "type": "text",
+          "label": "Insured",
+          "span": 12
         },
         {
           "key": "photos_required",
           "type": "radio",
           "label": "Photos Required",
           "options": [
-            { "label": "Yes", "value": "Yes" },
-            { "label": "No", "value": "No" }
+            {
+              "label": "Yes",
+              "value": "Yes"
+            },
+            {
+              "label": "No",
+              "value": "No"
+            }
           ],
-          "span": "HALF_ROW"
+          "span": 6
         },
         {
           "key": "is_itv_required",
           "type": "radio",
           "label": "Is an ITV Required?",
           "options": [
-            { "label": "Yes", "value": "Yes" },
-            { "label": "No", "value": "No" }
+            {
+              "label": "Yes",
+              "value": "Yes"
+            },
+            {
+              "label": "No",
+              "value": "No"
+            }
           ],
-          "span": "HALF_ROW"
+          "span": 6
         },
         {
           "key": "diagram_required",
           "type": "dropdown",
           "label": "Diagram (or plot plan) required",
           "options": [
-            { "label": "Select", "value": "" },
-            { "label": "Yes", "value": "Yes" },
-            { "label": "No", "value": "No" }
+            {
+              "label": "Select",
+              "value": ""
+            },
+            {
+              "label": "Yes",
+              "value": "Yes"
+            },
+            {
+              "label": "No",
+              "value": "No"
+            }
           ],
-          "span": "FULL_ROW"
+          "span": 12
+        },
+        {
+          "key": "enter_full_address_per_line_with_5_digit_zip_use_main_address_only_for_complexes",
+          "type": "textarea",
+          "label": "Location(s) - Enter one complete location address, ending in 5-digit zip code, per line & w/o descriptions (Note: For apt. complexes, resorts, etc. to be treated as one location, ONLY enter the main address, while indicating all additional addresses in the Additional Addresses text box below):",
+          "span": 6
+        },
+        {
+          "key": "list_addresses_to_be_surveyed_with_main_location_above",
+          "type": "textarea",
+          "label": "Additional Addresses (to be surveyed in ONE report, for the main location/address noted above):",
+          "span": 6
+        },
+        {
+          "key": "inspection_contact",
+          "type": "text",
+          "label": "Inspection Contact",
+          "span": 12
+        },
+        {
+          "key": "contact_telephone",
+          "type": "text",
+          "label": "Contact Telephone",
+          "span": 12
+        },
+        {
+          "key": "contact_mobile",
+          "type": "text",
+          "label": "Contact Mobile",
+          "span": 6
+        },
+        {
+          "key": "contact_email",
+          "type": "text",
+          "label": "Contact e-mail (optional)",
+          "span": 6
+        },
+        {
+          "key": "alternate_inspection_contact_info",
+          "type": "textarea",
+          "label": "Alternate Inspection Contact Info",
+          "span": 12
         },
         {
           "key": "nature_of_business",
           "type": "textarea",
           "label": "Nature of Business/Operations",
-          "span": "FULL_ROW"
+          "span": 12
         }
       ]
     },
@@ -143,14 +262,20 @@
       "title": "Climatic Perils Supplements",
       "components": [
         {
-          "key": "required_survey_form",
+          "key": "climatic_perils_supplements",
           "type": "checkbox",
-          "label": "Required Survey Form (check only if required as additional to standard forms)",
+          "label": "Required Survey Form (check only if required as additional to standard forms):",
           "options": [
-            { "label": "Wildfire Supplement", "value": "Wildfire Supplement" },
-            { "label": "Earthquake and Flood Supplement", "value": "Earthquake and Flood Supplement" }
+            {
+              "label": "Wildfire Supplement",
+              "value": "Wildfire Supplement"
+            },
+            {
+              "label": "Earthquake and Flood Supplement",
+              "value": "Earthquake and Flood Supplement"
+            }
           ],
-          "span": "FULL_ROW"
+          "span": 12
         }
       ]
     },
@@ -162,18 +287,48 @@
           "type": "checkbox",
           "label": "Coverage(s)",
           "options": [
-            { "label": "BOP", "value": "BOP" },
-            { "label": "Package", "value": "Package" },
-            { "label": "Monoline GL", "value": "Monoline GL" },
-            { "label": "Monoline Property", "value": "Monoline Property" },
-            { "label": "Dwelling - Exterior Only", "value": "Dwelling - Exterior Only" },
-            { "label": "Garage", "value": "Garage" },
-            { "label": "Auto Physical Damage", "value": "Auto Physical Damage" },
-            { "label": "Workers Comp", "value": "Workers Comp" },
-            { "label": "Sidewalk Only", "value": "Sidewalk Only" },
-            { "label": "Rec Check", "value": "Rec Check" }
+            {
+              "label": "BOP",
+              "value": "BOP"
+            },
+            {
+              "label": "Package",
+              "value": "Package"
+            },
+            {
+              "label": "Monoline GL",
+              "value": "Monoline GL"
+            },
+            {
+              "label": "Monoline Property",
+              "value": "Monoline Property"
+            },
+            {
+              "label": "Dwelling - Exterior Only",
+              "value": "Dwelling - Exterior Only"
+            },
+            {
+              "label": "Garage",
+              "value": "Garage"
+            },
+            {
+              "label": "Auto Physical Damage",
+              "value": "Auto Physical Damage"
+            },
+            {
+              "label": "Workers Comp",
+              "value": "Workers Comp"
+            },
+            {
+              "label": "Sidewalk Only",
+              "value": "Sidewalk Only"
+            },
+            {
+              "label": "Rec Check",
+              "value": "Rec Check"
+            }
           ],
-          "span": "FULL_ROW"
+          "span": 12
         }
       ]
     },
@@ -181,19 +336,40 @@
       "title": "Liability",
       "components": [
         {
-          "key": "liability_coverage",
+          "key": "liabilities",
           "type": "checkbox",
           "label": "Indicate all that apply",
           "options": [
-            { "label": "Commercial General Liability", "value": "Commercial General Liability" },
-            { "label": "Auto Liability", "value": "Auto Liability" },
-            { "label": "Professional Liability", "value": "Professional Liability" },
-            { "label": "Products Liability", "value": "Products Liability" },
-            { "label": "Liquor Liability", "value": "Liquor Liability" },
-            { "label": "Garage/GKLL", "value": "Garage/GKLL" },
-            { "label": "OCP", "value": "OCP" }
+            {
+              "label": "Commercial General Liability",
+              "value": "Commercial General Liability"
+            },
+            {
+              "label": "Auto Liability",
+              "value": "Auto Liability"
+            },
+            {
+              "label": "Professional Liability",
+              "value": "Professional Liability"
+            },
+            {
+              "label": "Products Liability",
+              "value": "Products Liability"
+            },
+            {
+              "label": "Liquor Liability",
+              "value": "Liquor Liability"
+            },
+            {
+              "label": "Garage/GKLL",
+              "value": "Garage/GKLL"
+            },
+            {
+              "label": "OCP",
+              "value": "OCP"
+            }
           ],
-          "span": "FULL_ROW"
+          "span": 12
         }
       ]
     },
@@ -204,25 +380,25 @@
           "key": "employee_dishonesty_amount",
           "type": "text",
           "label": "Employee Dishonesty $",
-          "span": "HALF_ROW"
+          "span": 6
         },
         {
           "key": "robbery_mon_sec_amount",
           "type": "text",
           "label": "Robbery Mon. & Sec. $",
-          "span": "HALF_ROW"
+          "span": 6
         },
         {
           "key": "burglary_amount",
           "type": "text",
           "label": "Burglary $",
-          "span": "HALF_ROW"
+          "span": 6
         },
         {
           "key": "theft_amount",
           "type": "text",
           "label": "Theft $",
-          "span": "HALF_ROW"
+          "span": 6
         }
       ]
     },
@@ -233,7 +409,7 @@
           "key": "inland_ocean_marine_description",
           "type": "textarea",
           "label": "Describe Coverage (e.g. Bailee, Cargo, Jeweler's Block, Transit, etc., along with goods, cargo and/or equipment covered, and their dollar values)",
-          "span": "FULL_ROW"
+          "span": 12
         }
       ]
     },
@@ -244,13 +420,13 @@
           "key": "additional_instructions",
           "type": "textarea",
           "label": "Please List or Describe",
-          "span": "FULL_ROW"
+          "span": 12
         },
         {
           "key": "earlier_recommendations",
           "type": "textarea",
           "label": "Earlier Recommendations (to be checked for compliance)",
-          "span": "FULL_ROW"
+          "span": 12
         }
       ]
     },
@@ -261,7 +437,7 @@
           "key": "disclaimer",
           "type": "note",
           "label": "This order form is for the purpose of ordering an insurance loss control survey of hazards; it is not a request for an insurance to value report. Please contact TIS (800-557-1147) for property valuation requests.",
-          "span": "FULL_ROW"
+          "span": 12
         }
       ]
     }
