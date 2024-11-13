@@ -6,7 +6,7 @@ class Activity
 
     include SoftDeletable
 
-    OPERATORS = %w[eq lt gt gteq lteq].freeze
+    OPERATORS = %w[eq lt gt gteq lteq cont].freeze
 
     belongs_to :activity,
                class_name: '::Activity',
