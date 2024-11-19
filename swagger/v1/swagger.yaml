@@ -1934,7 +1934,9 @@ paths:
       tags:
       - Companies
       security:
-      - xApiKey: []
+      - bearerAuth: []
+        apiKeyAuth: []
+        xApiKey: []
       parameters: []
       responses:
         '200':

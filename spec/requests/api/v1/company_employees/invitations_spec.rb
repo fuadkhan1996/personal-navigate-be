@@ -118,7 +118,7 @@ describe 'Api::V1::CompanyEmployees::InvitationsController' do
       tags 'Companies'
       consumes 'application/json'
       produces 'application/json'
-      security [{ xApiKey: [] }]
+      security [{ bearerAuth: [], apiKeyAuth: [], xApiKey: [] }]
 
       parameter name: :company_employee, in: :body, schema: {
         type: :object,
