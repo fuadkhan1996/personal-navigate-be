@@ -33,7 +33,7 @@ module Invitable
   end
 
   def valid_invitation?
-    time = invitation_created_at || invitation_sent_at
+    time = invitation_sent_at
     time && time.utc >= 7.days.ago
   end
 
