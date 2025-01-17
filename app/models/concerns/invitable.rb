@@ -5,7 +5,7 @@ module Invitable
 
   def invited_by=(inviter)
     super
-    self.invited_by_type = 'CompanyEmployee'
+    self.invited_by_type = 'Dc::CompanyEmployee'
   end
 
   def invited_by

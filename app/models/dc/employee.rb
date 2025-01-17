@@ -8,7 +8,8 @@ module Dc
     self.table_name = :dc_employees
 
     attr_accessor :password,
-                  :current_password # Only use to update password
+                  :current_password, # Only use to update password
+                  :should_validate_name_presence
 
     has_many :company_employees,
              dependent: :restrict_with_exception,
@@ -18,7 +19,7 @@ module Dc
 
     has_many :companies, through: :company_employees
 
-    validates :first_name, :last_name, presence: true
+    validates :first_name, :last_name, presence: true, if: :should_validate_name_presence?
     validates :password, :password_confirmation, presence: true, if: :password_required?
     validates :email, uniqueness: { case_sensitive: false }
     validates :email, format: {
@@ -35,7 +36,7 @@ module Dc
     after_update :update_email_in_cognito, if: :saved_change_to_email?
 
     def fullname
-      [first_name, last_name].join(' ')
+      [first_name.presence || '', last_name.presence || ''].join(' ').strip
     end
 
     def update_password(password_params)
@@ -59,6 +60,10 @@ module Dc
 
     def password_required?
       password.present? || password_confirmation.present?
+    end
+
+    def should_validate_name_presence?
+      !!should_validate_name_presence
     end
 
     def update_email_in_cognito

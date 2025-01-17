@@ -20,4 +20,8 @@ module CurrentContextHelper
   def current_employee
     current_company_employee.employee
   end
+
+  def current_user
+    current_company_employee
+  end
 end

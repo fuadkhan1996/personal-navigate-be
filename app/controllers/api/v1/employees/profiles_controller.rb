@@ -20,7 +20,7 @@ module Api
         end
 
         def update
-          if current_employee.update(update_params)
+          if current_employee.update(update_params.merge(should_validate_name_presence: true))
             render json: Dc::CompanyEmployeeBlueprint.render(current_company_employee, view: :extended), status: :ok
           else
             unprocessable_entity(current_employee.errors.messages)

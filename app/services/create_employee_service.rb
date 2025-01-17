@@ -10,9 +10,21 @@ class CreateEmployeeService < ApplicationService
 
   def call
     @company_employee = Dc::CompanyEmployee.new(create_params)
-    @company_employee.invite!(current_company_employee) if @company_employee.save
+    if block_given?
+      yield(@company_employee)
+    else
+      @company_employee.save
+    end
 
     @company_employee
+  end
+
+  def call_with_invitation
+    call do |company_employee|
+      company_employee.invite!(current_user)
+    end
+  rescue ActiveRecord::RecordInvalid => e
+    e.record
   end
 
   private

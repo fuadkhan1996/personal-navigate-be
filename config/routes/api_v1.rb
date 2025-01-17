@@ -52,6 +52,7 @@ namespace :api do
       resource :invitation, only: %i[show update create]
       resources :invitations, only: [] do
         post :resend_invite, on: :member
+        post :bulk_invite, on: :collection
       end
     end
 

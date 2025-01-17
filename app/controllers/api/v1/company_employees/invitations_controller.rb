@@ -17,7 +17,7 @@ module Api
         end
 
         def create
-          @company_employee = CreateEmployeeService.new(params: create_invitation_params).call
+          @company_employee = CreateEmployeeService.new(params: create_invitation_params).call_with_invitation
           if @company_employee.errors.any?
             unprocessable_entity(@company_employee.errors.messages)
           else
@@ -46,6 +46,15 @@ module Api
           end
         end
 
+        def bulk_invite
+          response = CreateEmployeesService.new(params: bulk_invite_params).call
+          if response.status == :success
+            render json: { message: response.message }, status: :ok
+          else
+            unprocessable_entity(response.errors.messages)
+          end
+        end
+
         private
 
         def set_company_employee
@@ -59,13 +68,25 @@ module Api
         end
 
         def accept_invitation_params
-          params.require(:employee).permit(:password, :password_confirmation)
+          params.require(:employee).permit(
+            :first_name,
+            :last_name,
+            :password,
+            :password_confirmation
+          ).merge(should_validate_name_presence: true)
         end
 
         def create_invitation_params
           params.require(:company_employee).permit(
             :employee_type,
             employee_attributes: %i[first_name last_name email]
+          ).merge(dc_company_id: current_company.id)
+        end
+
+        def bulk_invite_params
+          params.require(:invitation).permit(
+            :employee_type,
+            email_addresses: []
           ).merge(dc_company_id: current_company.id)
         end
 

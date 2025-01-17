@@ -65,6 +65,8 @@ describe 'Api::V1::CompanyEmployees::InvitationsController' do
           employee: {
             type: :object,
             properties: {
+              first_name: { type: :string },
+              last_name: { type: :string },
               password: { type: :string },
               password_confirmation: { type: :string }
             },
@@ -99,6 +101,24 @@ describe 'Api::V1::CompanyEmployees::InvitationsController' do
                    }
                  }
                }
+
+        run_test!
+      end
+
+      response '422', 'Unprocessable Entity' do
+        schema type: :object,
+               properties: {
+                 errors: {
+                   type: :object,
+                   additionalProperties: {
+                     type: :array,
+                     items: {
+                       type: :string
+                     }
+                   }
+                 }
+               },
+               required: %w[errors]
 
         run_test!
       end
@@ -238,6 +258,60 @@ describe 'Api::V1::CompanyEmployees::InvitationsController' do
       end
 
       response '422', 'Unauthorized' do
+        schema type: :object,
+               properties: {
+                 error: { type: :string }
+               },
+               required: %w[error]
+
+        run_test!
+      end
+    end
+  end
+
+  path '/api/v1/company_employees/invitations/bulk_invite' do
+    post 'Bulk invite employees' do
+      tags 'Companies'
+      consumes 'application/json'
+      produces 'application/json'
+      security [{ bearerAuth: [], apiKeyAuth: [], xApiKey: [] }]
+
+      parameter name: :invitation, in: :body, schema: {
+        type: :object,
+        properties: {
+          employee_type: { type: :string },
+          email_addresses: { type: :array, items: { type: :string } }
+        }
+      }
+
+      response '200', 'Invitations Sent Successfully.' do
+        schema type: :object,
+               properties: {
+                 message: { type: :string, example: 'Invitations Sent Successfully.' }
+               }
+
+        run_test!
+      end
+
+      response '422', 'Unprocessable Entity' do
+        schema type: :object,
+               properties: {
+                 errors: {
+                   type: :object,
+                   additionalProperties: {
+                     type: :array,
+                     items: {
+                       type: :string
+                     }
+                   }
+                 }
+               },
+               required: %w[errors]
+
+        run_test!
+      end
+
+      response '401', 'Unauthorized' do
         schema type: :object,
                properties: {
                  error: { type: :string }

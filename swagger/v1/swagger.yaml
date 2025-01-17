@@ -1900,6 +1900,21 @@ paths:
                         type: string
                       updated_at:
                         type: string
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    additionalProperties:
+                      type: array
+                      items:
+                        type: string
+                required:
+                - errors
         '401':
           description: Unauthorized
           content:
@@ -1920,6 +1935,10 @@ paths:
                 employee:
                   type: object
                   properties:
+                    first_name:
+                      type: string
+                    last_name:
+                      type: string
                     password:
                       type: string
                     password_confirmation:
@@ -2096,6 +2115,65 @@ paths:
                     type: string
                 required:
                 - error
+  "/api/v1/company_employees/invitations/bulk_invite":
+    post:
+      summary: Bulk invite employees
+      tags:
+      - Companies
+      security:
+      - bearerAuth: []
+        apiKeyAuth: []
+        xApiKey: []
+      parameters: []
+      responses:
+        '200':
+          description: Invitations Sent Successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Invitations Sent Successfully.
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    additionalProperties:
+                      type: array
+                      items:
+                        type: string
+                required:
+                - errors
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                employee_type:
+                  type: string
+                email_addresses:
+                  type: array
+                  items:
+                    type: string
   "/api/v1/company_employees/{id}":
     put:
       summary: Update Company Employee
