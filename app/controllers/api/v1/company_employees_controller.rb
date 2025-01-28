@@ -6,7 +6,13 @@ module Api
       before_action :set_company_employee, only: :update
 
       def index
-        @company_employees = current_company.company_employees.active.order_by_created_at(:desc).includes(:employee)
+        scope = if params[:employee_type].present?
+                  current_company.company_employees_by_employee_type(params[:employee_type])
+                else
+                  current_company.company_employees
+                end
+
+        @company_employees = scope.active.order_by_created_at(:desc).includes(:employee)
         render json: Dc::CompanyEmployeeBlueprint.render(@company_employees), status: :ok
       end
 

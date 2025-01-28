@@ -1,5 +1,6 @@
 namespace :api do
   namespace :v1 do
+    draw 'api/v1/companies'
     namespace :employees do
       resource :session, only: %i[create show] do
         post :refresh, on: :collection
@@ -13,7 +14,6 @@ namespace :api do
     end
 
     resources :actions, only: %i[index]
-    resources :companies, only: %i[index create show]
     resources :assessments, only: %i[create show update index] do
       collection do
         post :trigger_tis_api

@@ -76,6 +76,8 @@ describe 'Api::V1::CompanyEmployeesController' do
       consumes 'application/json'
       produces 'application/json'
 
+      parameter name: :employee_type, in: :query, type: :string, description: 'Admin/Owner, Agent, Insured, SME'
+
       response '200', 'Company Employee Data' do
         schema type: :array,
                items: {

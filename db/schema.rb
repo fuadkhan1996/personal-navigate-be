@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_10_31_174059) do
+ActiveRecord::Schema[7.1].define(version: 2025_01_27_212216) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -984,6 +984,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_31_174059) do
     t.datetime "deleted_at", precision: nil
   end
 
+  create_table "dc_assigned_company_employees", force: :cascade do |t|
+    t.bigint "company_employee_id"
+    t.bigint "company_connection_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["company_connection_id"], name: "index_dc_assigned_company_employees_on_company_connection_id"
+    t.index ["company_employee_id", "company_connection_id"], name: "idx_unique_assigned_employee_connection", unique: true
+    t.index ["company_employee_id"], name: "index_dc_assigned_company_employees_on_company_employee_id"
+  end
+
   create_table "dc_authentication_codes", force: :cascade do |t|
     t.bigint "company_employee_id", null: false
     t.string "code", null: false
@@ -1755,6 +1765,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_31_174059) do
   add_foreign_key "app_submission_groups", "dc_companies", column: "company_id"
   add_foreign_key "app_submission_groups", "dc_company_employees", column: "company_employee_id"
   add_foreign_key "app_templates", "app_templates", column: "renewal_template_id"
+  add_foreign_key "dc_assigned_company_employees", "dc_company_connections", column: "company_connection_id", on_delete: :cascade
+  add_foreign_key "dc_assigned_company_employees", "dc_company_employees", column: "company_employee_id", on_delete: :cascade
   add_foreign_key "dc_authentication_codes", "dc_company_employees", column: "company_employee_id"
   add_foreign_key "dc_companies", "dc_company_types", column: "comp_type_id", name: "dc_companies_dc_company_type_id_fkey"
   add_foreign_key "dc_company_connections", "dc_companies", column: "dc_partner_company_id", name: "dc_company_connections_dc_partner_company_id_fkey"

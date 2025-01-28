@@ -12,7 +12,10 @@ module Api
                   current_company.linked_companies
                 end
 
-        @companies = scope.includes(:company_type).order(created_at: :desc)
+        @companies = scope.accessible_by(current_ability).includes(:company_type)
+                          .includes({ assigned_company_employees: { company_employee: :employee } })
+                          .order(created_at: :desc)
+
         render json: Dc::CompanyBlueprint.render(@companies, view: :with_primary_company_employee), status: :ok
       end
 
@@ -43,7 +46,11 @@ module Api
       end
 
       def set_company
-        @company = current_company.linked_companies.find_by(id: params[:id])
+        @company = current_company.linked_companies
+                                  .accessible_by(current_ability)
+                                  .includes({ assigned_company_employees: { company_employee: :employee } })
+                                  .find_by(id: params[:id])
+
         raise ActiveRecord::RecordNotFound, "Company with ID #{params[:id]}" if @company.blank?
       end
     end

@@ -1542,6 +1542,235 @@ paths:
                     type: string
                 required:
                 - error
+  "/api/v1/companies/{company_id}/assigned_company_employees":
+    post:
+      summary: Assign Company Employee to a Company
+      tags:
+      - Companies
+      security:
+      - bearerAuth: []
+        apiKeyAuth: []
+        xApiKey: []
+      parameters:
+      - name: company_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Company Employee Assigned
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  title:
+                    type: string
+                  guid:
+                    type: string
+                  logo:
+                    type: string
+                  company_type_name:
+                    type: string
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  deleted_at:
+                    type: string
+                  primary_company_employee:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      uuid:
+                        type: string
+                      email:
+                        type: string
+                      first_name:
+                        type: string
+                      last_name:
+                        type: string
+                      invitation_sent_at:
+                        type: string
+                      invitation_accepted_at:
+                        type: string
+                      employee_type:
+                        type: string
+                  assigned_company_employees:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        created_at:
+                          type: string
+                        updated_at:
+                          type: string
+                        company_employee:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                            uuid:
+                              type: string
+                            email:
+                              type: string
+                            first_name:
+                              type: string
+                            last_name:
+                              type: string
+                            invitation_sent_at:
+                              type: string
+                            invitation_accepted_at:
+                              type: string
+                            employee_type:
+                              type: string
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    additionalProperties:
+                      type: array
+                      items:
+                        type: string
+                required:
+                - errors
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                assigned_company_employee:
+                  type: object
+                  properties:
+                    company_employee_id:
+                      type: string
+  "/api/v1/companies/{company_id}/assigned_company_employees/{id}":
+    delete:
+      summary: Remove Assigned Company Employee
+      tags:
+      - Companies
+      security:
+      - bearerAuth: []
+        apiKeyAuth: []
+        xApiKey: []
+      parameters:
+      - name: company_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Assigned Company Employee Removed Successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  title:
+                    type: string
+                  guid:
+                    type: string
+                  logo:
+                    type: string
+                  company_type_name:
+                    type: string
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  deleted_at:
+                    type: string
+                  primary_company_employee:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      uuid:
+                        type: string
+                      email:
+                        type: string
+                      first_name:
+                        type: string
+                      last_name:
+                        type: string
+                      invitation_sent_at:
+                        type: string
+                      invitation_accepted_at:
+                        type: string
+                      employee_type:
+                        type: string
+                  assigned_company_employees:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        created_at:
+                          type: string
+                        updated_at:
+                          type: string
+                        company_employee:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                            uuid:
+                              type: string
+                            email:
+                              type: string
+                            first_name:
+                              type: string
+                            last_name:
+                              type: string
+                            invitation_sent_at:
+                              type: string
+                            invitation_accepted_at:
+                              type: string
+                            employee_type:
+                              type: string
+        '422':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
   "/api/v1/companies":
     get:
       summary: Get Linked Companies
@@ -2262,6 +2491,12 @@ paths:
       summary: List of Company Employees
       tags:
       - Companies
+      parameters:
+      - name: employee_type
+        in: query
+        description: Admin/Owner, Agent, Insured, SME
+        schema:
+          type: string
       responses:
         '200':
           description: Company Employee Data

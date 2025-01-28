@@ -24,6 +24,16 @@ module Dc
              foreign_key: :dc_company_employee_id,
              inverse_of: :company_employee
 
+    has_many :assigned_company_employees,
+             class_name: 'AssignedCompanyEmployee',
+             inverse_of: :company_employee,
+             dependent: :destroy
+
+    has_many :assigned_company_connections, through: :assigned_company_employees, source: :company_connection
+
+    # only accounts for now
+    has_many :assigned_companies, through: :assigned_company_connections, source: :partner_company
+
     validates :dc_employee_id, uniqueness: { scope: :dc_company_id }
 
     accepts_nested_attributes_for :employee, reject_if: :blank?
@@ -38,6 +48,8 @@ module Dc
       joins(:company_type)
         .where.not(dc_company_types: { name: company_type_names })
     }
+
+    scope :by_employee_type, ->(employee_type) { where(employee_type:) }
 
     scope :order_by_created_at, ->(order = :asc) { order("dc_company_employees.created_at #{order}") }
     scope :active, -> { where(dc_company_employees: { deleted_at: nil }) }

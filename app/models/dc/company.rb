@@ -38,6 +38,9 @@ module Dc
              foreign_key: :dc_company_id,
              inverse_of: :company
 
+    # only accounts for now
+    has_many :assigned_company_employees, through: :partner_company_connections
+
     validates :title, presence: true
     validates :title, uniqueness: { case_sensitive: false }, unless: :company_type_account?
     validates_associated :partner_company_connections, on: :create, if: :company_type_account?
@@ -56,7 +59,7 @@ module Dc
 
     delegate :name, :account?, to: :company_type, prefix: true, allow_nil: true
     delegate :account?, to: :company_type, allow_nil: true
-    delegate :by_email, to: :company_employees, prefix: true, allow_nil: true
+    delegate :by_email, :by_employee_type, to: :company_employees, prefix: true, allow_nil: true
     delegate :email, to: :company_employees, allow_nil: true
     delegate :by_company_type, to: :linked_companies, prefix: true, allow_nil: true
 

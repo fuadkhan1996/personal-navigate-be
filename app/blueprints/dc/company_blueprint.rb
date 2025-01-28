@@ -8,6 +8,7 @@ module Dc
 
     view :with_primary_company_employee do
       association :primary_company_employee, blueprint: Dc::CompanyEmployeeBlueprint
+      api_association :assigned_company_employees, blueprint: Dc::AssignedCompanyEmployeeBlueprint
     end
   end
 end
