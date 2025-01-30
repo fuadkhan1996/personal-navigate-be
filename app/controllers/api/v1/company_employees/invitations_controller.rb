@@ -6,6 +6,7 @@ module Api
       class InvitationsController < ApplicationController
         skip_before_action :set_current_company, only: %i[show update]
         skip_before_action :authenticate_request!, only: %i[show update]
+        before_action :set_company, only: %i[create bulk_invite]
         before_action :set_company_employee, only: %i[show update]
 
         def show
@@ -80,14 +81,14 @@ module Api
           params.require(:company_employee).permit(
             :employee_type,
             employee_attributes: %i[first_name last_name email]
-          ).merge(dc_company_id: current_company.id)
+          ).merge(dc_company_id: @company.id)
         end
 
         def bulk_invite_params
           params.require(:invitation).permit(
             :employee_type,
             email_addresses: []
-          ).merge(dc_company_id: current_company.id)
+          ).merge(dc_company_id: @company.id)
         end
 
         def user_object
@@ -101,6 +102,16 @@ module Api
         def create_cognito_user
           Cognito::Base.admin_create_user(user_object:)
           Cognito::Base.admin_set_user_password(user_object: user_object.except(:phone_number))
+        end
+
+        def set_company
+          @company = current_company if params[:company_id].blank?
+          return if @company.present?
+
+          @company = current_company.linked_companies.find_by(id: params[:company_id])
+          return if @company.present?
+
+          raise ActiveRecord::RecordNotFound, "Company could not be found with ID: #{params[:company_id]}."
         end
       end
     end

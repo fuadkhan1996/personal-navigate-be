@@ -140,6 +140,7 @@ describe 'Api::V1::CompanyEmployees::InvitationsController' do
       produces 'application/json'
       security [{ bearerAuth: [], apiKeyAuth: [], xApiKey: [] }]
 
+      parameter name: :company_id, in: :query, type: :string
       parameter name: :company_employee, in: :body, schema: {
         type: :object,
         properties: {
@@ -276,6 +277,7 @@ describe 'Api::V1::CompanyEmployees::InvitationsController' do
       produces 'application/json'
       security [{ bearerAuth: [], apiKeyAuth: [], xApiKey: [] }]
 
+      parameter name: :company_id, in: :query, type: :string
       parameter name: :invitation, in: :body, schema: {
         type: :object,
         properties: {
