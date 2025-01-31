@@ -11,6 +11,7 @@ module Api
         def create
           @assigned_company_employee = company_connection.assigned_company_employees.new(create_params)
           if @assigned_company_employee.save
+            send_assignment_email
             render json: Dc::CompanyBlueprint.render(company.reload, view: :with_primary_company_employee),
                    status: :created
           else
@@ -58,6 +59,19 @@ module Api
           return if @assigned_company_employee.present?
 
           raise ActiveRecord::RecordNotFound, "Assigned Company Employee could not be found with ID #{params[:id]}."
+        end
+
+        def send_assignment_email
+          AssignedCompanyEmployeeMailer.notify_assignment(
+            company_employee: @assigned_company_employee.company_employee,
+            assigned_company:
+          ).deliver_later
+        end
+
+        def assigned_company
+          return company_connection.partner_company if company_connection.dc_company_id == current_company.id
+
+          company_connection.company
         end
       end
     end

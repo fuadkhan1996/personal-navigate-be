@@ -108,7 +108,7 @@ module Api
           @company = current_company if params[:company_id].blank?
           return if @company.present?
 
-          @company = current_company.linked_companies.find_by(id: params[:company_id])
+          @company = current_company.linked_companies.accessible_by(current_ability).find_by(id: params[:company_id])
           return if @company.present?
 
           raise ActiveRecord::RecordNotFound, "Company could not be found with ID: #{params[:company_id]}."

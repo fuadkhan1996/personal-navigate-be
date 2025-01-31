@@ -51,7 +51,7 @@ class ApplicationController < ActionController::API
     cognito_user = Cognito::Base.get_user(access_token: token.to_s)
     return if cognito_user.blank?
 
-    Current.company_employee = current_company.company_employees_by_email(cognito_user[:email].to_s).first
+    Current.company_employee = current_company.active_company_employees_by_email(cognito_user[:email].to_s).first
     Current.access_token = token
   end
 

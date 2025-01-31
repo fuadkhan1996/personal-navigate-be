@@ -2419,6 +2419,11 @@ paths:
       security:
       - xApiKey: []
       parameters:
+      - name: company_id
+        in: query
+        description: Account ID
+        schema:
+          type: string
       - name: id
         in: path
         required: true
@@ -2500,6 +2505,11 @@ paths:
       tags:
       - Companies
       parameters:
+      - name: company_id
+        in: query
+        description: Account ID
+        schema:
+          type: string
       - name: employee_type
         in: query
         description: Admin/Owner, Agent, Insured, SME

@@ -13,6 +13,12 @@ module Dc
              foreign_key: :dc_company_id,
              inverse_of: :company
 
+    has_many :active_company_employees, lambda {
+      active
+    }, dependent: :restrict_with_exception,
+       class_name: 'Dc::CompanyEmployee',
+       inverse_of: :company
+
     has_many :employees, through: :company_employees
     has_many :activities,
              dependent: :restrict_with_exception,
@@ -59,7 +65,7 @@ module Dc
 
     delegate :name, :account?, to: :company_type, prefix: true, allow_nil: true
     delegate :account?, to: :company_type, allow_nil: true
-    delegate :by_email, :by_employee_type, to: :company_employees, prefix: true, allow_nil: true
+    delegate :by_email, :by_employee_type, to: :active_company_employees, prefix: true, allow_nil: true
     delegate :email, to: :company_employees, allow_nil: true
     delegate :by_company_type, to: :linked_companies, prefix: true, allow_nil: true
 

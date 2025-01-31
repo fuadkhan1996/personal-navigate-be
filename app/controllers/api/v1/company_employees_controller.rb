@@ -3,16 +3,17 @@
 module Api
   module V1
     class CompanyEmployeesController < ApplicationController
+      before_action :set_company
       before_action :set_company_employee, only: :update
 
       def index
         scope = if params[:employee_type].present?
-                  current_company.company_employees_by_employee_type(params[:employee_type])
+                  @company.active_company_employees_by_employee_type(params[:employee_type])
                 else
-                  current_company.company_employees
+                  @company.active_company_employees
                 end
 
-        @company_employees = scope.active.order_by_created_at(:desc).includes(:employee)
+        @company_employees = scope.order_by_created_at(:desc).includes(:employee)
         render json: Dc::CompanyEmployeeBlueprint.render(@company_employees), status: :ok
       end
 
@@ -27,7 +28,10 @@ module Api
       private
 
       def set_company_employee
-        @company_employee = current_company.company_employees.find(params[:id])
+        @company_employee = @company.active_company_employees.find_by(id: params[:id])
+        return if @company_employee.present?
+
+        raise ActiveRecord::RecordNotFound, "Company Employee could not be found with ID: #{params[:id]}."
       end
 
       def update_params
@@ -40,6 +44,16 @@ module Api
 
           params[:employee_attributes][:id] = @company_employee.dc_employee_id
         end
+      end
+
+      def set_company
+        @company = current_company if params[:company_id].blank?
+        return if @company.present?
+
+        @company = current_company.linked_companies.accessible_by(current_ability).find_by(id: params[:company_id])
+        return if @company.present?
+
+        raise ActiveRecord::RecordNotFound, "Company could not be found with ID: #{params[:company_id]}."
       end
     end
   end
