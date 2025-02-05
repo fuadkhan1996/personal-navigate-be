@@ -44,6 +44,13 @@ module Dc
              foreign_key: :dc_company_id,
              inverse_of: :company
 
+    has_many :activity_connections,
+             dependent: :destroy,
+             class_name: 'AssociatedActivity',
+             inverse_of: :company
+
+    has_many :assigned_activities, through: :activity_connections, source: :activity
+
     # only accounts for now
     has_many :assigned_company_employees, through: :partner_company_connections
 

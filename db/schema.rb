@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_01_27_212216) do
+ActiveRecord::Schema[7.1].define(version: 2025_02_05_202219) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -1237,6 +1237,9 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_27_212216) do
     t.datetime "updated_at", null: false
     t.bigint "nav_activity_trigger_id"
     t.datetime "completed_at"
+    t.bigint "nav_activity_trigger_id"
+    t.bigint "associated_activity_id"
+    t.index ["associated_activity_id"], name: "index_nav_assessment_action_results_on_associated_activity_id"
     t.index ["nav_activity_action_id"], name: "index_nav_assessment_action_results_on_nav_activity_action_id"
     t.index ["nav_activity_trigger_id"], name: "index_nav_assessment_action_results_on_nav_activity_trigger_id"
     t.index ["nav_assessment_id"], name: "index_nav_assessment_action_results_on_nav_assessment_id"
@@ -1258,6 +1261,17 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_27_212216) do
     t.index ["dc_company_employee_id"], name: "index_nav_assessments_on_dc_company_employee_id"
     t.index ["dc_company_id"], name: "index_nav_assessments_on_dc_company_id"
     t.index ["nav_questionnaire_id"], name: "index_nav_assessments_on_nav_questionnaire_id"
+  end
+
+  create_table "nav_associated_activities", force: :cascade do |t|
+    t.bigint "activity_id"
+    t.bigint "company_id"
+    t.bigint "assessment_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["activity_id"], name: "index_nav_associated_activities_on_activity_id"
+    t.index ["assessment_id"], name: "index_nav_associated_activities_on_assessment_id"
+    t.index ["company_id"], name: "index_nav_associated_activities_on_company_id"
   end
 
   create_table "nav_questionnaire_actions", force: :cascade do |t|
@@ -1787,10 +1801,14 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_27_212216) do
   add_foreign_key "nav_assessment_action_results", "nav_activity_actions"
   add_foreign_key "nav_assessment_action_results", "nav_activity_triggers"
   add_foreign_key "nav_assessment_action_results", "nav_assessments", on_delete: :cascade
+  add_foreign_key "nav_assessment_action_results", "nav_associated_activities", column: "associated_activity_id", on_delete: :cascade
   add_foreign_key "nav_assessments", "dc_companies", column: "account_id"
   add_foreign_key "nav_assessments", "dc_companies", on_delete: :cascade
   add_foreign_key "nav_assessments", "dc_company_employees"
   add_foreign_key "nav_assessments", "nav_questionnaires", on_delete: :cascade
+  add_foreign_key "nav_associated_activities", "dc_companies", column: "company_id", on_delete: :cascade
+  add_foreign_key "nav_associated_activities", "nav_activities", column: "activity_id", on_delete: :cascade
+  add_foreign_key "nav_associated_activities", "nav_assessments", column: "assessment_id", on_delete: :cascade
   add_foreign_key "nav_questionnaire_actions", "nav_actions", on_delete: :cascade
   add_foreign_key "nav_questionnaire_actions", "nav_questionnaires", on_delete: :cascade
   add_foreign_key "nav_questionnaires", "dc_companies", on_delete: :cascade

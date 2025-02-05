@@ -57,5 +57,6 @@ namespace :api do
     end
 
     resources :company_employees, only: %i[update index]
+    resources :associated_activities, only: %i[index create]
   end
 end

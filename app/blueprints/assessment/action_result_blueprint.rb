@@ -5,6 +5,7 @@ class Assessment
     identifier :id
 
     fields :activity_action_id,
+           :associated_activity_id,
            :assessment_id,
            :result_data,
            :deleted_at,

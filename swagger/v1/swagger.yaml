@@ -1542,6 +1542,113 @@ paths:
                     type: string
                 required:
                 - error
+  "/api/v1/associated_activities":
+    post:
+      summary: Create Associated Activity
+      tags:
+      - Activities
+      security:
+      - bearerAuth: []
+        apiKeyAuth: []
+        xApiKey: []
+      parameters:
+      - name: company_id
+        in: query
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Associated Activity Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  activity:
+                    type: object
+                  associated_activity_actions:
+                    type: array
+                    items:
+                      type: object
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    additionalProperties:
+                      type: array
+                      items:
+                        type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                associated_activity:
+                  type: object
+                  properties:
+                    activity_id:
+                      type: string
+    get:
+      summary: Company's Associated Activities
+      tags:
+      - Activities
+      security:
+      - bearerAuth: []
+        apiKeyAuth: []
+        xApiKey: []
+      parameters:
+      - name: company_id
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Company's Associated Activities
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    activity:
+                      type: object
+                    associated_activity_actions:
+                      type: array
+                      items:
+                        type: object
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
   "/api/v1/companies/{company_id}/assigned_company_employees":
     post:
       summary: Assign Company Employee to a Company

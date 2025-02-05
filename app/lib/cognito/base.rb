@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
-ResponseStruct = Struct.new(:status, :attribute, :message, keyword_init: true)
 module Cognito
   class Base < ApplicationLib
+    ResponseStruct = Struct.new(:status, :attribute, :message, keyword_init: true)
+
     attr_accessor :cognito_client,
                   :user_object,
                   :access_token,

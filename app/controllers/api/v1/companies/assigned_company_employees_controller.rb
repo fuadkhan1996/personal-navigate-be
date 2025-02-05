@@ -4,7 +4,7 @@ module Api
   module V1
     module Companies
       class AssignedCompanyEmployeesController < ApplicationController
-        before_action :validate_company_employee!
+        before_action :validate_company_connection!
         before_action :validate_company!
         before_action :set_assigned_company_employee, only: :destroy
 
@@ -47,7 +47,7 @@ module Api
                                                                                 company.id)
         end
 
-        def validate_company_employee!
+        def validate_company_connection!
           return if company_connection.present?
 
           raise ActiveRecord::RecordNotFound,
