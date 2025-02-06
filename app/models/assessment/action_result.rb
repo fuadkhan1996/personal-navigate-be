@@ -104,6 +104,8 @@ class Assessment
     end
 
     def allowed_file_types_from_details
+      return activity_action_details['allowed_file_types'] if activity_action_details['allowed_file_types'].is_a?(Array)
+
       (activity_action_details['allowed_file_types'] || '').split(',').map(&:strip)
     end
 
