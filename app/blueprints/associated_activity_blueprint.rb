@@ -3,7 +3,9 @@
 class AssociatedActivityBlueprint < ApplicationBlueprint
   identifier :id
 
+  fields :company_id, :activity_id, :assessment_id, :created_at, :updated_at
+
   api_association :activity, blueprint: ActivityBlueprint
-  api_association :associated_activity_actions, blueprint: Assessment::ActionResultBlueprint
-  # api_association :assessment, blueprint: AssessmentBlueprint
+  api_association :associated_activity_actions, blueprint: AssociatedActivity::ActionBlueprint
+  api_association :associated_activity_triggers, blueprint: AssociatedActivity::TriggerBlueprint
 end

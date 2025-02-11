@@ -33,7 +33,7 @@ class AssociatedActivity
     end
 
     def status
-      completed_at.present? ? 'Complete' : 'InComplete'
+      completed_at.present? ? 'Complete' : 'Incomplete'
     end
   end
 end

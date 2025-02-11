@@ -5,14 +5,17 @@ module Api
     class AssociatedActivitiesController < ApplicationController
       before_action :set_company
       before_action :validate_company!
+      before_action :set_assessment
+      before_action :validate_assessment!
+      before_action :set_associated_activity, only: %i[show]
+      before_action :validate_associated_activity!, only: %i[show]
 
       def index
-        @associated_activities = @company.activity_connections.includes(
-          :activity,
-          { associated_activity_actions: :activity_action }
-        )
+        render json: AssociatedActivityBlueprint.render(associated_activities), status: :ok
+      end
 
-        render json: AssociatedActivityBlueprint.render(@associated_activities), status: :ok
+      def show
+        render json: AssociatedActivityBlueprint.render(@associated_activity), status: :ok
       end
 
       def create
@@ -31,13 +34,57 @@ module Api
       end
 
       def set_company
-        @company = current_company.linked_companies.find_by(id: params[:company_id])
+        @company = current_company.linked_companies.find_by(id: params[:company_id]) if params[:company_id].present?
+        @company ||= current_company if current_company.account?
+      end
+
+      def set_assessment
+        return if params[:assessment_id].blank?
+
+        @assessment = Assessment.accessible_by(current_ability).find_by(id: params[:assessment_id])
+      end
+
+      def associated_activities
+        return @associated_activities if @associated_activities.present?
+
+        scope = if @assessment.present?
+                  @assessment.associated_activities
+                else
+                  AssociatedActivity.accessible_by(primary_company_employee.ability)
+                end
+
+        @associated_activities = scope.includes(
+          :activity,
+          { associated_activity_actions: :activity_action }
+        )
+      end
+
+      def set_associated_activity
+        @associated_activity = associated_activities.find_by(id: params[:id])
+      end
+
+      def primary_company_employee
+        @primary_company_employee ||= @company&.primary_company_employee
       end
 
       def validate_company!
+        return if params[:company_id].blank?
         return if @company.present?
 
         raise ActiveRecord::RecordNotFound, "Company could not be found with ID: #{params[:company_id]}."
+      end
+
+      def validate_assessment!
+        return if params[:assessment].blank?
+        return if @assessment.present?
+
+        raise ActiveRecord::RecordNotFound, "Assessment could not be found with ID: #{params[:assessment_id]}."
+      end
+
+      def validate_associated_activity!
+        return if @associated_activity.present?
+
+        raise ActiveRecord::RecordNotFound, "Associated Activity could not be found with ID: #{params[:id]}."
       end
     end
   end

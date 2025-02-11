@@ -8,13 +8,13 @@ paths:
     get:
       summary: Get All Actions
       tags:
-      - Actions
+        - Actions
       security:
-      - bearerAuth: []
-        apiKeyAuth: []
-        xApiKey: []
+        - bearerAuth: []
+          apiKeyAuth: []
+          xApiKey: []
       responses:
-        '200':
+        "200":
           description: Actions List
           content:
             application/json:
@@ -38,14 +38,14 @@ paths:
                     updated_at:
                       type: string
                   required:
-                  - id
-                  - title
-                  - description
-                  - action_kind
-                  - deleted_at
-                  - created_at
-                  - updated_at
-        '401':
+                    - id
+                    - title
+                    - description
+                    - action_kind
+                    - deleted_at
+                    - created_at
+                    - updated_at
+        "401":
           description: Unauthorized
           content:
             application/json:
@@ -55,24 +55,24 @@ paths:
                   error:
                     type: string
                 required:
-                - error
+                  - error
   "/api/v1/activities/{activity_id}/triggers":
     post:
       summary: Create Activity Trigger
       tags:
-      - Activities
+        - Activities
       security:
-      - bearerAuth: []
-        apiKeyAuth: []
-        xApiKey: []
+        - bearerAuth: []
+          apiKeyAuth: []
+          xApiKey: []
       parameters:
-      - name: activity_id
-        in: path
-        required: true
-        schema:
-          type: string
+        - name: activity_id
+          in: path
+          required: true
+          schema:
+            type: string
       responses:
-        '201':
+        "201":
           description: Activity Trigger Created
           content:
             application/json:
@@ -84,9 +84,9 @@ paths:
                   message:
                     type: string
                 required:
-                - id
-                - message
-        '422':
+                  - id
+                  - message
+        "422":
           description: Unprocessable Entity
           content:
             application/json:
@@ -100,8 +100,8 @@ paths:
                       items:
                         type: string
                 required:
-                - errors
-        '401':
+                  - errors
+        "401":
           description: Unauthorized
           content:
             application/json:
@@ -111,7 +111,7 @@ paths:
                   error:
                     type: string
                 required:
-                - error
+                  - error
       requestBody:
         content:
           application/json:
@@ -133,7 +133,7 @@ paths:
                         conjunction:
                           type: string
                           enum:
-                          - and
+                            - and
                         conditions:
                           type: array
                           items:
@@ -144,41 +144,41 @@ paths:
                               operator:
                                 type: string
                                 enum:
-                                - eq
-                                - gt
-                                - gteq
-                                - lteq
+                                  - eq
+                                  - gt
+                                  - gteq
+                                  - lteq
                               value:
                                 type: string
                             required:
-                            - key
-                            - operator
-                            - value
+                              - key
+                              - operator
+                              - value
                       required:
-                      - conjunction
-                      - conditions
+                        - conjunction
+                        - conditions
                   required:
-                  - title
-                  - description
-                  - criteria
+                    - title
+                    - description
+                    - criteria
               required:
-              - activity_trigger
+                - activity_trigger
     get:
       summary: Get Activity Triggers
       tags:
-      - Activities
+        - Activities
       security:
-      - bearerAuth: []
-        apiKeyAuth: []
-        xApiKey: []
+        - bearerAuth: []
+          apiKeyAuth: []
+          xApiKey: []
       parameters:
-      - name: activity_id
-        in: path
-        required: true
-        schema:
-          type: string
+        - name: activity_id
+          in: path
+          required: true
+          schema:
+            type: string
       responses:
-        '200':
+        "200":
           description: Activity triggers List
           content:
             application/json:
@@ -216,21 +216,21 @@ paths:
                               value:
                                 type: string
                             required:
-                            - key
-                            - operator
-                            - value
+                              - key
+                              - operator
+                              - value
                       required:
-                      - conjunction
-                      - conditions
+                        - conjunction
+                        - conditions
                   required:
-                  - id
-                  - title
-                  - description
-                  - deleted_at
-                  - created_at
-                  - updated_at
-                  - criteria
-        '401':
+                    - id
+                    - title
+                    - description
+                    - deleted_at
+                    - created_at
+                    - updated_at
+                    - criteria
+        "401":
           description: Unauthorized
           content:
             application/json:
@@ -240,29 +240,29 @@ paths:
                   error:
                     type: string
                 required:
-                - error
+                  - error
   "/api/v1/activities/{activity_id}/triggers/{id}":
     get:
       summary: Get Activity Trigger
       tags:
-      - Activities
+        - Activities
       security:
-      - bearerAuth: []
-        apiKeyAuth: []
-        xApiKey: []
+        - bearerAuth: []
+          apiKeyAuth: []
+          xApiKey: []
       parameters:
-      - name: activity_id
-        in: path
-        required: true
-        schema:
-          type: string
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: string
+        - name: activity_id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
       responses:
-        '200':
+        "200":
           description: Activity trigger Data
           content:
             application/json:
@@ -300,22 +300,22 @@ paths:
                             value:
                               type: string
                           required:
-                          - key
-                          - operator
-                          - value
+                            - key
+                            - operator
+                            - value
                     required:
-                    - conjunction
-                    - conditions
+                      - conjunction
+                      - conditions
                 required:
-                - id
-                - title
-                - description
-                - questionnaire_title
-                - deleted_at
-                - created_at
-                - updated_at
-                - criteria
-        '401':
+                  - id
+                  - title
+                  - description
+                  - questionnaire_title
+                  - deleted_at
+                  - created_at
+                  - updated_at
+                  - criteria
+        "401":
           description: Unauthorized
           content:
             application/json:
@@ -325,28 +325,28 @@ paths:
                   error:
                     type: string
                 required:
-                - error
+                  - error
     delete:
       summary: Delete Activity Trigger
       tags:
-      - Activities
+        - Activities
       security:
-      - bearerAuth: []
-        apiKeyAuth: []
-        xApiKey: []
+        - bearerAuth: []
+          apiKeyAuth: []
+          xApiKey: []
       parameters:
-      - name: activity_id
-        in: path
-        required: true
-        schema:
-          type: string
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: string
+        - name: activity_id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
       responses:
-        '200':
+        "200":
           description: Activity trigger Deleted Successfully.
           content:
             application/json:
@@ -358,9 +358,9 @@ paths:
                   message:
                     type: string
                 required:
-                - id
-                - message
-        '422':
+                  - id
+                  - message
+        "422":
           description: Unprocessable Entity
           content:
             application/json:
@@ -374,8 +374,8 @@ paths:
                       items:
                         type: string
                 required:
-                - errors
-        '401':
+                  - errors
+        "401":
           description: Unauthorized
           content:
             application/json:
@@ -385,18 +385,18 @@ paths:
                   error:
                     type: string
                 required:
-                - error
+                  - error
   "/api/v1/activities":
     get:
       summary: Get Activities
       tags:
-      - Activities
+        - Activities
       security:
-      - bearerAuth: []
-        apiKeyAuth: []
-        xApiKey: []
+        - bearerAuth: []
+          apiKeyAuth: []
+          xApiKey: []
       responses:
-        '200':
+        "200":
           description: Activity List
           content:
             application/json:
@@ -417,7 +417,7 @@ paths:
                       type: string
                     updated_at:
                       type: string
-        '401':
+        "401":
           description: Unauthorized
           content:
             application/json:
@@ -427,18 +427,18 @@ paths:
                   error:
                     type: string
                 required:
-                - error
+                  - error
     post:
       summary: Create Activity
       tags:
-      - Activities
+        - Activities
       security:
-      - bearerAuth: []
-        apiKeyAuth: []
-        xApiKey: []
+        - bearerAuth: []
+          apiKeyAuth: []
+          xApiKey: []
       parameters: []
       responses:
-        '201':
+        "201":
           description: Activity Created
           content:
             application/json:
@@ -450,9 +450,9 @@ paths:
                   message:
                     type: string
                 required:
-                - id
-                - message
-        '422':
+                  - id
+                  - message
+        "422":
           description: Unprocessable Entity
           content:
             application/json:
@@ -466,8 +466,8 @@ paths:
                       items:
                         type: string
                 required:
-                - errors
-        '401':
+                  - errors
+        "401":
           description: Unauthorized
           content:
             application/json:
@@ -477,7 +477,7 @@ paths:
                   error:
                     type: string
                 required:
-                - error
+                  - error
       requestBody:
         content:
           application/json:
@@ -511,24 +511,24 @@ paths:
                           linked_action_kind:
                             type: string
               required:
-              - activity
+                - activity
   "/api/v1/activities/{id}":
     get:
       summary: Get Activity
       tags:
-      - Activities
+        - Activities
       security:
-      - bearerAuth: []
-        apiKeyAuth: []
-        xApiKey: []
+        - bearerAuth: []
+          apiKeyAuth: []
+          xApiKey: []
       parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: string
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
       responses:
-        '200':
+        "200":
           description: Activity Data
           content:
             application/json:
@@ -615,7 +615,7 @@ paths:
                                     type: string
                                   value:
                                     type: string
-        '401':
+        "401":
           description: Unauthorized
           content:
             application/json:
@@ -625,29 +625,29 @@ paths:
                   error:
                     type: string
                 required:
-                - error
+                  - error
   "/api/v1/assessments/{assessment_id}/action_results/{id}":
     put:
       summary: Evaluate Action Result
       tags:
-      - Assessments
+        - Assessments
       security:
-      - bearerAuth: []
-        apiKeyAuth: []
-        xApiKey: []
+        - bearerAuth: []
+          apiKeyAuth: []
+          xApiKey: []
       parameters:
-      - name: assessment_id
-        in: path
-        required: true
-        schema:
-          type: string
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: string
+        - name: assessment_id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
       responses:
-        '200':
+        "200":
           description: Action Result Updated Successfully.
           content:
             application/json:
@@ -682,7 +682,7 @@ paths:
                         type: object
                     activity_action:
                       type: object
-        '422':
+        "422":
           description: Unprocessable Entity
           content:
             application/json:
@@ -695,9 +695,9 @@ paths:
                   message:
                     type: string
                 required:
-                - success
-                - message
-        '401':
+                  - success
+                  - message
+        "401":
           description: Unauthorized
           content:
             application/json:
@@ -707,7 +707,7 @@ paths:
                   error:
                     type: string
                 required:
-                - error
+                  - error
       requestBody:
         content:
           application/json:
@@ -728,19 +728,19 @@ paths:
     post:
       summary: Evaluate Trigger
       tags:
-      - Assessments
+        - Assessments
       security:
-      - bearerAuth: []
-        apiKeyAuth: []
-        xApiKey: []
+        - bearerAuth: []
+          apiKeyAuth: []
+          xApiKey: []
       parameters:
-      - name: assessment_id
-        in: path
-        required: true
-        schema:
-          type: string
+        - name: assessment_id
+          in: path
+          required: true
+          schema:
+            type: string
       responses:
-        '200':
+        "200":
           description: Triggers Evaluated Successfully.
           content:
             application/json:
@@ -775,7 +775,7 @@ paths:
                       type: string
                     status:
                       type: string
-        '422':
+        "422":
           description: Unprocessable Entity
           content:
             application/json:
@@ -788,9 +788,9 @@ paths:
                   message:
                     type: string
                 required:
-                - success
-                - message
-        '401':
+                  - success
+                  - message
+        "401":
           description: Unauthorized
           content:
             application/json:
@@ -800,18 +800,18 @@ paths:
                   error:
                     type: string
                 required:
-                - error
+                  - error
   "/api/v1/assessments/activities":
     get:
       summary: Get Activities
       tags:
-      - Assessments
+        - Assessments
       security:
-      - bearerAuth: []
-        apiKeyAuth: []
-        xApiKey: []
+        - bearerAuth: []
+          apiKeyAuth: []
+          xApiKey: []
       responses:
-        '200':
+        "200":
           description: Activities List
           content:
             application/json:
@@ -870,7 +870,7 @@ paths:
                           type: string
                         invitation_accepted_at:
                           type: string
-        '401':
+        "401":
           description: Unauthorized
           content:
             application/json:
@@ -880,24 +880,24 @@ paths:
                   error:
                     type: string
                 required:
-                - error
+                  - error
   "/api/v1/assessments/{assessment_id}/activities":
     get:
       summary: Get Activities for an assessment with Action Results
       tags:
-      - Assessments
+        - Assessments
       security:
-      - bearerAuth: []
-        apiKeyAuth: []
-        xApiKey: []
+        - bearerAuth: []
+          apiKeyAuth: []
+          xApiKey: []
       parameters:
-      - name: assessment_id
-        in: path
-        required: true
-        schema:
-          type: string
+        - name: assessment_id
+          in: path
+          required: true
+          schema:
+            type: string
       responses:
-        '200':
+        "200":
           description: Activities List
           content:
             application/json:
@@ -956,7 +956,7 @@ paths:
                           type: string
                         invitation_accepted_at:
                           type: string
-        '401':
+        "401":
           description: Unauthorized
           content:
             application/json:
@@ -966,29 +966,29 @@ paths:
                   error:
                     type: string
                 required:
-                - error
+                  - error
   "/api/v1/assessments/{assessment_id}/activities/{id}":
     get:
       summary: Get Activity for an assessment with Action Results
       tags:
-      - Assessments
+        - Assessments
       security:
-      - bearerAuth: []
-        apiKeyAuth: []
-        xApiKey: []
+        - bearerAuth: []
+          apiKeyAuth: []
+          xApiKey: []
       parameters:
-      - name: assessment_id
-        in: path
-        required: true
-        schema:
-          type: string
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: string
+        - name: assessment_id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
       responses:
-        '200':
+        "200":
           description: Activity Data
           content:
             application/json:
@@ -1076,7 +1076,7 @@ paths:
                         type: string
                       invitation_accepted_at:
                         type: string
-        '401':
+        "401":
           description: Unauthorized
           content:
             application/json:
@@ -1086,29 +1086,29 @@ paths:
                   error:
                     type: string
                 required:
-                - error
+                  - error
   "/api/v1/assessments/{assessment_id}/triggers/{id}/evaluate_trigger":
     post:
       summary: Evaluate Trigger
       tags:
-      - Assessments
+        - Assessments
       security:
-      - bearerAuth: []
-        apiKeyAuth: []
-        xApiKey: []
+        - bearerAuth: []
+          apiKeyAuth: []
+          xApiKey: []
       parameters:
-      - name: assessment_id
-        in: path
-        required: true
-        schema:
-          type: string
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: string
+        - name: assessment_id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
       responses:
-        '200':
+        "200":
           description: Trigger Evaluated Successfully.
           content:
             application/json:
@@ -1143,7 +1143,7 @@ paths:
                         type: object
                     activity_action:
                       type: object
-        '422':
+        "422":
           description: Unprocessable Entity
           content:
             application/json:
@@ -1156,9 +1156,9 @@ paths:
                   message:
                     type: string
                 required:
-                - success
-                - message
-        '401':
+                  - success
+                  - message
+        "401":
           description: Unauthorized
           content:
             application/json:
@@ -1168,19 +1168,19 @@ paths:
                   error:
                     type: string
                 required:
-                - error
+                  - error
   "/api/v1/assessments":
     post:
       summary: Create Assessment
       tags:
-      - Assessments
+        - Assessments
       security:
-      - bearerAuth: []
-        apiKeyAuth: []
-        xApiKey: []
+        - bearerAuth: []
+          apiKeyAuth: []
+          xApiKey: []
       parameters: []
       responses:
-        '201':
+        "201":
           description: Assessment Created
           content:
             application/json:
@@ -1192,9 +1192,9 @@ paths:
                   message:
                     type: string
                 required:
-                - id
-                - message
-        '422':
+                  - id
+                  - message
+        "422":
           description: Unprocessable Entity
           content:
             application/json:
@@ -1208,8 +1208,8 @@ paths:
                       items:
                         type: string
                 required:
-                - errors
-        '401':
+                  - errors
+        "401":
           description: Unauthorized
           content:
             application/json:
@@ -1219,7 +1219,7 @@ paths:
                   error:
                     type: string
                 required:
-                - error
+                  - error
       requestBody:
         content:
           application/json:
@@ -1236,25 +1236,25 @@ paths:
                     form_data:
                       type: object
                   required:
-                  - title
-                  - form_data
+                    - title
+                    - form_data
               required:
-              - assessment
+                - assessment
     get:
       summary: Get Assessments
       tags:
-      - Assessments
+        - Assessments
       security:
-      - bearerAuth: []
-        apiKeyAuth: []
-        xApiKey: []
+        - bearerAuth: []
+          apiKeyAuth: []
+          xApiKey: []
       parameters:
-      - name: account_id
-        in: query
-        schema:
-          type: string
+        - name: account_id
+          in: query
+          schema:
+            type: string
       responses:
-        '200':
+        "200":
           description: Assessment List
           content:
             application/json:
@@ -1319,7 +1319,7 @@ paths:
                               type: string
                             employee_type:
                               type: string
-        '401':
+        "401":
           description: Unauthorized
           content:
             application/json:
@@ -1329,24 +1329,24 @@ paths:
                   error:
                     type: string
                 required:
-                - error
+                  - error
   "/api/v1/assessments/{id}":
     get:
       summary: Get Assessment
       tags:
-      - Assessments
+        - Assessments
       security:
-      - bearerAuth: []
-        apiKeyAuth: []
-        xApiKey: []
+        - bearerAuth: []
+          apiKeyAuth: []
+          xApiKey: []
       parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: string
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
       responses:
-        '200':
+        "200":
           description: Assessment Data
           content:
             application/json:
@@ -1413,7 +1413,7 @@ paths:
                     type: array
                     items:
                       type: object
-        '401':
+        "401":
           description: Unauthorized
           content:
             application/json:
@@ -1423,23 +1423,23 @@ paths:
                   error:
                     type: string
                 required:
-                - error
+                  - error
     put:
       summary: Update Assessment
       tags:
-      - Assessments
+        - Assessments
       security:
-      - bearerAuth: []
-        apiKeyAuth: []
-        xApiKey: []
+        - bearerAuth: []
+          apiKeyAuth: []
+          xApiKey: []
       parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: string
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
       responses:
-        '200':
+        "200":
           description: Assessment Updated
           content:
             application/json:
@@ -1451,9 +1451,9 @@ paths:
                   message:
                     type: string
                 required:
-                - id
-                - message
-        '422':
+                  - id
+                  - message
+        "422":
           description: Unprocessable Entity
           content:
             application/json:
@@ -1467,8 +1467,8 @@ paths:
                       items:
                         type: string
                 required:
-                - errors
-        '401':
+                  - errors
+        "401":
           description: Unauthorized
           content:
             application/json:
@@ -1478,7 +1478,7 @@ paths:
                   error:
                     type: string
                 required:
-                - error
+                  - error
       requestBody:
         content:
           application/json:
@@ -1495,21 +1495,21 @@ paths:
                     form_data:
                       type: object
                   required:
-                  - title
-                  - form_data
+                    - title
+                    - form_data
               required:
-              - assessment
+                - assessment
   "/api/v1/assessments/trigger_tis_api":
     post:
       summary: Call TIS APIs
       tags:
-      - Assessments
+        - Assessments
       security:
-      - bearerAuth: []
-        apiKeyAuth: []
-        xApiKey: []
+        - bearerAuth: []
+          apiKeyAuth: []
+          xApiKey: []
       responses:
-        '200':
+        "200":
           description: Assessment Processed Successfully.
           content:
             application/json:
@@ -1520,7 +1520,7 @@ paths:
                     type: string
                   message:
                     type: string
-        '422':
+        "422":
           description: Unprocessable Entity
           content:
             application/json:
@@ -1531,7 +1531,7 @@ paths:
                     type: string
                   message:
                     type: string
-        '401':
+        "401":
           description: Unauthorized
           content:
             application/json:
@@ -1541,23 +1541,23 @@ paths:
                   error:
                     type: string
                 required:
-                - error
+                  - error
   "/api/v1/associated_activities":
     post:
       summary: Create Associated Activity
       tags:
-      - Activities
+        - Activities
       security:
-      - bearerAuth: []
-        apiKeyAuth: []
-        xApiKey: []
+        - bearerAuth: []
+          apiKeyAuth: []
+          xApiKey: []
       parameters:
-      - name: company_id
-        in: query
-        schema:
-          type: string
+        - name: company_id
+          in: query
+          schema:
+            type: string
       responses:
-        '201':
+        "201":
           description: Associated Activity Created
           content:
             application/json:
@@ -1572,7 +1572,7 @@ paths:
                     type: array
                     items:
                       type: object
-        '422':
+        "422":
           description: Unprocessable Entity
           content:
             application/json:
@@ -1585,7 +1585,7 @@ paths:
                       type: array
                       items:
                         type: string
-        '401':
+        "401":
           description: Unauthorized
           content:
             application/json:
@@ -1595,7 +1595,7 @@ paths:
                   error:
                     type: string
                 required:
-                - error
+                  - error
       requestBody:
         content:
           application/json:
@@ -1608,21 +1608,25 @@ paths:
                     activity_id:
                       type: string
     get:
-      summary: Company's Associated Activities
+      summary: Get Associated Activities
       tags:
-      - Activities
+        - Activities
       security:
-      - bearerAuth: []
-        apiKeyAuth: []
-        xApiKey: []
+        - bearerAuth: []
+          apiKeyAuth: []
+          xApiKey: []
       parameters:
-      - name: company_id
-        in: query
-        schema:
-          type: string
+        - name: company_id
+          in: query
+          schema:
+            type: string
+        - name: assessment_id
+          in: query
+          schema:
+            type: string
       responses:
-        '200':
-          description: Company's Associated Activities
+        "200":
+          description: Associated Activities
           content:
             application/json:
               schema:
@@ -1638,7 +1642,7 @@ paths:
                       type: array
                       items:
                         type: object
-        '401':
+        "401":
           description: Unauthorized
           content:
             application/json:
@@ -1648,24 +1652,66 @@ paths:
                   error:
                     type: string
                 required:
-                - error
+                  - error
+  "/api/v1/associated_activities/{id}":
+    get:
+      summary: Get Associated Activity
+      tags:
+        - Activities
+      security:
+        - bearerAuth: []
+          apiKeyAuth: []
+          xApiKey: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Associated Activity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  activity:
+                    type: object
+                  associated_activity_actions:
+                    type: array
+                    items:
+                      type: object
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                  - error
   "/api/v1/companies/{company_id}/assigned_company_employees":
     post:
       summary: Assign Company Employee to a Company
       tags:
-      - Companies
+        - Companies
       security:
-      - bearerAuth: []
-        apiKeyAuth: []
-        xApiKey: []
+        - bearerAuth: []
+          apiKeyAuth: []
+          xApiKey: []
       parameters:
-      - name: company_id
-        in: path
-        required: true
-        schema:
-          type: string
+        - name: company_id
+          in: path
+          required: true
+          schema:
+            type: string
       responses:
-        '201':
+        "201":
           description: Company Employee Assigned
           content:
             application/json:
@@ -1737,7 +1783,7 @@ paths:
                               type: string
                             employee_type:
                               type: string
-        '422':
+        "422":
           description: Unprocessable Entity
           content:
             application/json:
@@ -1751,8 +1797,8 @@ paths:
                       items:
                         type: string
                 required:
-                - errors
-        '401':
+                  - errors
+        "401":
           description: Unauthorized
           content:
             application/json:
@@ -1762,7 +1808,7 @@ paths:
                   error:
                     type: string
                 required:
-                - error
+                  - error
       requestBody:
         content:
           application/json:
@@ -1778,24 +1824,24 @@ paths:
     delete:
       summary: Remove Assigned Company Employee
       tags:
-      - Companies
+        - Companies
       security:
-      - bearerAuth: []
-        apiKeyAuth: []
-        xApiKey: []
+        - bearerAuth: []
+          apiKeyAuth: []
+          xApiKey: []
       parameters:
-      - name: company_id
-        in: path
-        required: true
-        schema:
-          type: string
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: string
+        - name: company_id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
       responses:
-        '200':
+        "200":
           description: Assigned Company Employee Removed Successfully
           content:
             application/json:
@@ -1867,7 +1913,7 @@ paths:
                               type: string
                             employee_type:
                               type: string
-        '422':
+        "422":
           description: Unauthorized
           content:
             application/json:
@@ -1877,24 +1923,24 @@ paths:
                   error:
                     type: string
                 required:
-                - error
+                  - error
   "/api/v1/companies":
     get:
       summary: Get Linked Companies
       tags:
-      - Companies
+        - Companies
       security:
-      - bearerAuth: []
-        apiKeyAuth: []
-        xApiKey: []
+        - bearerAuth: []
+          apiKeyAuth: []
+          xApiKey: []
       parameters:
-      - name: company_type
-        in: query
-        description: Account/Carrier/Wholesaler/SubAgency
-        schema:
-          type: string
+        - name: company_type
+          in: query
+          description: Account/Carrier/Wholesaler/SubAgency
+          schema:
+            type: string
       responses:
-        '200':
+        "200":
           description: Companies List
           content:
             application/json:
@@ -1936,7 +1982,7 @@ paths:
                           type: string
                         employee_type:
                           type: string
-        '401':
+        "401":
           description: Unauthorized
           content:
             application/json:
@@ -1946,18 +1992,18 @@ paths:
                   error:
                     type: string
                 required:
-                - error
+                  - error
     post:
       summary: Create Company
       tags:
-      - Companies
+        - Companies
       security:
-      - bearerAuth: []
-        apiKeyAuth: []
-        xApiKey: []
+        - bearerAuth: []
+          apiKeyAuth: []
+          xApiKey: []
       parameters: []
       responses:
-        '201':
+        "201":
           description: Company Created
           content:
             application/json:
@@ -1978,7 +2024,7 @@ paths:
                     type: string
                   updated_at:
                     type: string
-        '422':
+        "422":
           description: Unprocessable Entity
           content:
             application/json:
@@ -1991,7 +2037,7 @@ paths:
                       type: array
                       items:
                         type: string
-        '401':
+        "401":
           description: Unauthorized
           content:
             application/json:
@@ -2001,7 +2047,7 @@ paths:
                   error:
                     type: string
                 required:
-                - error
+                  - error
       requestBody:
         content:
           application/json:
@@ -2033,32 +2079,32 @@ paths:
                           email:
                             type: string
                         required:
-                        - first_name
-                        - last_name
-                        - email
+                          - first_name
+                          - last_name
+                          - email
                   required:
-                  - title
-                  - company_type_name
-                  - employee_attributes
+                    - title
+                    - company_type_name
+                    - employee_attributes
               required:
-              - company
+                - company
   "/api/v1/companies/{id}":
     get:
       summary: Get Linked Company
       tags:
-      - Companies
+        - Companies
       security:
-      - bearerAuth: []
-        apiKeyAuth: []
-        xApiKey: []
+        - bearerAuth: []
+          apiKeyAuth: []
+          xApiKey: []
       parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: string
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
       responses:
-        '200':
+        "200":
           description: Company Data
           content:
             application/json:
@@ -2098,7 +2144,7 @@ paths:
                         type: string
                       employee_type:
                         type: string
-        '401':
+        "401":
           description: Unauthorized
           content:
             application/json:
@@ -2108,8 +2154,8 @@ paths:
                   error:
                     type: string
                 required:
-                - error
-        '404':
+                  - error
+        "404":
           description: Not Found
           content:
             application/json:
@@ -2119,19 +2165,19 @@ paths:
                   error:
                     type: string
                 required:
-                - error
+                  - error
   "/api/v1/company_employees/invitation":
     get:
       summary: Get Company Employee by Invitation Token
       tags:
-      - Companies
+        - Companies
       security:
-      - xApiKey: []
+        - xApiKey: []
       parameters:
-      - name: invitation_token
-        in: query
+        - name: invitation_token
+          in: query
       responses:
-        '200':
+        "200":
           description: Company Employee Data
           content:
             application/json:
@@ -2173,7 +2219,7 @@ paths:
                         type: string
                       updated_at:
                         type: string
-        '401':
+        "401":
           description: Unauthorized
           content:
             application/json:
@@ -2183,18 +2229,18 @@ paths:
                   error:
                     type: string
                 required:
-                - error
+                  - error
     put:
       summary: Accept Invitation
       tags:
-      - Companies
+        - Companies
       security:
-      - xApiKey: []
+        - xApiKey: []
       parameters:
-      - name: invitation_token
-        in: query
+        - name: invitation_token
+          in: query
       responses:
-        '200':
+        "200":
           description: Company Employee Data
           content:
             application/json:
@@ -2236,7 +2282,7 @@ paths:
                         type: string
                       updated_at:
                         type: string
-        '422':
+        "422":
           description: Unprocessable Entity
           content:
             application/json:
@@ -2250,8 +2296,8 @@ paths:
                       items:
                         type: string
                 required:
-                - errors
-        '401':
+                  - errors
+        "401":
           description: Unauthorized
           content:
             application/json:
@@ -2261,7 +2307,7 @@ paths:
                   error:
                     type: string
                 required:
-                - error
+                  - error
       requestBody:
         content:
           application/json:
@@ -2280,25 +2326,25 @@ paths:
                     password_confirmation:
                       type: string
                   required:
-                  - password
-                  - password_confirmation
+                    - password
+                    - password_confirmation
               required:
-              - employee
+                - employee
     post:
       summary: Invite New Employee
       tags:
-      - Companies
+        - Companies
       security:
-      - bearerAuth: []
-        apiKeyAuth: []
-        xApiKey: []
+        - bearerAuth: []
+          apiKeyAuth: []
+          xApiKey: []
       parameters:
-      - name: company_id
-        in: query
-        schema:
-          type: string
+        - name: company_id
+          in: query
+          schema:
+            type: string
       responses:
-        '200':
+        "200":
           description: Company Employee Data
           content:
             application/json:
@@ -2340,7 +2386,7 @@ paths:
                         type: string
                       updated_at:
                         type: string
-        '422':
+        "422":
           description: Unprocessable Entity
           content:
             application/json:
@@ -2354,8 +2400,8 @@ paths:
                       items:
                         type: string
                 required:
-                - errors
-        '401':
+                  - errors
+        "401":
           description: Unauthorized
           content:
             application/json:
@@ -2365,7 +2411,7 @@ paths:
                   error:
                     type: string
                 required:
-                - error
+                  - error
       requestBody:
         content:
           application/json:
@@ -2390,19 +2436,19 @@ paths:
     post:
       summary: Resend Invite to Employee
       tags:
-      - Companies
+        - Companies
       security:
-      - bearerAuth: []
-        apiKeyAuth: []
-        xApiKey: []
+        - bearerAuth: []
+          apiKeyAuth: []
+          xApiKey: []
       parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: string
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
       responses:
-        '200':
+        "200":
           description: Company Employee Data
           content:
             application/json:
@@ -2444,7 +2490,7 @@ paths:
                         type: string
                       updated_at:
                         type: string
-        '422':
+        "422":
           description: Unauthorized
           content:
             application/json:
@@ -2454,23 +2500,23 @@ paths:
                   error:
                     type: string
                 required:
-                - error
+                  - error
   "/api/v1/company_employees/invitations/bulk_invite":
     post:
       summary: Bulk invite employees
       tags:
-      - Companies
+        - Companies
       security:
-      - bearerAuth: []
-        apiKeyAuth: []
-        xApiKey: []
+        - bearerAuth: []
+          apiKeyAuth: []
+          xApiKey: []
       parameters:
-      - name: company_id
-        in: query
-        schema:
-          type: string
+        - name: company_id
+          in: query
+          schema:
+            type: string
       responses:
-        '200':
+        "200":
           description: Invitations Sent Successfully.
           content:
             application/json:
@@ -2480,7 +2526,7 @@ paths:
                   message:
                     type: string
                     example: Invitations Sent Successfully.
-        '422':
+        "422":
           description: Unprocessable Entity
           content:
             application/json:
@@ -2494,8 +2540,8 @@ paths:
                       items:
                         type: string
                 required:
-                - errors
-        '401':
+                  - errors
+        "401":
           description: Unauthorized
           content:
             application/json:
@@ -2505,7 +2551,7 @@ paths:
                   error:
                     type: string
                 required:
-                - error
+                  - error
       requestBody:
         content:
           application/json:
@@ -2522,22 +2568,22 @@ paths:
     put:
       summary: Update Company Employee
       tags:
-      - Companies
+        - Companies
       security:
-      - xApiKey: []
+        - xApiKey: []
       parameters:
-      - name: company_id
-        in: query
-        description: Account ID
-        schema:
-          type: string
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: string
+        - name: company_id
+          in: query
+          description: Account ID
+          schema:
+            type: string
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
       responses:
-        '200':
+        "200":
           description: Company Employee Data
           content:
             application/json:
@@ -2579,7 +2625,7 @@ paths:
                         type: string
                       updated_at:
                         type: string
-        '401':
+        "401":
           description: Unauthorized
           content:
             application/json:
@@ -2589,7 +2635,7 @@ paths:
                   error:
                     type: string
                 required:
-                - error
+                  - error
       requestBody:
         content:
           application/json:
@@ -2610,20 +2656,20 @@ paths:
     get:
       summary: List of Company Employees
       tags:
-      - Companies
+        - Companies
       parameters:
-      - name: company_id
-        in: query
-        description: Account ID
-        schema:
-          type: string
-      - name: employee_type
-        in: query
-        description: Admin/Owner, Agent, Insured, SME
-        schema:
-          type: string
+        - name: company_id
+          in: query
+          description: Account ID
+          schema:
+            type: string
+        - name: employee_type
+          in: query
+          description: Admin/Owner, Agent, Insured, SME
+          schema:
+            type: string
       responses:
-        '200':
+        "200":
           description: Company Employee Data
           content:
             application/json:
@@ -2667,7 +2713,7 @@ paths:
                           type: string
                         updated_at:
                           type: string
-        '401':
+        "401":
           description: Unauthorized
           content:
             application/json:
@@ -2677,19 +2723,19 @@ paths:
                   error:
                     type: string
                 required:
-                - error
+                  - error
   "/api/v1/employees/profile/update_email":
     patch:
       summary: Update employee email
       tags:
-      - Sessions
+        - Sessions
       security:
-      - bearerAuth: []
-        apiKeyAuth: []
-        xApiKey: []
+        - bearerAuth: []
+          apiKeyAuth: []
+          xApiKey: []
       parameters: []
       responses:
-        '200':
+        "200":
           description: Email Updated Successfully.
           content:
             application/json:
@@ -2736,22 +2782,22 @@ paths:
                       updated_at:
                         type: string
                     required:
-                    - id
-                    - title
-                    - logo
-                    - company_type_name
-                    - created_at
-                    - updated_at
+                      - id
+                      - title
+                      - logo
+                      - company_type_name
+                      - created_at
+                      - updated_at
                 required:
-                - id
-                - first_name
-                - last_name
-                - email
-                - access_token
-                - refresh_token
-                - token_expires_in
-                - company
-        '422':
+                  - id
+                  - first_name
+                  - last_name
+                  - email
+                  - access_token
+                  - refresh_token
+                  - token_expires_in
+                  - company
+        "422":
           description: Unprocessable Entity
           content:
             application/json:
@@ -2761,8 +2807,8 @@ paths:
                   error:
                     type: string
                 required:
-                - error
-        '401':
+                  - error
+        "401":
           description: Unauthorized
           content:
             application/json:
@@ -2772,7 +2818,7 @@ paths:
                   error:
                     type: string
                 required:
-                - error
+                  - error
       requestBody:
         content:
           application/json:
@@ -2788,14 +2834,14 @@ paths:
     post:
       summary: Update employee email update
       tags:
-      - Sessions
+        - Sessions
       security:
-      - bearerAuth: []
-        apiKeyAuth: []
-        xApiKey: []
+        - bearerAuth: []
+          apiKeyAuth: []
+          xApiKey: []
       parameters: []
       responses:
-        '200':
+        "200":
           description: Email Verified Successfully.
           content:
             application/json:
@@ -2804,7 +2850,7 @@ paths:
                 properties:
                   message:
                     type: string
-        '422':
+        "422":
           description: Unprocessable Entity
           content:
             application/json:
@@ -2814,8 +2860,8 @@ paths:
                   error:
                     type: string
                 required:
-                - error
-        '401':
+                  - error
+        "401":
           description: Unauthorized
           content:
             application/json:
@@ -2825,7 +2871,7 @@ paths:
                   error:
                     type: string
                 required:
-                - error
+                  - error
       requestBody:
         content:
           application/json:
@@ -2841,14 +2887,14 @@ paths:
     put:
       summary: Update employee information
       tags:
-      - Sessions
+        - Sessions
       security:
-      - bearerAuth: []
-        apiKeyAuth: []
-        xApiKey: []
+        - bearerAuth: []
+          apiKeyAuth: []
+          xApiKey: []
       parameters: []
       responses:
-        '200':
+        "200":
           description: Employee updated Successfully.
           content:
             application/json:
@@ -2857,7 +2903,7 @@ paths:
                 properties:
                   message:
                     type: string
-        '422':
+        "422":
           description: Unprocessable Entity
           content:
             application/json:
@@ -2871,8 +2917,8 @@ paths:
                       items:
                         type: string
                 required:
-                - errors
-        '401':
+                  - errors
+        "401":
           description: Unauthorized
           content:
             application/json:
@@ -2882,7 +2928,7 @@ paths:
                   error:
                     type: string
                 required:
-                - error
+                  - error
       requestBody:
         content:
           application/json:
@@ -2900,12 +2946,12 @@ paths:
     post:
       summary: Create an Employee Session
       tags:
-      - Sessions
+        - Sessions
       security:
-      - xApiKey: []
+        - xApiKey: []
       parameters: []
       responses:
-        '201':
+        "201":
           description: Authentication successful
           content:
             application/json:
@@ -2950,22 +2996,22 @@ paths:
                       updated_at:
                         type: string
                     required:
-                    - id
-                    - title
-                    - logo
-                    - company_type_name
-                    - created_at
-                    - updated_at
+                      - id
+                      - title
+                      - logo
+                      - company_type_name
+                      - created_at
+                      - updated_at
                 required:
-                - id
-                - first_name
-                - last_name
-                - email
-                - access_token
-                - refresh_token
-                - token_expires_in
-                - company
-        '401':
+                  - id
+                  - first_name
+                  - last_name
+                  - email
+                  - access_token
+                  - refresh_token
+                  - token_expires_in
+                  - company
+        "401":
           description: Authentication failed
           content:
             application/json:
@@ -2975,7 +3021,7 @@ paths:
                   error:
                     type: string
                 required:
-                - error
+                  - error
       requestBody:
         content:
           application/json:
@@ -2992,21 +3038,21 @@ paths:
                     entity_type:
                       type: string
                   required:
-                  - email
-                  - password
-                  - entity_type
+                    - email
+                    - password
+                    - entity_type
               required:
-              - employee
+                - employee
     get:
       summary: Get Current Logged In Employee
       tags:
-      - Sessions
+        - Sessions
       security:
-      - bearerAuth: []
-        apiKeyAuth: []
-        xApiKey: []
+        - bearerAuth: []
+          apiKeyAuth: []
+          xApiKey: []
       responses:
-        '200':
+        "200":
           description: Logged In Employee Data
           content:
             application/json:
@@ -3047,23 +3093,23 @@ paths:
                       updated_at:
                         type: string
                     required:
-                    - id
-                    - title
-                    - logo
-                    - company_type_name
-                    - created_at
-                    - updated_at
+                      - id
+                      - title
+                      - logo
+                      - company_type_name
+                      - created_at
+                      - updated_at
                 required:
-                - id
-                - uuid
-                - first_name
-                - last_name
-                - email
-                - access_token
-                - refresh_token
-                - token_expires_in
-                - company
-        '401':
+                  - id
+                  - uuid
+                  - first_name
+                  - last_name
+                  - email
+                  - access_token
+                  - refresh_token
+                  - token_expires_in
+                  - company
+        "401":
           description: Failed to Get User Data
           content:
             application/json:
@@ -3073,17 +3119,17 @@ paths:
                   error:
                     type: string
                 required:
-                - error
+                  - error
   "/api/v1/employees/session/refresh":
     post:
       summary: Refresh an Employee Session
       tags:
-      - Sessions
+        - Sessions
       security:
-      - xApiKey: []
+        - xApiKey: []
       parameters: []
       responses:
-        '201':
+        "201":
           description: Authentication successful
           content:
             application/json:
@@ -3100,12 +3146,12 @@ paths:
                       token_expires_in:
                         type: integer
                     required:
-                    - access_token
-                    - refresh_token
-                    - token_expires_in
+                      - access_token
+                      - refresh_token
+                      - token_expires_in
                 required:
-                - data
-        '401':
+                  - data
+        "401":
           description: Unauthorized
           content:
             application/json:
@@ -3115,7 +3161,7 @@ paths:
                   error:
                     type: string
                 required:
-                - error
+                  - error
       requestBody:
         content:
           application/json:
@@ -3127,19 +3173,19 @@ paths:
                 email:
                   type: string
               required:
-              - refresh_token
+                - refresh_token
   "/api/v1/employees/session/update_password":
     post:
       summary: Update Current Employee Password
       tags:
-      - Sessions
+        - Sessions
       security:
-      - bearerAuth: []
-        apiKeyAuth: []
-        xApiKey: []
+        - bearerAuth: []
+          apiKeyAuth: []
+          xApiKey: []
       parameters: []
       responses:
-        '200':
+        "200":
           description: Authentication successful
           content:
             application/json:
@@ -3148,7 +3194,7 @@ paths:
                 properties:
                   message:
                     type: string
-        '401':
+        "401":
           description: Unauthorized
           content:
             application/json:
@@ -3158,7 +3204,7 @@ paths:
                   error:
                     type: string
                 required:
-                - error
+                  - error
       requestBody:
         content:
           application/json:
@@ -3178,19 +3224,19 @@ paths:
     get:
       summary: Get Questionnaire Triggers
       tags:
-      - Questionnaires
+        - Questionnaires
       security:
-      - bearerAuth: []
-        apiKeyAuth: []
-        xApiKey: []
+        - bearerAuth: []
+          apiKeyAuth: []
+          xApiKey: []
       parameters:
-      - name: questionnaire_id
-        in: path
-        required: true
-        schema:
-          type: string
+        - name: questionnaire_id
+          in: path
+          required: true
+          schema:
+            type: string
       responses:
-        '200':
+        "200":
           description: Questionnaire triggers List
           content:
             application/json:
@@ -3230,24 +3276,24 @@ paths:
                               value:
                                 type: string
                             required:
-                            - key
-                            - operator
-                            - value
+                              - key
+                              - operator
+                              - value
                       required:
-                      - conjunction
-                      - conditions
+                        - conjunction
+                        - conditions
                     activity:
                       type: object
                   required:
-                  - id
-                  - title
-                  - description
-                  - questionnaire_title
-                  - deleted_at
-                  - created_at
-                  - updated_at
-                  - criteria
-        '401':
+                    - id
+                    - title
+                    - description
+                    - questionnaire_title
+                    - deleted_at
+                    - created_at
+                    - updated_at
+                    - criteria
+        "401":
           description: Unauthorized
           content:
             application/json:
@@ -3257,19 +3303,19 @@ paths:
                   error:
                     type: string
                 required:
-                - error
+                  - error
   "/api/v1/uploads":
     post:
       summary: Upload File
       tags:
-      - Upload
+        - Upload
       security:
-      - bearerAuth: []
-        apiKeyAuth: []
-        xApiKey: []
+        - bearerAuth: []
+          apiKeyAuth: []
+          xApiKey: []
       parameters: []
       responses:
-        '200':
+        "200":
           description: File Attached Successfully.
           content:
             application/json:
@@ -3278,7 +3324,7 @@ paths:
                 properties:
                   key:
                     type: string
-        '401':
+        "401":
           description: Unauthorized
           content:
             application/json:
@@ -3288,7 +3334,7 @@ paths:
                   error:
                     type: string
                 required:
-                - error
+                  - error
       requestBody:
         content:
           multipart/form-data:
@@ -3303,19 +3349,19 @@ paths:
     get:
       summary: Download File
       tags:
-      - Upload
+        - Upload
       security:
-      - bearerAuth: []
-        apiKeyAuth: []
-        xApiKey: []
+        - bearerAuth: []
+          apiKeyAuth: []
+          xApiKey: []
       parameters:
-      - name: key
-        in: path
-        required: true
-        schema:
-          type: string
+        - name: key
+          in: path
+          required: true
+          schema:
+            type: string
       responses:
-        '200':
+        "200":
           description: File downloaded successfully.
           content:
             application/json:
@@ -3324,7 +3370,7 @@ paths:
                 properties:
                   url:
                     type: string
-        '404':
+        "404":
           description: Not Found
           content:
             application/json:
@@ -3334,8 +3380,8 @@ paths:
                   error:
                     type: string
                 required:
-                - error
-        '401':
+                  - error
+        "401":
           description: Unauthorized
           content:
             application/json:
@@ -3345,7 +3391,7 @@ paths:
                   error:
                     type: string
                 required:
-                - error
+                  - error
 components:
   securitySchemes:
     bearerAuth:
@@ -3361,6 +3407,6 @@ components:
       name: x-api-key
       in: header
 security:
-- bearerAuth: []
-- apiKeyAuth: []
-- xApiKey: []
+  - bearerAuth: []
+  - apiKeyAuth: []
+  - xApiKey: []

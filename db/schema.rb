@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_02_05_202219) do
+ActiveRecord::Schema[7.1].define(version: 2025_02_07_203112) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -1220,12 +1220,14 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_05_202219) do
 
   create_table "nav_assessment_action_result_triggers", force: :cascade do |t|
     t.bigint "activity_trigger_id", null: false
-    t.bigint "assessment_action_result_id", null: false
+    t.bigint "assessment_action_result_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "associated_activity_id"
     t.index ["activity_trigger_id", "assessment_action_result_id"], name: "index_nav_assessment_action_result_triggers", unique: true
     t.index ["activity_trigger_id"], name: "idx_on_activity_trigger_id_f0764e8a7a"
     t.index ["assessment_action_result_id"], name: "idx_on_assessment_action_result_id_d43978073e"
+    t.index ["associated_activity_id"], name: "idx_on_associated_activity_id_327846aec7"
   end
 
   create_table "nav_assessment_action_results", force: :cascade do |t|
@@ -1798,6 +1800,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_05_202219) do
   add_foreign_key "nav_activity_triggers", "nav_questionnaires", on_delete: :cascade
   add_foreign_key "nav_assessment_action_result_triggers", "nav_activity_triggers", column: "activity_trigger_id", on_delete: :cascade
   add_foreign_key "nav_assessment_action_result_triggers", "nav_assessment_action_results", column: "assessment_action_result_id", on_delete: :cascade
+  add_foreign_key "nav_assessment_action_result_triggers", "nav_associated_activities", column: "associated_activity_id", on_delete: :cascade
   add_foreign_key "nav_assessment_action_results", "nav_activity_actions"
   add_foreign_key "nav_assessment_action_results", "nav_activity_triggers"
   add_foreign_key "nav_assessment_action_results", "nav_assessments", on_delete: :cascade

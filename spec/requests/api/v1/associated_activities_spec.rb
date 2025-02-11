@@ -62,15 +62,16 @@ describe 'Api::V1::AssociatedActivities' do
       end
     end
 
-    get "Company's Associated Activities" do
+    get 'Get Associated Activities' do
       tags 'Activities'
       consumes 'application/json'
       produces 'application/json'
       security [{ bearerAuth: [], apiKeyAuth: [], xApiKey: [] }]
 
       parameter name: :company_id, in: :query, type: :string
+      parameter name: :assessment_id, in: :query, type: :string
 
-      response '200', "Company's Associated Activities" do
+      response '200', 'Associated Activities' do
         schema type: :array,
                items: {
                  type: :object,
@@ -79,6 +80,38 @@ describe 'Api::V1::AssociatedActivities' do
                    activity: { type: :object },
                    associated_activity_actions: { type: :array, items: { type: :object } }
                  }
+               }
+
+        run_test!
+      end
+
+      response '401', 'Unauthorized' do
+        schema type: :object,
+               properties: {
+                 error: { type: :string }
+               },
+               required: %w[error]
+
+        run_test!
+      end
+    end
+  end
+
+  path '/api/v1/associated_activities/{id}' do
+    get 'Get Associated Activity' do
+      tags 'Activities'
+      consumes 'application/json'
+      produces 'application/json'
+      security [{ bearerAuth: [], apiKeyAuth: [], xApiKey: [] }]
+
+      parameter name: :id, in: :path, type: :string
+
+      response '200', 'Associated Activity' do
+        schema type: :object,
+               properties: {
+                 id: { type: :string },
+                 activity: { type: :object },
+                 associated_activity_actions: { type: :array, items: { type: :object } }
                }
 
         run_test!
