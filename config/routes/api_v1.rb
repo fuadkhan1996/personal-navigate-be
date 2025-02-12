@@ -57,6 +57,10 @@ namespace :api do
     end
 
     resources :company_employees, only: %i[update index]
-    resources :associated_activities, only: %i[index create show]
+    resources :associated_activities, only: %i[index create show] do
+      scope module: :associated_activities do
+        resources :associated_activity_actions, only: %i[update]
+      end
+    end
   end
 end

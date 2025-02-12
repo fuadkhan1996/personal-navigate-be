@@ -25,6 +25,10 @@ class AssociatedActivity < ApplicationRecord
 
   before_create :set_associated_activity_actions, unless: :skip_associated_activity_actions_creation
 
+  def completed?
+    associated_activity_actions.all?(&:completed_at)
+  end
+
   private
 
   def set_associated_activity_actions
