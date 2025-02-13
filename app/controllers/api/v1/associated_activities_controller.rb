@@ -49,8 +49,10 @@ module Api
 
         scope = if @assessment.present?
                   @assessment.associated_activities
-                else
+                elsif @company.present?
                   AssociatedActivity.accessible_by(primary_company_employee.ability)
+                else
+                  AssociatedActivity.accessible_by(current_ability)
                 end
 
         @associated_activities = scope.includes(
