@@ -58,6 +58,7 @@ module Dc
     validates :title, uniqueness: { case_sensitive: false }, unless: :company_type_account?
     validates_associated :partner_company_connections, on: :create, if: :company_type_account?
     validates_associated :company_employees, on: :create
+    validate :validate_title_uniqueness, on: %i[create update]
 
     accepts_nested_attributes_for :company_employees, reject_if: :blank?, allow_destroy: true
     accepts_nested_attributes_for :partner_company_connections, reject_if: :blank?, allow_destroy: true
@@ -80,6 +81,10 @@ module Dc
       company_ids = company_connections.pluck(:dc_partner_company_id) +
                     partner_company_connections.pluck(:dc_company_id)
       Company.where(id: company_ids)
+    end
+
+    def accounts
+      linked_companies.by_company_type('Account')
     end
 
     def assessments
@@ -111,6 +116,14 @@ module Dc
 
     def set_guid
       self.guid = SecureRandom.uuid
+    end
+
+    def validate_title_uniqueness
+      return if current_company.blank?
+      return unless account?
+      return unless current_company.accounts.pluck(:title).any? { |acc_title| acc_title == title }
+
+      errors.add(:title, 'Account already exist with the same title')
     end
   end
 end

@@ -36,6 +36,8 @@ module Dc
 
     validates :dc_employee_id, uniqueness: { scope: :dc_company_id }
 
+    before_create :set_employee_type, if: :company_account?
+
     accepts_nested_attributes_for :employee, reject_if: :blank?
 
     scope :by_email, ->(email) { joins(:employee).where(dc_employees: { email: email.to_s }) }
@@ -61,7 +63,7 @@ module Dc
              to: :employee
 
     delegate :name, to: :company_type, prefix: true
-    delegate :linked_companies, to: :company, prefix: true, allow_nil: true
+    delegate :linked_companies, :account?, to: :company, prefix: true, allow_nil: true
 
     def self.find_for_email_and_company_type(email:, company_type_name:)
       all.by_email(email).by_company_type(company_type_name).order_by_created_at.first
@@ -69,6 +71,14 @@ module Dc
 
     def ability
       Ability.new(self)
+    end
+
+    private
+
+    def set_employee_type
+      return if employee_type.present?
+
+      self.employee_type = company.company_employees.exists? ? 'SME' : 'Insured'
     end
   end
 end
