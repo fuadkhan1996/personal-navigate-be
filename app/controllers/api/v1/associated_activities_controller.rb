@@ -50,7 +50,7 @@ module Api
         scope = if @assessment.present?
                   @assessment.associated_activities
                 elsif @company.present?
-                  AssociatedActivity.accessible_by(primary_company_employee.ability)
+                  @company.all_associated_activities
                 else
                   AssociatedActivity.accessible_by(current_ability)
                 end
