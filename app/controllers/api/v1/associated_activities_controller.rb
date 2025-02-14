@@ -7,8 +7,8 @@ module Api
       before_action :validate_company!
       before_action :set_assessment
       before_action :validate_assessment!
-      before_action :set_associated_activity, only: %i[show]
-      before_action :validate_associated_activity!, only: %i[show]
+      before_action :set_associated_activity, only: %i[show update]
+      before_action :validate_associated_activity!, only: %i[show update]
 
       def index
         render json: AssociatedActivityBlueprint.render(associated_activities), status: :ok
@@ -27,10 +27,22 @@ module Api
         end
       end
 
+      def update
+        if @associated_activity.update(update_params)
+          render json: AssociatedActivityBlueprint.render(@associated_activity), status: :ok
+        else
+          unprocessable_entity(@associated_activity.errors.messages)
+        end
+      end
+
       private
 
       def create_params
         params.permit(:company_id, associated_activity: %i[activity_id]).require(:associated_activity)
+      end
+
+      def update_params
+        params.permit(:id, associated_activity: %i[pinned]).require(:associated_activity)
       end
 
       def set_company

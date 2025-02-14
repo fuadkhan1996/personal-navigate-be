@@ -1783,6 +1783,71 @@ paths:
                     type: string
                 required:
                 - error
+    put:
+      summary: Update Associated Activity
+      tags:
+      - Activities
+      security:
+      - bearerAuth: []
+        apiKeyAuth: []
+        xApiKey: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Updated Associated Activity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  activity:
+                    type: object
+                  associated_activity_actions:
+                    type: array
+                    items:
+                      type: object
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    additionalProperties:
+                      type: array
+                      items:
+                        type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                associated_activity:
+                  type: object
+                  properties:
+                    pinned:
+                      type: boolean
   "/api/v1/companies/{company_id}/assigned_company_employees":
     post:
       summary: Assign Company Employee to a Company

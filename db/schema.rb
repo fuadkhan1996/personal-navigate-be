@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_02_07_203112) do
+ActiveRecord::Schema[7.1].define(version: 2025_02_14_184850) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -1271,6 +1271,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_07_203112) do
     t.bigint "assessment_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "completed_at"
+    t.boolean "pinned", default: false
     t.index ["activity_id"], name: "index_nav_associated_activities_on_activity_id"
     t.index ["assessment_id"], name: "index_nav_associated_activities_on_assessment_id"
     t.index ["company_id"], name: "index_nav_associated_activities_on_company_id"

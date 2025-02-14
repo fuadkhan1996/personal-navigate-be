@@ -19,8 +19,10 @@ class UpdateAssociatedActivityActionService < ApplicationService
     return associated_activity_action if associated_activity_action.errors.any?
 
     associated_activity_action.update(associated_activity_params)
-    # send_notification_if_complete
 
+    # Attempt to mark the associated activity as complete
+    associated_activity&.complete!
+    # send_notification_if_complete
     associated_activity_action
   end
 

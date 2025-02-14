@@ -26,6 +26,16 @@ class AssociatedActivity < ApplicationRecord
   before_create :set_associated_activity_actions, unless: :skip_associated_activity_actions_creation
 
   def completed?
+    completed_at.present?
+  end
+
+  def complete!
+    return unless all_associated_activity_actions_completed?
+
+    update!(completed_at: DateTime.current)
+  end
+
+  def all_associated_activity_actions_completed?
     associated_activity_actions.all?(&:completed_at)
   end
 
