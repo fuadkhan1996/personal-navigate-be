@@ -38,6 +38,12 @@ module Dc
              foreign_key: :dc_partner_company_id,
              inverse_of: :partner_company
 
+    has_many :assessments,
+             dependent: :restrict_with_exception,
+             class_name: '::Assessment',
+             foreign_key: :dc_company_id,
+             inverse_of: :company
+
     has_many :activity_connections,
              dependent: :destroy,
              class_name: 'AssociatedActivity',
@@ -79,15 +85,6 @@ module Dc
 
     def accounts
       linked_companies.by_company_type('Account')
-    end
-
-    def all_associated_activities
-      # Return activity_connections if the account? condition is false
-      return activity_connections unless account?
-
-      # Fetch associated activities based on company_id or assessment_ids
-      AssociatedActivity.where(company_id: id)
-                        .or(AssociatedActivity.where(assessment_id: assessments.select(:id)))
     end
 
     def assessments
