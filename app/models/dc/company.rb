@@ -103,6 +103,15 @@ module Dc
       end
     end
 
+    def all_associated_activities
+      # Return activity_connections if the account? condition is false
+      return activity_connections unless account?
+
+      # Fetch associated activities based on company_id or assessment_ids
+      AssociatedActivity.where(company_id: id)
+                        .or(AssociatedActivity.where(assessment_id: assessments.pluck(:id)))
+    end
+
     private
 
     def set_company_code
