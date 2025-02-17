@@ -25,6 +25,8 @@ class AssociatedActivity < ApplicationRecord
 
   before_create :set_associated_activity_actions, unless: :skip_associated_activity_actions_creation
 
+  scope :order_by_pinned, -> { order(pinned: :desc) }
+
   def completed?
     completed_at.present?
   end

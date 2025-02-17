@@ -11,7 +11,7 @@ module Api
       before_action :validate_associated_activity!, only: %i[show update]
 
       def index
-        render json: AssociatedActivityBlueprint.render(associated_activities), status: :ok
+        render json: AssociatedActivityBlueprint.render(associated_activities.order_by_pinned), status: :ok
       end
 
       def show
