@@ -1542,6 +1542,541 @@ paths:
                     type: string
                 required:
                 - error
+  "/api/v1/associated_activities/{associated_activity_id}/associated_activity_actions/{id}":
+    put:
+      summary: Update Associated Activity Action
+      tags:
+      - Activities
+      security:
+      - bearerAuth: []
+        apiKeyAuth: []
+        xApiKey: []
+      parameters:
+      - name: associated_activity_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Associated Activity Action Updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  activity_action_id:
+                    type: string
+                  associated_activity_id:
+                    type: string
+                  result_data:
+                    type: string
+                  deleted_at:
+                    type: string
+                  completed_at:
+                    type: string
+                  status:
+                    type: string
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: object
+                  activity_action:
+                    type: object
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    additionalProperties:
+                      type: array
+                      items:
+                        type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                associated_activity_action:
+                  type: object
+                  properties:
+                    result_data:
+                      type: object
+                      properties:
+                        data:
+                          type: array
+                          items:
+                            type: object
+  "/api/v1/associated_activities":
+    post:
+      summary: Create Associated Activity
+      tags:
+      - Activities
+      security:
+      - bearerAuth: []
+        apiKeyAuth: []
+        xApiKey: []
+      parameters:
+      - name: company_id
+        in: query
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Associated Activity Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  activity:
+                    type: object
+                  associated_activity_actions:
+                    type: array
+                    items:
+                      type: object
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    additionalProperties:
+                      type: array
+                      items:
+                        type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                associated_activity:
+                  type: object
+                  properties:
+                    activity_id:
+                      type: string
+    get:
+      summary: Get Associated Activities
+      tags:
+      - Activities
+      security:
+      - bearerAuth: []
+        apiKeyAuth: []
+        xApiKey: []
+      parameters:
+      - name: company_id
+        in: query
+        schema:
+          type: string
+      - name: assessment_id
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Associated Activities
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    activity:
+                      type: object
+                    associated_activity_actions:
+                      type: array
+                      items:
+                        type: object
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
+  "/api/v1/associated_activities/{id}":
+    get:
+      summary: Get Associated Activity
+      tags:
+      - Activities
+      security:
+      - bearerAuth: []
+        apiKeyAuth: []
+        xApiKey: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Associated Activity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  activity:
+                    type: object
+                  associated_activity_actions:
+                    type: array
+                    items:
+                      type: object
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
+    put:
+      summary: Update Associated Activity
+      tags:
+      - Activities
+      security:
+      - bearerAuth: []
+        apiKeyAuth: []
+        xApiKey: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Updated Associated Activity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  activity:
+                    type: object
+                  associated_activity_actions:
+                    type: array
+                    items:
+                      type: object
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    additionalProperties:
+                      type: array
+                      items:
+                        type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                associated_activity:
+                  type: object
+                  properties:
+                    pinned:
+                      type: boolean
+  "/api/v1/companies/{company_id}/assigned_company_employees":
+    post:
+      summary: Assign Company Employee to a Company
+      tags:
+      - Companies
+      security:
+      - bearerAuth: []
+        apiKeyAuth: []
+        xApiKey: []
+      parameters:
+      - name: company_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Company Employee Assigned
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  title:
+                    type: string
+                  guid:
+                    type: string
+                  logo:
+                    type: string
+                  company_type_name:
+                    type: string
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  deleted_at:
+                    type: string
+                  primary_company_employee:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      uuid:
+                        type: string
+                      email:
+                        type: string
+                      first_name:
+                        type: string
+                      last_name:
+                        type: string
+                      invitation_sent_at:
+                        type: string
+                      invitation_accepted_at:
+                        type: string
+                      employee_type:
+                        type: string
+                  assigned_company_employees:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        created_at:
+                          type: string
+                        updated_at:
+                          type: string
+                        company_employee:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                            uuid:
+                              type: string
+                            email:
+                              type: string
+                            first_name:
+                              type: string
+                            last_name:
+                              type: string
+                            invitation_sent_at:
+                              type: string
+                            invitation_accepted_at:
+                              type: string
+                            employee_type:
+                              type: string
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    additionalProperties:
+                      type: array
+                      items:
+                        type: string
+                required:
+                - errors
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                assigned_company_employee:
+                  type: object
+                  properties:
+                    company_employee_id:
+                      type: string
+  "/api/v1/companies/{company_id}/assigned_company_employees/{id}":
+    delete:
+      summary: Remove Assigned Company Employee
+      tags:
+      - Companies
+      security:
+      - bearerAuth: []
+        apiKeyAuth: []
+        xApiKey: []
+      parameters:
+      - name: company_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Assigned Company Employee Removed Successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  title:
+                    type: string
+                  guid:
+                    type: string
+                  logo:
+                    type: string
+                  company_type_name:
+                    type: string
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  deleted_at:
+                    type: string
+                  primary_company_employee:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      uuid:
+                        type: string
+                      email:
+                        type: string
+                      first_name:
+                        type: string
+                      last_name:
+                        type: string
+                      invitation_sent_at:
+                        type: string
+                      invitation_accepted_at:
+                        type: string
+                      employee_type:
+                        type: string
+                  assigned_company_employees:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        created_at:
+                          type: string
+                        updated_at:
+                          type: string
+                        company_employee:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                            uuid:
+                              type: string
+                            email:
+                              type: string
+                            first_name:
+                              type: string
+                            last_name:
+                              type: string
+                            invitation_sent_at:
+                              type: string
+                            invitation_accepted_at:
+                              type: string
+                            employee_type:
+                              type: string
+        '422':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
   "/api/v1/companies":
     get:
       summary: Get Linked Companies
@@ -1956,7 +2491,11 @@ paths:
       - bearerAuth: []
         apiKeyAuth: []
         xApiKey: []
-      parameters: []
+      parameters:
+      - name: company_id
+        in: query
+        schema:
+          type: string
       responses:
         '200':
           description: Company Employee Data
@@ -2124,7 +2663,11 @@ paths:
       - bearerAuth: []
         apiKeyAuth: []
         xApiKey: []
-      parameters: []
+      parameters:
+      - name: company_id
+        in: query
+        schema:
+          type: string
       responses:
         '200':
           description: Invitations Sent Successfully.
@@ -2182,6 +2725,11 @@ paths:
       security:
       - xApiKey: []
       parameters:
+      - name: company_id
+        in: query
+        description: Account ID
+        schema:
+          type: string
       - name: id
         in: path
         required: true
@@ -2262,6 +2810,17 @@ paths:
       summary: List of Company Employees
       tags:
       - Companies
+      parameters:
+      - name: company_id
+        in: query
+        description: Account ID
+        schema:
+          type: string
+      - name: employee_type
+        in: query
+        description: Admin/Owner, Agent, Insured, SME
+        schema:
+          type: string
       responses:
         '200':
           description: Company Employee Data

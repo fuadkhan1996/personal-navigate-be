@@ -1,0 +1,8 @@
+<% content_for :header, 'New Account Assignment' %>
+<% content_for :recipient_name, @company_employee.fullname %>
+<p>
+  You have been granted the permission to manage the account <strong><%= @company.title %></strong>.
+</p>
+
+<a href="<%= host %>/underwriter/companies/<%= @company.id %>" class="primary-btn">View Account</a>
+<p>If you did not expect this email, you can ignore it.</p>

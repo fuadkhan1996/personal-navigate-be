@@ -2,7 +2,7 @@
 
 class Assessment
   class EvaluatorService < ApplicationService
-    attr_reader :assessment, :triggers, :trigger, :retained_action_results
+    attr_reader :assessment, :triggers, :trigger, :retained_associated_activities
 
     OPERATIONS = {
       'eq' => ->(data, condition) { data.to_s == condition.to_s },
@@ -17,7 +17,7 @@ class Assessment
       super()
       @assessment = assessment
       @triggers = Array(triggers)
-      @retained_action_results = []
+      @retained_associated_activities = []
     end
 
     def call
@@ -28,13 +28,11 @@ class Assessment
           next unless criteria_met?
 
           criteria_met = true
-          create_action_results
+          create_associated_activities
         end
 
         raise ActiveRecord::Rollback unless criteria_met
       end
-
-      soft_delete_unretained_action_results if criteria_met
 
       criteria_met
     end
@@ -64,24 +62,10 @@ class Assessment
       conjunction == 'and' ? results.all? : results.any?
     end
 
-    def create_action_results
-      activity.activity_actions.each do |activity_action|
-        action_result = Assessment::ActionResult.find_or_create_by!(
-          nav_assessment_id: assessment.id,
-          nav_activity_action_id: activity_action.id
-        )
-
-        retained_action_results << action_result
-
-        Assessment::ActionResultTrigger.find_or_create_by!(
-          assessment_action_result_id: action_result.id,
-          activity_trigger_id: trigger.id
-        )
-      end
-    end
-
-    def soft_delete_unretained_action_results
-      unretained_action_results.soft_delete
+    def create_associated_activities
+      associated_activity = activity.activity_connections.find_or_create_by!(assessment_id: assessment.id)
+      retained_associated_activities << associated_activity
+      associated_activity.associated_activity_triggers.find_or_create_by!(activity_trigger_id: trigger.id)
     end
 
     def activity
@@ -102,10 +86,6 @@ class Assessment
 
     def form_data
       assessment.form_data
-    end
-
-    def unretained_action_results
-      Assessment::ActionResult.by_assessments([assessment.id]).ids_not_in(retained_action_results.map(&:id))
     end
   end
 end

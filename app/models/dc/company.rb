@@ -13,6 +13,12 @@ module Dc
              foreign_key: :dc_company_id,
              inverse_of: :company
 
+    has_many :active_company_employees, lambda {
+      active
+    }, dependent: :restrict_with_exception,
+       class_name: 'Dc::CompanyEmployee',
+       inverse_of: :company
+
     has_many :employees, through: :company_employees
     has_many :activities,
              dependent: :restrict_with_exception,
@@ -38,10 +44,21 @@ module Dc
              foreign_key: :dc_company_id,
              inverse_of: :company
 
+    has_many :activity_connections,
+             dependent: :destroy,
+             class_name: 'AssociatedActivity',
+             inverse_of: :company
+
+    has_many :assigned_activities, through: :activity_connections, source: :activity
+
+    # only accounts for now
+    has_many :assigned_company_employees, through: :partner_company_connections
+
     validates :title, presence: true
     validates :title, uniqueness: { case_sensitive: false }, unless: :company_type_account?
     validates_associated :partner_company_connections, on: :create, if: :company_type_account?
     validates_associated :company_employees, on: :create
+    validate :validate_title_uniqueness, on: %i[create update]
 
     accepts_nested_attributes_for :company_employees, reject_if: :blank?, allow_destroy: true
     accepts_nested_attributes_for :partner_company_connections, reject_if: :blank?, allow_destroy: true
@@ -56,7 +73,7 @@ module Dc
 
     delegate :name, :account?, to: :company_type, prefix: true, allow_nil: true
     delegate :account?, to: :company_type, allow_nil: true
-    delegate :by_email, to: :company_employees, prefix: true, allow_nil: true
+    delegate :by_email, :by_employee_type, to: :active_company_employees, prefix: true, allow_nil: true
     delegate :email, to: :company_employees, allow_nil: true
     delegate :by_company_type, to: :linked_companies, prefix: true, allow_nil: true
 
@@ -64,6 +81,10 @@ module Dc
       company_ids = company_connections.pluck(:dc_partner_company_id) +
                     partner_company_connections.pluck(:dc_company_id)
       Company.where(id: company_ids)
+    end
+
+    def accounts
+      linked_companies.by_company_type('Account')
     end
 
     def assessments
@@ -82,6 +103,15 @@ module Dc
       end
     end
 
+    def all_associated_activities
+      # Return activity_connections if the account? condition is false
+      return activity_connections unless account?
+
+      # Fetch associated activities based on company_id or assessment_ids
+      AssociatedActivity.where(company_id: id)
+                        .or(AssociatedActivity.where(assessment_id: assessments.pluck(:id)))
+    end
+
     private
 
     def set_company_code
@@ -95,6 +125,14 @@ module Dc
 
     def set_guid
       self.guid = SecureRandom.uuid
+    end
+
+    def validate_title_uniqueness
+      return if current_company.blank?
+      return unless account?
+      return unless current_company.accounts.pluck(:title).any? { |acc_title| acc_title == title }
+
+      errors.add(:title, 'Account already exist with the same title')
     end
   end
 end

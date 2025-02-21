@@ -12,6 +12,6 @@ class Assessment
                class_name: '::Assessment::ActionResult',
                inverse_of: :assessment_action_result_triggers
 
-    validates :activity_trigger_id, uniqueness: { scope: :assessment_action_result_id }
+    # validates :activity_trigger_id, uniqueness: { scope: :assessment_action_result_id }
   end
 end

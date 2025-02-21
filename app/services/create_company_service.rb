@@ -10,17 +10,11 @@ class CreateCompanyService < ApplicationService
 
   def call
     @company = Dc::Company.new(create_params)
-    ActiveRecord::Base.transaction do
-      if account_exist?
-        @company.errors.add(:base, 'already exist.')
-      elsif @company.save
-        @company_employee = @company.company_employees.first
-      end
-
-      raise ActiveRecord::Rollback if @company.errors.any?
+    if @company.save
+      @company_employee = @company.company_employees.first
+      @company_employee&.invite!(current_company_employee) if @company_employee.present?
     end
 
-    @company_employee&.invite!(current_company_employee) if @company.persisted?
     @company
   end
 
@@ -34,15 +28,11 @@ class CreateCompanyService < ApplicationService
   end
 
   def employee_attributes
+    return {} if params[:employee_attributes].blank?
+
     attributes = params[:employee_attributes].try(:first) || {}
     attributes[:email] = attributes[:email].try(:downcase) if attributes[:email].present?
     attributes
-  end
-
-  def account_exist?
-    email = employee_attributes[:email]
-    current_company.linked_companies.joins(:employees, :company_type).where(dc_company_types: { name: 'Account' },
-                                                                            dc_employees: { email: }).present?
   end
 
   def create_params
@@ -52,6 +42,8 @@ class CreateCompanyService < ApplicationService
   end
 
   def merge_employee_attributes(attrs)
+    return attrs if employee_attributes.blank?
+
     attrs.merge(company_employees_attributes: [
                   {
                     employee_type: 'Insured',

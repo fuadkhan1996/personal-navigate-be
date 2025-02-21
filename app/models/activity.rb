@@ -22,8 +22,14 @@ class Activity < ApplicationRecord
            foreign_key: :nav_activity_id,
            inverse_of: :activity
 
+  has_many :activity_connections,
+           dependent: :destroy,
+           class_name: 'AssociatedActivity',
+           inverse_of: :activity
+
+  has_many :assigned_companies, through: :activity_connections, source: :company
   has_many :assessment_action_results, through: :activity_actions
-  has_many :assessments, through: :assessment_action_results
+  has_many :assessments, through: :activity_connections
 
   accepts_nested_attributes_for :activity_actions
 

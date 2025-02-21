@@ -1,5 +1,6 @@
 namespace :api do
   namespace :v1 do
+    draw 'api/v1/companies'
     namespace :employees do
       resource :session, only: %i[create show] do
         post :refresh, on: :collection
@@ -13,7 +14,6 @@ namespace :api do
     end
 
     resources :actions, only: %i[index]
-    resources :companies, only: %i[index create show]
     resources :assessments, only: %i[create show update index] do
       collection do
         post :trigger_tis_api
@@ -57,5 +57,10 @@ namespace :api do
     end
 
     resources :company_employees, only: %i[update index]
+    resources :associated_activities, only: %i[index create update show] do
+      scope module: :associated_activities do
+        resources :associated_activity_actions, only: %i[update]
+      end
+    end
   end
 end

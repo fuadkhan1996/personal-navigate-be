@@ -3,8 +3,8 @@
 class ActivityBlueprint < ApplicationBlueprint
   identifier :id
 
+  fields :title, :description, :deleted_at, :created_at, :updated_at
   view :normal do
-    fields :title, :description, :deleted_at, :created_at, :updated_at
     association :company, blueprint: Dc::CompanyBlueprint
     association :company_employee, blueprint: Dc::CompanyEmployeeBlueprint
   end

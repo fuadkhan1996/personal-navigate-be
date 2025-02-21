@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-ResponseStruct = Struct.new(:status, :message, keyword_init: true)
-
 module Tis
   class RequestHandlerService < ApplicationService
+    ResponseStruct = Struct.new(:status, :message, keyword_init: true)
+
     def initialize
       super
       @processed_assessment_ids = []

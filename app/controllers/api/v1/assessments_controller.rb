@@ -18,11 +18,11 @@ module Api
       def index
         @assessments = Assessment.accessible_by(current_ability).order(created_at: :desc)
         @assessments = @assessments.where(account_id: @account.id) if @account.present?
-        render json: ::AssessmentBlueprint.render(@assessments), status: :ok
+        render json: ::AssessmentBlueprint.render(@assessments.includes(:account), view: :extended), status: :ok
       end
 
       def show
-        render json: ::AssessmentBlueprint.render(@assessment, view: :with_action_results), status: :ok
+        render json: ::AssessmentBlueprint.render(@assessment, view: :extended), status: :ok
       end
 
       def create

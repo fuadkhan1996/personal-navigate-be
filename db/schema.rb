@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_10_31_174059) do
+ActiveRecord::Schema[7.1].define(version: 2025_02_14_184850) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -984,6 +984,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_31_174059) do
     t.datetime "deleted_at", precision: nil
   end
 
+  create_table "dc_assigned_company_employees", force: :cascade do |t|
+    t.bigint "company_employee_id"
+    t.bigint "company_connection_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["company_connection_id"], name: "index_dc_assigned_company_employees_on_company_connection_id"
+    t.index ["company_employee_id", "company_connection_id"], name: "idx_unique_assigned_employee_connection", unique: true
+    t.index ["company_employee_id"], name: "index_dc_assigned_company_employees_on_company_employee_id"
+  end
+
   create_table "dc_authentication_codes", force: :cascade do |t|
     t.bigint "company_employee_id", null: false
     t.string "code", null: false
@@ -1210,12 +1220,14 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_31_174059) do
 
   create_table "nav_assessment_action_result_triggers", force: :cascade do |t|
     t.bigint "activity_trigger_id", null: false
-    t.bigint "assessment_action_result_id", null: false
+    t.bigint "assessment_action_result_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "associated_activity_id"
     t.index ["activity_trigger_id", "assessment_action_result_id"], name: "index_nav_assessment_action_result_triggers", unique: true
     t.index ["activity_trigger_id"], name: "idx_on_activity_trigger_id_f0764e8a7a"
     t.index ["assessment_action_result_id"], name: "idx_on_assessment_action_result_id_d43978073e"
+    t.index ["associated_activity_id"], name: "idx_on_associated_activity_id_327846aec7"
   end
 
   create_table "nav_assessment_action_results", force: :cascade do |t|
@@ -1227,6 +1239,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_31_174059) do
     t.datetime "updated_at", null: false
     t.bigint "nav_activity_trigger_id"
     t.datetime "completed_at"
+    t.bigint "nav_activity_trigger_id"
+    t.bigint "associated_activity_id"
+    t.index ["associated_activity_id"], name: "index_nav_assessment_action_results_on_associated_activity_id"
     t.index ["nav_activity_action_id"], name: "index_nav_assessment_action_results_on_nav_activity_action_id"
     t.index ["nav_activity_trigger_id"], name: "index_nav_assessment_action_results_on_nav_activity_trigger_id"
     t.index ["nav_assessment_id"], name: "index_nav_assessment_action_results_on_nav_assessment_id"
@@ -1248,6 +1263,19 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_31_174059) do
     t.index ["dc_company_employee_id"], name: "index_nav_assessments_on_dc_company_employee_id"
     t.index ["dc_company_id"], name: "index_nav_assessments_on_dc_company_id"
     t.index ["nav_questionnaire_id"], name: "index_nav_assessments_on_nav_questionnaire_id"
+  end
+
+  create_table "nav_associated_activities", force: :cascade do |t|
+    t.bigint "activity_id"
+    t.bigint "company_id"
+    t.bigint "assessment_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "completed_at"
+    t.boolean "pinned", default: false
+    t.index ["activity_id"], name: "index_nav_associated_activities_on_activity_id"
+    t.index ["assessment_id"], name: "index_nav_associated_activities_on_assessment_id"
+    t.index ["company_id"], name: "index_nav_associated_activities_on_company_id"
   end
 
   create_table "nav_questionnaire_actions", force: :cascade do |t|
@@ -1755,6 +1783,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_31_174059) do
   add_foreign_key "app_submission_groups", "dc_companies", column: "company_id"
   add_foreign_key "app_submission_groups", "dc_company_employees", column: "company_employee_id"
   add_foreign_key "app_templates", "app_templates", column: "renewal_template_id"
+  add_foreign_key "dc_assigned_company_employees", "dc_company_connections", column: "company_connection_id", on_delete: :cascade
+  add_foreign_key "dc_assigned_company_employees", "dc_company_employees", column: "company_employee_id", on_delete: :cascade
   add_foreign_key "dc_authentication_codes", "dc_company_employees", column: "company_employee_id"
   add_foreign_key "dc_companies", "dc_company_types", column: "comp_type_id", name: "dc_companies_dc_company_type_id_fkey"
   add_foreign_key "dc_company_connections", "dc_companies", column: "dc_partner_company_id", name: "dc_company_connections_dc_partner_company_id_fkey"
@@ -1772,13 +1802,18 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_31_174059) do
   add_foreign_key "nav_activity_triggers", "nav_questionnaires", on_delete: :cascade
   add_foreign_key "nav_assessment_action_result_triggers", "nav_activity_triggers", column: "activity_trigger_id", on_delete: :cascade
   add_foreign_key "nav_assessment_action_result_triggers", "nav_assessment_action_results", column: "assessment_action_result_id", on_delete: :cascade
+  add_foreign_key "nav_assessment_action_result_triggers", "nav_associated_activities", column: "associated_activity_id", on_delete: :cascade
   add_foreign_key "nav_assessment_action_results", "nav_activity_actions"
   add_foreign_key "nav_assessment_action_results", "nav_activity_triggers"
   add_foreign_key "nav_assessment_action_results", "nav_assessments", on_delete: :cascade
+  add_foreign_key "nav_assessment_action_results", "nav_associated_activities", column: "associated_activity_id", on_delete: :cascade
   add_foreign_key "nav_assessments", "dc_companies", column: "account_id"
   add_foreign_key "nav_assessments", "dc_companies", on_delete: :cascade
   add_foreign_key "nav_assessments", "dc_company_employees"
   add_foreign_key "nav_assessments", "nav_questionnaires", on_delete: :cascade
+  add_foreign_key "nav_associated_activities", "dc_companies", column: "company_id", on_delete: :cascade
+  add_foreign_key "nav_associated_activities", "nav_activities", column: "activity_id", on_delete: :cascade
+  add_foreign_key "nav_associated_activities", "nav_assessments", column: "assessment_id", on_delete: :cascade
   add_foreign_key "nav_questionnaire_actions", "nav_actions", on_delete: :cascade
   add_foreign_key "nav_questionnaire_actions", "nav_questionnaires", on_delete: :cascade
   add_foreign_key "nav_questionnaires", "dc_companies", on_delete: :cascade

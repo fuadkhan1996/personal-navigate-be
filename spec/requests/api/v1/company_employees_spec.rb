@@ -10,6 +10,7 @@ describe 'Api::V1::CompanyEmployeesController' do
       produces 'application/json'
       security [{ xApiKey: [] }]
 
+      parameter name: :company_id, in: :query, type: :string, description: 'Account ID'
       parameter name: :id, in: :path, type: :string
       parameter name: :company_employee, in: :body, schema: {
         type: :object,
@@ -75,6 +76,9 @@ describe 'Api::V1::CompanyEmployeesController' do
       tags 'Companies'
       consumes 'application/json'
       produces 'application/json'
+
+      parameter name: :company_id, in: :query, type: :string, description: 'Account ID'
+      parameter name: :employee_type, in: :query, type: :string, description: 'Admin/Owner, Agent, Insured, SME'
 
       response '200', 'Company Employee Data' do
         schema type: :array,
