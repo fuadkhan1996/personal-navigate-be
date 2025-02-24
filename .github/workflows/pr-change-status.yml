@@ -1,0 +1,30 @@
+name: Update Clickup status
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review, labeled]
+    paths-ignore:
+      - "**.md"
+jobs:
+  build-deploy:
+    name: Update Clickup status
+    if: contains(github.event.pull_request.labels.*.name, 'preview') || github.event.pull_request.draft == false
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🔍 Extract ClickUp Task ID from Branch Name
+        id: extract_task_id
+        run: |
+          TASK_ID=$(echo "${GITHUB_HEAD_REF}" | sed -n 's/^CU-\([^_]*\).*/\1/p')
+          echo "Task ID: $TASK_ID"
+          echo "task_id=$TASK_ID" >> $GITHUB_ENV
+      - name: 🚀 Move task to Shipped on ClickUp
+        run: |
+          if [ -z "${{ env.task_id }}" ]; then
+            echo "No Task ID found, skipping ClickUp update."
+            exit 0
+          fi
+          curl --request PUT \
+            --url "https://api.clickup.com/api/v2/task/${{ env.task_id }}" \
+            --header "Authorization: ${{ secrets.CLICKUP_API_TOKEN }}" \
+            --header "Content-Type: application/json" \
+            --data '{"status": "CODE REVIEW"}'
