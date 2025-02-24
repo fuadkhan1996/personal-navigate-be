@@ -17,7 +17,7 @@ jobs:
           TASK_ID=$(echo "${GITHUB_HEAD_REF}" | sed -n 's/^CU-\([^_]*\).*/\1/p')
           echo "Task ID: $TASK_ID"
           echo "task_id=$TASK_ID" >> $GITHUB_ENV
-      - name: 🚀 Move task to Shipped on ClickUp
+      - name: 🚀 Move task to CodeReview on ClickUp
         run: |
           if [ -z "${{ env.task_id }}" ]; then
             echo "No Task ID found, skipping ClickUp update."
