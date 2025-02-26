@@ -11,7 +11,7 @@ class Assessment < ApplicationRecord
              foreign_key: :dc_company_employee_id,
              inverse_of: :assessments
 
-  has_many :activity_triggers, through: :questionnaire
+  has_many :active_questionnaire_triggers, through: :questionnaire, source: :active_triggers
   has_many :assessment_action_results,
            dependent: :restrict_with_exception,
            class_name: 'Assessment::ActionResult',

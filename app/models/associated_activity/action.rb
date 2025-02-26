@@ -24,8 +24,9 @@ class AssociatedActivity
 
     before_update :set_completed_at, unless: :deleted?
 
-    delegate :action_kind, to: :action
-    delegate :details, to: :activity_action, prefix: true
+    delegate :action_kind, :file_upload?, to: :action
+    delegate :details, :title, :description, to: :activity_action, prefix: true
+    delegate :title, :description, :details, to: :activity_action
 
     def activity_action_id
       nav_activity_action_id
@@ -36,7 +37,17 @@ class AssociatedActivity
     end
 
     def status
-      completed_at.present? ? 'Complete' : 'Incomplete'
+      completed? ? 'Complete' : 'Incomplete'
+    end
+
+    def complete!
+      return if completed?
+
+      update!(completed_at: DateTime.current)
+    end
+
+    def completed?
+      completed_at.present?
     end
 
     private

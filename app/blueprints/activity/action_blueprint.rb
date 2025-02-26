@@ -2,12 +2,18 @@
 
 class Activity
   class ActionBlueprint < ApplicationBlueprint
-    identifier :id
+    api_identifier :id
 
-    fields :title, :description, :details, :action_kind, :order, :created_at, :updated_at
+    api_field :title, type: :string, required: true
+    api_field :description, type: :string, required: true
+    api_field :details, type: :string, required: true
+    api_field :action_kind, type: :string, required: true
+    api_field :order, type: :string, required: true
+    api_field :created_at, type: :string, required: true
+    api_field :updated_at, type: :string, required: true
 
-    view :with_supporting_documents do
-      field :supporting_documents do |activity, _options|
+    api_view :with_supporting_documents do
+      api_field :supporting_documents, type: :array do |activity, _options|
         activity.supporting_documents.map do |document|
           {
             key: document.key,

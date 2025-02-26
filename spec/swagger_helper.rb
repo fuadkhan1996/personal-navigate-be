@@ -14,6 +14,7 @@ RSpec.configure do |config|
       },
       paths: {},
       components: {
+        schemas: SwaggerSchemaGenerator.generate_schemas,
         securitySchemes: {
           bearerAuth: {
             type: 'http',

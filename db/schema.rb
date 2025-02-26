@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_02_14_184850) do
+ActiveRecord::Schema[7.1].define(version: 2025_02_21_214432) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -1302,6 +1302,24 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_14_184850) do
     t.index ["dc_company_id"], name: "index_nav_questionnaires_on_dc_company_id"
   end
 
+  create_table "nav_triggers", force: :cascade do |t|
+    t.string "title"
+    t.string "description"
+    t.jsonb "criteria", default: {}
+    t.datetime "deleted_at"
+    t.bigint "nav_questionnaire_id"
+    t.bigint "nav_activity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "company_id"
+    t.bigint "company_employee_id"
+    t.index ["company_employee_id"], name: "index_nav_triggers_on_company_employee_id"
+    t.index ["company_id"], name: "index_nav_triggers_on_company_id"
+    t.index ["nav_activity_id"], name: "index_nav_triggers_on_nav_activity_id"
+    t.index ["nav_questionnaire_id"], name: "index_nav_triggers_on_nav_questionnaire_id"
+    t.index ["title", "company_id"], name: "index_nav_triggers_on_title_and_company", unique: true
+  end
+
   create_table "ocr_active_admin_comments", force: :cascade do |t|
     t.string "namespace"
     t.text "body"
@@ -1798,15 +1816,16 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_14_184850) do
   add_foreign_key "nav_activities", "dc_company_employees"
   add_foreign_key "nav_activity_actions", "nav_actions", on_delete: :cascade
   add_foreign_key "nav_activity_actions", "nav_activities", on_delete: :cascade
-  add_foreign_key "nav_activity_triggers", "nav_activities", on_delete: :cascade
-  add_foreign_key "nav_activity_triggers", "nav_questionnaires", on_delete: :cascade
-  add_foreign_key "nav_assessment_action_result_triggers", "nav_activity_triggers", column: "activity_trigger_id", on_delete: :cascade
+  add_foreign_key "nav_activity_triggers", "nav_activities", column: "activity_id", on_delete: :cascade
+  add_foreign_key "nav_activity_triggers", "nav_triggers", column: "trigger_id", on_delete: :cascade
   add_foreign_key "nav_assessment_action_result_triggers", "nav_assessment_action_results", column: "assessment_action_result_id", on_delete: :cascade
   add_foreign_key "nav_assessment_action_result_triggers", "nav_associated_activities", column: "associated_activity_id", on_delete: :cascade
+  add_foreign_key "nav_assessment_action_result_triggers", "nav_triggers", column: "activity_trigger_id", on_delete: :cascade
   add_foreign_key "nav_assessment_action_results", "nav_activity_actions"
   add_foreign_key "nav_assessment_action_results", "nav_activity_triggers"
   add_foreign_key "nav_assessment_action_results", "nav_assessments", on_delete: :cascade
   add_foreign_key "nav_assessment_action_results", "nav_associated_activities", column: "associated_activity_id", on_delete: :cascade
+  add_foreign_key "nav_assessment_action_results", "nav_triggers", column: "nav_activity_trigger_id"
   add_foreign_key "nav_assessments", "dc_companies", column: "account_id"
   add_foreign_key "nav_assessments", "dc_companies", on_delete: :cascade
   add_foreign_key "nav_assessments", "dc_company_employees"
@@ -1818,6 +1837,10 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_14_184850) do
   add_foreign_key "nav_questionnaire_actions", "nav_questionnaires", on_delete: :cascade
   add_foreign_key "nav_questionnaires", "dc_companies", on_delete: :cascade
   add_foreign_key "nav_questionnaires", "dc_company_employees"
+  add_foreign_key "nav_triggers", "dc_companies", column: "company_id", on_delete: :cascade
+  add_foreign_key "nav_triggers", "dc_company_employees", column: "company_employee_id", on_delete: :cascade
+  add_foreign_key "nav_triggers", "nav_activities", on_delete: :cascade
+  add_foreign_key "nav_triggers", "nav_questionnaires", on_delete: :cascade
   add_foreign_key "ocr_active_storage_attachments", "ocr_active_storage_blobs", column: "blob_id"
   add_foreign_key "ocr_active_storage_variant_records", "ocr_active_storage_blobs", column: "blob_id"
   add_foreign_key "ocr_application_mappings", "ocr_api_clients"

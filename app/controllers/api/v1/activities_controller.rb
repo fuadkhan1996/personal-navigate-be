@@ -7,11 +7,9 @@ module Api
       before_action :authorize_activity!, only: %i[show create]
 
       def index
-        @activities = Activity.accessible_by(current_ability)
-                              .includes(activity_actions: :action)
-                              .order(created_at: :desc)
-
-        render json: ::ActivityBlueprint.render(@activities, view: :normal), status: :ok
+        @activities = activities
+        @activities = @activities.by_action_kind(params[:action_kind]) if params[:action_kind].present?
+        render json: ::ActivityBlueprint.render(@activities.order(created_at: :desc), view: :normal), status: :ok
       end
 
       def show
@@ -33,7 +31,8 @@ module Api
         params.require(:activity).permit(
           :title,
           :description,
-          activity_actions_attributes: activity_actions_params
+          { trigger_ids: [] },
+          { activity_actions_attributes: activity_actions_params }
         ).merge(
           dc_company_employee_id: current_company_employee.id,
           dc_company_id: current_company.id
@@ -51,8 +50,12 @@ module Api
         ]
       end
 
+      def activities
+        Activity.accessible_by(current_ability).includes({ company: :company_type }, { company_employee: :employee })
+      end
+
       def set_activity
-        @activity = Activity.accessible_by(current_ability).find_by(id: params[:id])
+        @activity = activities.find_by(id: params[:id])
       end
 
       def authorize_activity!

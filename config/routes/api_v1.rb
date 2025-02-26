@@ -62,5 +62,7 @@ namespace :api do
         resources :associated_activity_actions, only: %i[update]
       end
     end
+
+    resources :triggers, only: %i[create show index]
   end
 end

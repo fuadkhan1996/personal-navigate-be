@@ -2,12 +2,16 @@
 
 class Activity
   class TriggerBlueprint < ApplicationBlueprint
-    identifier :id
+    api_identifier :id
 
-    fields :title, :description, :criteria, :questionnaire_title, :deleted_at, :created_at, :updated_at
+    api_field :activity_id, type: :string, required: false
+    api_field :trigger_id, type: :string, required: true
+    api_field :created_at, type: :string, required: true
+    api_field :updated_at, type: :string, required: true
+    api_association :trigger, blueprint: ::TriggerBlueprint
 
-    view :extended do
-      association :activity, blueprint: ::ActivityBlueprint, view: :normal
+    api_view :extended do
+      api_association :activity, blueprint: ::ActivityBlueprint, view: :normal
     end
   end
 end

@@ -17,71 +17,24 @@ describe 'Api::V1::Activities::TriggersController' do
           activity_trigger: {
             type: :object,
             properties: {
-              title: { type: :string },
-              description: { type: :string },
-              nav_questionnaire_id: { type: :integer },
-              criteria: {
-                type: :object,
-                properties: {
-                  conjunction: { type: :string, enum: %w[and] },
-                  conditions: {
-                    type: :array,
-                    items: {
-                      type: :object,
-                      properties: {
-                        key: { type: :string },
-                        operator: { type: :string, enum: %w[eq gt gteq lteq] },
-                        value: { type: :string }
-                      },
-                      required: %w[key operator value]
-                    }
-                  }
-                },
-                required: %w[conjunction conditions]
-              }
-            },
-            required: %w[title description criteria]
+              trigger_id: { type: :string }
+            }
           }
-        },
-        required: %w[activity_trigger]
+        }
       }
 
       response '201', 'Activity Trigger Created' do
-        schema type: :object,
-               properties: {
-                 id: { type: :integer },
-                 message: { type: :string }
-               },
-               required: %w[id message]
-
+        schema '$ref' => '#/components/schemas/SuccessMessageWithId'
         run_test!
       end
 
       response '422', 'Unprocessable Entity' do
-        schema type: :object,
-               properties: {
-                 errors: {
-                   type: :object,
-                   additionalProperties: {
-                     type: :array,
-                     items: {
-                       type: :string
-                     }
-                   }
-                 }
-               },
-               required: %w[errors]
-
+        schema '$ref' => '#/components/schemas/Error422'
         run_test!
       end
 
       response '401', 'Unauthorized' do
-        schema type: :object,
-               properties: {
-                 error: { type: :string }
-               },
-               required: %w[error]
-
+        schema '$ref' => '#/components/schemas/GeneralError'
         run_test!
       end
     end
@@ -95,48 +48,12 @@ describe 'Api::V1::Activities::TriggersController' do
       parameter name: :activity_id, in: :path, type: :string
       response '200', 'Activity triggers List' do
         schema type: :array,
-               items: {
-                 type: :object,
-                 properties: {
-                   id: { type: :string },
-                   title: { type: :string },
-                   description: { type: :string },
-                   deleted_at: { type: :string },
-                   created_at: { type: :string },
-                   updated_at: { type: :string },
-                   criteria: {
-                     type: :object,
-                     properties: {
-                       conjunction: { type: :string },
-                       conditions: {
-                         type: :array,
-                         items: {
-                           type: :object,
-                           properties: {
-                             key: { type: :string },
-                             operator: { type: :string },
-                             value: { type: :string }
-                           },
-                           required: %w[key operator value]
-                         }
-                       }
-                     },
-                     required: %w[conjunction conditions]
-                   }
-                 },
-                 required: %w[id title description deleted_at created_at updated_at criteria]
-               }
-
+               items: { '$ref' => '#/components/schemas/Activity::TriggerBlueprint' }
         run_test!
       end
 
       response '401', 'Unauthorized' do
-        schema type: :object,
-               properties: {
-                 error: { type: :string }
-               },
-               required: %w[error]
-
+        schema '$ref' => '#/components/schemas/GeneralError'
         run_test!
       end
     end
@@ -152,47 +69,12 @@ describe 'Api::V1::Activities::TriggersController' do
       parameter name: :activity_id, in: :path, type: :string
       parameter name: :id, in: :path, type: :string
       response '200', 'Activity trigger Data' do
-        schema type: :object,
-               properties: {
-                 id: { type: :string },
-                 title: { type: :string },
-                 description: { type: :string },
-                 questionnaire_title: { type: :string },
-                 deleted_at: { type: :string },
-                 created_at: { type: :string },
-                 updated_at: { type: :string },
-                 criteria: {
-                   type: :object,
-                   properties: {
-                     conjunction: { type: :string },
-                     conditions: {
-                       type: :array,
-                       items: {
-                         type: :object,
-                         properties: {
-                           key: { type: :string },
-                           operator: { type: :string },
-                           value: { type: :string }
-                         },
-                         required: %w[key operator value]
-                       }
-                     }
-                   },
-                   required: %w[conjunction conditions]
-                 }
-               },
-               required: %w[id title description questionnaire_title deleted_at created_at updated_at criteria]
-
+        schema '$ref' => '#/components/schemas/Activity::TriggerBlueprint'
         run_test!
       end
 
       response '401', 'Unauthorized' do
-        schema type: :object,
-               properties: {
-                 error: { type: :string }
-               },
-               required: %w[error]
-
+        schema '$ref' => '#/components/schemas/GeneralError'
         run_test!
       end
     end
@@ -207,41 +89,17 @@ describe 'Api::V1::Activities::TriggersController' do
       parameter name: :id, in: :path, type: :string
 
       response '200', 'Activity trigger Deleted Successfully.' do
-        schema type: :object,
-               properties: {
-                 id: { type: :integer },
-                 message: { type: :string }
-               },
-               required: %w[id message]
-
+        schema '$ref' => '#/components/schemas/SuccessMessageWithId'
         run_test!
       end
 
       response '422', 'Unprocessable Entity' do
-        schema type: :object,
-               properties: {
-                 errors: {
-                   type: :object,
-                   additionalProperties: {
-                     type: :array,
-                     items: {
-                       type: :string
-                     }
-                   }
-                 }
-               },
-               required: %w[errors]
-
+        schema '$ref' => '#/components/schemas/Error422'
         run_test!
       end
 
       response '401', 'Unauthorized' do
-        schema type: :object,
-               properties: {
-                 error: { type: :string }
-               },
-               required: %w[error]
-
+        schema '$ref' => '#/components/schemas/GeneralError'
         run_test!
       end
     end

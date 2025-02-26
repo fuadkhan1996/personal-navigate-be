@@ -25,29 +25,25 @@ class Activity
              foreign_key: :nav_activity_action_id,
              inverse_of: :activity_action
 
-    before_validation :change_max_number_of_files_to_integer
     before_validation :set_action_id, if: :linked_action_kind
+    before_validation :change_max_number_of_files_to_integer, if: :file_upload?
     after_save :attach_supporting_documents
 
     validates :title, presence: true
     validates :title, uniqueness: { case_sensitive: false, scope: :activity }
-    validate :validate_details
+    validates :description, presence: true, if: :alert?
+    validates_with ActivityActionValidators::FileUploadValidator, if: :file_upload?
+    validates_with ActivityActionValidators::AlertValidator, if: :alert?
 
-    delegate :action_kind, to: :action, allow_nil: true
+    delegate :action_kind, :file_upload?, :alert?, to: :action, allow_nil: true
     delegate :title, :description, to: :action, prefix: true
 
     private
 
     def change_max_number_of_files_to_integer
-      return unless action_kind == 'file_upload'
       return if details['max_number_of_files'].blank?
 
       details['max_number_of_files'] = details['max_number_of_files'].to_i
-    end
-
-    def validate_details
-      errors.add(:'details.allowed_file_types', "can't be blank") if details['allowed_file_types'].blank?
-      errors.add(:'details.max_number_of_files', "can't be blank") if details['max_number_of_files'].blank?
     end
 
     def set_action_id

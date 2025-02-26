@@ -24,40 +24,17 @@ describe 'Api::V1::AssociatedActivities' do
       }
 
       response '201', 'Associated Activity Created' do
-        schema type: :object,
-               properties: {
-                 id: { type: :string },
-                 activity: { type: :object },
-                 associated_activity_actions: { type: :array, items: { type: :object } }
-               }
-
+        schema '$ref' => '#/components/schemas/AssociatedActivityBlueprint'
         run_test!
       end
 
       response '422', 'Unprocessable Entity' do
-        schema type: :object,
-               properties: {
-                 errors: {
-                   type: :object,
-                   additionalProperties: {
-                     type: :array,
-                     items: {
-                       type: :string
-                     }
-                   }
-                 }
-               }
-
+        schema '$ref' => '#/components/schemas/Error422'
         run_test!
       end
 
       response '401', 'Unauthorized' do
-        schema type: :object,
-               properties: {
-                 error: { type: :string }
-               },
-               required: %w[error]
-
+        schema '$ref' => '#/components/schemas/GeneralError'
         run_test!
       end
     end
@@ -70,28 +47,17 @@ describe 'Api::V1::AssociatedActivities' do
 
       parameter name: :company_id, in: :query, type: :string
       parameter name: :assessment_id, in: :query, type: :string
+      parameter name: :action_kind, in: :query, type: :string, description: 'file_upload/alert'
 
       response '200', 'Associated Activities' do
         schema type: :array,
-               items: {
-                 type: :object,
-                 properties: {
-                   id: { type: :string },
-                   activity: { type: :object },
-                   associated_activity_actions: { type: :array, items: { type: :object } }
-                 }
-               }
+               items: { '$ref' => '#/components/schemas/AssociatedActivityBlueprint' }
 
         run_test!
       end
 
       response '401', 'Unauthorized' do
-        schema type: :object,
-               properties: {
-                 error: { type: :string }
-               },
-               required: %w[error]
-
+        schema '$ref' => '#/components/schemas/GeneralError'
         run_test!
       end
     end
@@ -107,13 +73,7 @@ describe 'Api::V1::AssociatedActivities' do
       parameter name: :id, in: :path, type: :string
 
       response '200', 'Associated Activity' do
-        schema type: :object,
-               properties: {
-                 id: { type: :string },
-                 activity: { type: :object },
-                 associated_activity_actions: { type: :array, items: { type: :object } }
-               }
-
+        schema '$ref' => '#/components/schemas/AssociatedActivityBlueprint'
         run_test!
       end
 
@@ -148,40 +108,17 @@ describe 'Api::V1::AssociatedActivities' do
       }
 
       response '200', 'Updated Associated Activity' do
-        schema type: :object,
-               properties: {
-                 id: { type: :string },
-                 activity: { type: :object },
-                 associated_activity_actions: { type: :array, items: { type: :object } }
-               }
-
+        schema '$ref' => '#/components/schemas/AssociatedActivityBlueprint'
         run_test!
       end
 
       response '422', 'Unprocessable Entity' do
-        schema type: :object,
-               properties: {
-                 errors: {
-                   type: :object,
-                   additionalProperties: {
-                     type: :array,
-                     items: {
-                       type: :string
-                     }
-                   }
-                 }
-               }
-
+        schema '$ref' => '#/components/schemas/Error422'
         run_test!
       end
 
       response '401', 'Unauthorized' do
-        schema type: :object,
-               properties: {
-                 error: { type: :string }
-               },
-               required: %w[error]
-
+        schema '$ref' => '#/components/schemas/GeneralError'
         run_test!
       end
     end

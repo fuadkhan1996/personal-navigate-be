@@ -11,17 +11,17 @@ class Activity < ApplicationRecord
              inverse_of: :activities
 
   has_many :activity_actions,
-           dependent: :restrict_with_exception,
+           dependent: :destroy,
            class_name: 'Activity::Action',
            foreign_key: :nav_activity_id,
            inverse_of: :activity
 
   has_many :activity_triggers,
-           dependent: :restrict_with_exception,
+           dependent: :destroy,
            class_name: 'Activity::Trigger',
-           foreign_key: :nav_activity_id,
            inverse_of: :activity
 
+  has_many :triggers, through: :activity_triggers
   has_many :activity_connections,
            dependent: :destroy,
            class_name: 'AssociatedActivity',
@@ -38,27 +38,5 @@ class Activity < ApplicationRecord
   validates :activity_actions, presence: true, on: :create
   validates_associated :activity_actions
 
-  scope :with_assessment_action_results, lambda { |assessment_ids|
-    joins(:assessment_action_results)
-      .where(nav_assessment_action_results: { nav_assessment_id: assessment_ids })
-      .where(nav_assessment_action_results: { deleted_at: nil })
-      .select(
-        "nav_activities.*,
-       nav_assessment_action_results.nav_assessment_id AS assessment_id,
-       CASE
-         WHEN COUNT(nav_assessment_action_results.id) = COUNT(nav_assessment_action_results.completed_at)
-           THEN 'Complete'
-         WHEN COUNT(nav_assessment_action_results.completed_at) > 0
-           THEN 'In Progress'
-         ELSE 'InComplete'
-       END AS status"
-      )
-      .group('nav_activities.id', 'nav_assessment_action_results.nav_assessment_id')
-  }
-
-  # Checks if the assessment associated with this activity is complete
-  def complete_for_assessment?(assessment_id)
-    action_results = assessment_action_results.where(nav_assessment_id: assessment_id)
-    action_results.empty? || action_results.all?(&:completed_at)
-  end
+  scope :by_action_kind, ->(action_kind) { joins(activity_actions: :action).where(nav_actions: { action_kind: }) }
 end

@@ -53,6 +53,7 @@ module Dc
 
     # only accounts for now
     has_many :assigned_company_employees, through: :partner_company_connections
+    has_many :triggers, dependent: :destroy, class_name: '::Trigger'
 
     validates :title, presence: true
     validates :title, uniqueness: { case_sensitive: false }, unless: :company_type_account?

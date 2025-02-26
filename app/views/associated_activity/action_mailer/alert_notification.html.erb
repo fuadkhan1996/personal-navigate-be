@@ -1,0 +1,6 @@
+<% content_for :header, 'Important Alert Notification' %>
+<% content_for :recipient_name, @company_employee.fullname %>
+<p><%= @message %></p>
+
+<a href="<%= host %>/dashboard/underwriter/assessments/<%= @assessment.id %>" class="primary-btn">View Alert</a>
+<p>If you did not expect this email, you can ignore it.</p>

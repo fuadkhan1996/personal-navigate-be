@@ -12,15 +12,15 @@ class Questionnaire < ApplicationRecord
            foreign_key: :nav_questionnaire_id,
            inverse_of: :questionnaire
 
-  has_many :activity_triggers,
+  has_many :triggers,
            dependent: :restrict_with_exception,
-           class_name: 'Activity::Trigger',
+           class_name: 'Trigger',
            foreign_key: :nav_questionnaire_id,
            inverse_of: :questionnaire
 
-  has_many :active_activity_triggers, -> { active },
+  has_many :active_triggers, -> { active },
            dependent: :restrict_with_exception,
-           class_name: 'Activity::Trigger',
+           class_name: 'Trigger',
            foreign_key: :nav_questionnaire_id,
            inverse_of: :questionnaire
 

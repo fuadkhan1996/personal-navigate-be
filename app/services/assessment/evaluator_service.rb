@@ -34,6 +34,7 @@ class Assessment
         raise ActiveRecord::Rollback unless criteria_met
       end
 
+      execute_associated_activities if criteria_met
       criteria_met
     end
 
@@ -63,13 +64,16 @@ class Assessment
     end
 
     def create_associated_activities
-      associated_activity = activity.activity_connections.find_or_create_by!(assessment_id: assessment.id)
-      retained_associated_activities << associated_activity
-      associated_activity.associated_activity_triggers.find_or_create_by!(activity_trigger_id: trigger.id)
+      activity_triggers.each do |activity_trigger|
+        activity = activity_trigger.activity
+        associated_activity = activity.activity_connections.find_or_create_by!(assessment_id: assessment.id)
+        retained_associated_activities << associated_activity
+        associated_activity.associated_activity_triggers.find_or_create_by!(trigger:)
+      end
     end
 
-    def activity
-      trigger.activity
+    def activity_triggers
+      @activity_triggers ||= trigger.activity_triggers
     end
 
     def criteria
@@ -86,6 +90,12 @@ class Assessment
 
     def form_data
       assessment.form_data
+    end
+
+    def execute_associated_activities
+      assessment.associated_activities.each do |associated_activity|
+        ExecuteAssociatedActivityService.new(associated_activity).call
+      end
     end
   end
 end

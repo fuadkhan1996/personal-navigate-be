@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 
 class ActionBlueprint < ApplicationBlueprint
-  identifier :id
+  api_identifier :id
 
-  fields :title, :description, :action_kind, :created_at, :updated_at
+  api_field :title, type: :string, required: true
+  api_field :description, type: :string, required: true
+  api_field :action_kind, type: :string, required: true
+  api_field :created_at, type: :string, required: true
+  api_field :updated_at, type: :string, required: true
 end

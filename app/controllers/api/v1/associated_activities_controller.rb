@@ -11,7 +11,12 @@ module Api
       before_action :validate_associated_activity!, only: %i[show update]
 
       def index
-        render json: AssociatedActivityBlueprint.render(associated_activities.order_by_pinned), status: :ok
+        @associated_activities = associated_activities.order_by_pinned
+        if params[:action_kind].present?
+          @associated_activities = @associated_activities.by_action_kind(params[:action_kind])
+        end
+
+        render json: AssociatedActivityBlueprint.render(@associated_activities), status: :ok
       end
 
       def show
@@ -69,6 +74,7 @@ module Api
 
         @associated_activities = scope.includes(
           :activity,
+          { associated_activity_triggers: :trigger },
           { associated_activity_actions: :activity_action }
         )
       end

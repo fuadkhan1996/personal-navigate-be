@@ -2,16 +2,16 @@
 
 class AssociatedActivity
   class ActionBlueprint < ApplicationBlueprint
-    identifier :id
+    api_identifier :id
 
-    fields :activity_action_id,
-           :associated_activity_id,
-           :result_data,
-           :deleted_at,
-           :completed_at,
-           :status,
-           :created_at,
-           :updated_at
+    api_field :activity_action_id, type: :string, required: true
+    api_field :associated_activity_id, type: :string, required: true
+    api_field :result_data, type: :object, required: true
+    api_field :deleted_at, type: :string, required: true
+    api_field :completed_at, type: :string, required: true
+    api_field :status, type: :string, required: true
+    api_field :created_at, type: :string, required: true
+    api_field :updated_at, type: :string, required: true
 
     api_association :activity_action, blueprint: Activity::ActionBlueprint, view: :with_supporting_documents
   end

@@ -2,13 +2,20 @@
 
 module Dc
   class CompanyEmployeeBlueprint < ApplicationBlueprint
-    identifier :id
+    api_identifier :id
 
-    fields :email, :first_name, :last_name, :uuid, :created_at, :updated_at,
-           :invitation_sent_at, :invitation_accepted_at, :employee_type
+    api_field :email, type: :string, required: true
+    api_field :first_name, type: :string, required: true
+    api_field :last_name, type: :string, required: true
+    api_field :uuid, type: :string, required: true
+    api_field :created_at, type: :string, required: true
+    api_field :updated_at, type: :string, required: true
+    api_field :invitation_sent_at, type: :string, required: true
+    api_field :invitation_accepted_at, type: :string, required: true
+    api_field :employee_type, type: :string, required: true
 
-    view :extended do
-      association :company, blueprint: Dc::CompanyBlueprint
+    api_view :extended do
+      api_association :company, blueprint: Dc::CompanyBlueprint
     end
   end
 end

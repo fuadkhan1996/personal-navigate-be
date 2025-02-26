@@ -33,6 +33,7 @@ module Dc
 
     # only accounts for now
     has_many :assigned_companies, through: :assigned_company_connections, source: :partner_company
+    has_many :triggers, dependent: :destroy, class_name: '::Trigger'
 
     validates :dc_employee_id, uniqueness: { scope: :dc_company_id }
 

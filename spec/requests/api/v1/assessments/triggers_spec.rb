@@ -15,26 +15,7 @@ describe 'Api::V1::Assessments::TriggersController' do
 
       response '200', 'Trigger Evaluated Successfully.' do
         schema type: :array,
-               items: {
-                 type: :object,
-                 properties: {
-                   id: { type: :integer },
-                   activity_action_id: { type: :integer },
-                   completed_at: { type: :string },
-                   status: { type: :string },
-                   assessment_id: { type: :integer },
-                   result_data: { type: :object },
-                   deleted_at: { type: :string },
-                   created_at: { type: :string },
-                   updated_at: { type: :string },
-                   activity: { type: :object },
-                   activity_triggers: {
-                     type: :array,
-                     items: { type: :object }
-                   },
-                   activity_action: { type: :object }
-                 }
-               }
+               items: { '$ref' => '#/components/schemas/AssociatedActivityBlueprint' }
 
         run_test!
       end
@@ -51,19 +32,14 @@ describe 'Api::V1::Assessments::TriggersController' do
       end
 
       response '401', 'Unauthorized' do
-        schema type: :object,
-               properties: {
-                 error: { type: :string }
-               },
-               required: %w[error]
-
+        schema '$ref' => '#/components/schemas/GeneralError'
         run_test!
       end
     end
   end
 
   path '/api/v1/assessments/{assessment_id}/triggers/evaluate_triggers' do
-    post 'Evaluate Trigger' do
+    post 'Evaluate Triggers' do
       tags 'Assessments'
       consumes 'application/json'
       produces 'application/json'
@@ -72,26 +48,7 @@ describe 'Api::V1::Assessments::TriggersController' do
       parameter name: :assessment_id, in: :path, type: :string
       response '200', 'Triggers Evaluated Successfully.' do
         schema type: :array,
-               items: {
-                 type: :object,
-                 properties: {
-                   id: { type: :integer },
-                   activity_action_id: { type: :integer },
-                   completed_at: { type: :string },
-                   status: { type: :string },
-                   assessment_id: { type: :integer },
-                   result_data: { type: :object },
-                   deleted_at: { type: :string },
-                   created_at: { type: :string },
-                   updated_at: { type: :string },
-                   activity: { type: :object },
-                   activity_triggers: {
-                     type: :array,
-                     items: { type: :object }
-                   },
-                   activity_action: { type: :object }
-                 }
-               }
+               items: { '$ref' => '#/components/schemas/AssociatedActivityBlueprint' }
 
         run_test!
       end
@@ -108,12 +65,7 @@ describe 'Api::V1::Assessments::TriggersController' do
       end
 
       response '401', 'Unauthorized' do
-        schema type: :object,
-               properties: {
-                 error: { type: :string }
-               },
-               required: %w[error]
-
+        schema '$ref' => '#/components/schemas/GeneralError'
         run_test!
       end
     end

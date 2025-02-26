@@ -2,13 +2,13 @@
 
 class AssociatedActivity
   class TriggerBlueprint < ApplicationBlueprint
-    identifier :id
+    api_identifier :id
 
-    fields :activity_trigger_id,
-           :associated_activity_id,
-           :created_at,
-           :updated_at
+    api_field :activity_trigger_id, type: :string, required: true
+    api_field :associated_activity_id, type: :string, required: true
+    api_field :created_at, type: :string, required: true
+    api_field :updated_at, type: :string, required: true
 
-    api_association :activity_trigger, blueprint: Activity::TriggerBlueprint
+    api_association :trigger, blueprint: ::TriggerBlueprint
   end
 end

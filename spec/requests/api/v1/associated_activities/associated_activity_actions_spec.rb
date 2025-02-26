@@ -33,47 +33,17 @@ describe 'Api::V1::AssociatedActivities' do
       }
 
       response '200', 'Associated Activity Action Updated' do
-        schema type: :object,
-               properties: {
-                 id: { type: :string },
-                 activity_action_id: { type: :string },
-                 associated_activity_id: { type: :string },
-                 result_data: { type: :string },
-                 deleted_at: { type: :string },
-                 completed_at: { type: :string },
-                 status: { type: :string },
-                 created_at: { type: :string },
-                 updated_at: { type: :object },
-                 activity_action: { type: :object }
-               }
-
+        schema '$ref' => '#/components/schemas/AssociatedActivity::ActionBlueprint'
         run_test!
       end
 
       response '422', 'Unprocessable Entity' do
-        schema type: :object,
-               properties: {
-                 errors: {
-                   type: :object,
-                   additionalProperties: {
-                     type: :array,
-                     items: {
-                       type: :string
-                     }
-                   }
-                 }
-               }
-
+        schema '$ref' => '#/components/schemas/Error422'
         run_test!
       end
 
       response '401', 'Unauthorized' do
-        schema type: :object,
-               properties: {
-                 error: { type: :string }
-               },
-               required: %w[error]
-
+        schema '$ref' => '#/components/schemas/GeneralError'
         run_test!
       end
     end
