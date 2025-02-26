@@ -13,42 +13,13 @@ describe 'Api::V1::CompaniesController' do
       parameter name: :company_type, in: :query, type: :string, description: 'Account/Carrier/Wholesaler/SubAgency'
       response '200', 'Companies List' do
         schema type: :array,
-               items: {
-                 type: :object,
-                 properties: {
-                   id: { type: :string },
-                   title: { type: :string },
-                   guid: { type: :string },
-                   logo: { type: :string },
-                   company_type_name: { type: :string },
-                   created_at: { type: :string },
-                   updated_at: { type: :string },
-                   primary_company_employee: {
-                     type: :object,
-                     properties: {
-                       id: { type: :string },
-                       uuid: { type: :string },
-                       email: { type: :string },
-                       first_name: { type: :string },
-                       last_name: { type: :string },
-                       invitation_sent_at: { type: :string },
-                       invitation_accepted_at: { type: :string },
-                       employee_type: { type: :string }
-                     }
-                   }
-                 }
-               }
+               items: { '$ref' => '#/components/schemas/DcCompanyBlueprintWithPrimaryCompanyEmployee' }
 
         run_test!
       end
 
       response '401', 'Unauthorized' do
-        schema type: :object,
-               properties: {
-                 error: { type: :string }
-               },
-               required: %w[error]
-
+        schema '$ref' => '#/components/schemas/GeneralError'
         run_test!
       end
     end
@@ -90,44 +61,17 @@ describe 'Api::V1::CompaniesController' do
       }
 
       response '201', 'Company Created' do
-        schema type: :object,
-               properties: {
-                 id: { type: :integer },
-                 title: { type: :string },
-                 guid: { type: :string },
-                 logo: { type: :string },
-                 company_type_name: { type: :string },
-                 created_at: { type: :string },
-                 updated_at: { type: :string }
-               }
-
+        schema '$ref' => '#/components/schemas/DcCompanyBlueprint'
         run_test!
       end
 
       response '422', 'Unprocessable Entity' do
-        schema type: :object,
-               properties: {
-                 errors: {
-                   type: :object,
-                   additionalProperties: {
-                     type: :array,
-                     items: {
-                       type: :string
-                     }
-                   }
-                 }
-               }
-
+        schema '$ref' => '#/components/schemas/Error422'
         run_test!
       end
 
       response '401', 'Unauthorized' do
-        schema type: :object,
-               properties: {
-                 error: { type: :string }
-               },
-               required: %w[error]
-
+        schema '$ref' => '#/components/schemas/GeneralError'
         run_test!
       end
     end
@@ -142,50 +86,17 @@ describe 'Api::V1::CompaniesController' do
 
       parameter name: :id, in: :path, type: :string
       response '200', 'Company Data' do
-        schema type: :object,
-               properties: {
-                 id: { type: :string },
-                 title: { type: :string },
-                 guid: { type: :string },
-                 logo: { type: :string },
-                 company_type_name: { type: :string },
-                 created_at: { type: :string },
-                 updated_at: { type: :string },
-                 primary_company_employee: {
-                   type: :object,
-                   properties: {
-                     id: { type: :string },
-                     uuid: { type: :string },
-                     email: { type: :string },
-                     first_name: { type: :string },
-                     last_name: { type: :string },
-                     invitation_sent_at: { type: :string },
-                     invitation_accepted_at: { type: :string },
-                     employee_type: { type: :string }
-                   }
-                 }
-               }
-
+        schema '$ref' => '#/components/schemas/DcCompanyBlueprintWithPrimaryCompanyEmployee'
         run_test!
       end
 
       response '401', 'Unauthorized' do
-        schema type: :object,
-               properties: {
-                 error: { type: :string }
-               },
-               required: %w[error]
-
+        schema '$ref' => '#/components/schemas/GeneralError'
         run_test!
       end
 
       response '404', 'Not Found' do
-        schema type: :object,
-               properties: {
-                 error: { type: :string }
-               },
-               required: %w[error]
-
+        schema '$ref' => '#/components/schemas/GeneralError'
         run_test!
       end
     end

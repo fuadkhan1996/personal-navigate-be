@@ -8,6 +8,10 @@ module ApiFieldHelpers
   module ClassMethods
     attr_reader :current_api_view
 
+    def openapi_schema_name
+      name.gsub('::', '')
+    end
+
     def api_fields
       @api_fields ||= {}
     end
@@ -135,7 +139,7 @@ class ApplicationBlueprint < Blueprinter::Base
   end
 
   def self.add_default_schema(schemas)
-    schemas[name] = {
+    schemas[openapi_schema_name] = {
       type: :object,
       properties: openapi_properties(api_fields),
       required: openapi_required_fields(api_fields)
@@ -147,7 +151,7 @@ class ApplicationBlueprint < Blueprinter::Base
       next if assoc[:view]
 
       schema_key = assoc[:type] == :array ? :items : :$ref
-      schemas[name][:properties][assoc[:name]] = {
+      schemas[openapi_schema_name][:properties][assoc[:name]] = {
         type: assoc[:type],
         schema_key => assoc[:type] == :array ? { '$ref' => ref_key(assoc) } : ref_key(assoc)
       }.compact
@@ -170,7 +174,7 @@ class ApplicationBlueprint < Blueprinter::Base
   end
 
   def self.build_view_key(view_name)
-    "#{name}#{view_name.to_s.camelize}"
+    "#{openapi_schema_name}#{view_name.to_s.camelize}"
   end
 
   def self.add_associations_to_schema(schemas, view_key, associations)
@@ -184,6 +188,6 @@ class ApplicationBlueprint < Blueprinter::Base
   end
 
   def self.ref_key(assoc)
-    "#/components/schemas/#{assoc[:serializer]}#{assoc[:nested_view]&.to_s&.camelize}"
+    "#/components/schemas/#{assoc[:serializer].to_s.gsub('::', '')}#{assoc[:nested_view]&.to_s&.camelize}"
   end
 end

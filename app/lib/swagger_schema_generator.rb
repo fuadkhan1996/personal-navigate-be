@@ -30,22 +30,24 @@ module SwaggerSchemaGenerator
         message: { type: :string }
       },
       nullable: false,
-      required: true
+      required: %w[message]
     }
   end
 
   def self.session_success_schema
     schema = {}
-    extended_schema = Dc::CompanyEmployeeBlueprint.openapi_schema['Dc::CompanyEmployeeBlueprintExtended']
+    extended_schema = Dc::CompanyEmployeeBlueprint.openapi_schema['DcCompanyEmployeeBlueprintExtended']
     success_schema = extended_schema[:properties].merge(
-      access_token: { type: :string, nullable: false, required: true },
-      refresh_token: { type: :string, nullable: false, required: true },
-      token_expires_in: { type: :integer, nullable: false, required: true }
+      access_token: { type: :string },
+      refresh_token: { type: :string },
+      token_expires_in: { type: :integer }
     )
 
+    required_fields = extended_schema[:required] + %i[access_token refresh_token token_expires_in]
     schema['SessionSuccess'] = {
       type: :object,
-      properties: success_schema
+      properties: success_schema,
+      required: required_fields
     }
 
     schema

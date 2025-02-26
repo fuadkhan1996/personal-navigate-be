@@ -10,44 +10,15 @@ describe 'Api::V1::CompanyEmployees::InvitationsController' do
       produces 'application/json'
       security [{ xApiKey: [] }]
 
-      parameter name: :invitation_token, in: :query
+      parameter name: :invitation_token, in: :query, type: :string, required: true
 
       response '200', 'Company Employee Data' do
-        schema type: :object,
-               properties: {
-                 id: { type: :integer },
-                 first_name: { type: :string },
-                 last_name: { type: :string },
-                 email: { type: :string },
-                 invitation_sent_at: { type: :string },
-                 invitation_accepted_at: { type: :string },
-                 uuid: { type: :string },
-                 created_at: { type: :string },
-                 updated_at: { type: :string },
-                 company: {
-                   type: :object,
-                   properties: {
-                     id: { type: :string },
-                     title: { type: :string },
-                     logo: { type: :string },
-                     guid: { type: :string },
-                     company_type_name: { type: :string },
-                     created_at: { type: :string },
-                     updated_at: { type: :string }
-                   }
-                 }
-               }
-
+        schema '$ref' => '#/components/schemas/DcCompanyEmployeeBlueprintExtended'
         run_test!
       end
 
       response '401', 'Unauthorized' do
-        schema type: :object,
-               properties: {
-                 error: { type: :string }
-               },
-               required: %w[error]
-
+        schema '$ref' => '#/components/schemas/GeneralError'
         run_test!
       end
     end
@@ -58,7 +29,7 @@ describe 'Api::V1::CompanyEmployees::InvitationsController' do
       produces 'application/json'
       security [{ xApiKey: [] }]
 
-      parameter name: :invitation_token, in: :query
+      parameter name: :invitation_token, in: :query, type: :string, required: true
       parameter name: :employee, in: :body, schema: {
         type: :object,
         properties: {
@@ -77,59 +48,17 @@ describe 'Api::V1::CompanyEmployees::InvitationsController' do
       }
 
       response '200', 'Company Employee Data' do
-        schema type: :object,
-               properties: {
-                 id: { type: :integer },
-                 first_name: { type: :string },
-                 last_name: { type: :string },
-                 email: { type: :string },
-                 invitation_sent_at: { type: :string },
-                 invitation_accepted_at: { type: :string },
-                 uuid: { type: :string },
-                 created_at: { type: :string },
-                 updated_at: { type: :string },
-                 company: {
-                   type: :object,
-                   properties: {
-                     id: { type: :string },
-                     title: { type: :string },
-                     guid: { type: :string },
-                     logo: { type: :string },
-                     company_type_name: { type: :string },
-                     created_at: { type: :string },
-                     updated_at: { type: :string }
-                   }
-                 }
-               }
-
+        schema '$ref' => '#/components/schemas/DcCompanyEmployeeBlueprintExtended'
         run_test!
       end
 
       response '422', 'Unprocessable Entity' do
-        schema type: :object,
-               properties: {
-                 errors: {
-                   type: :object,
-                   additionalProperties: {
-                     type: :array,
-                     items: {
-                       type: :string
-                     }
-                   }
-                 }
-               },
-               required: %w[errors]
-
+        schema '$ref' => '#/components/schemas/Error422'
         run_test!
       end
 
       response '401', 'Unauthorized' do
-        schema type: :object,
-               properties: {
-                 error: { type: :string }
-               },
-               required: %w[error]
-
+        schema '$ref' => '#/components/schemas/GeneralError'
         run_test!
       end
     end
@@ -162,59 +91,17 @@ describe 'Api::V1::CompanyEmployees::InvitationsController' do
       }
 
       response '200', 'Company Employee Data' do
-        schema type: :object,
-               properties: {
-                 id: { type: :integer },
-                 first_name: { type: :string },
-                 last_name: { type: :string },
-                 email: { type: :string },
-                 invitation_sent_at: { type: :string },
-                 invitation_accepted_at: { type: :string },
-                 uuid: { type: :string },
-                 created_at: { type: :string },
-                 updated_at: { type: :string },
-                 company: {
-                   type: :object,
-                   properties: {
-                     id: { type: :string },
-                     title: { type: :string },
-                     guid: { type: :string },
-                     logo: { type: :string },
-                     company_type_name: { type: :string },
-                     created_at: { type: :string },
-                     updated_at: { type: :string }
-                   }
-                 }
-               }
-
+        schema '$ref' => '#/components/schemas/DcCompanyEmployeeBlueprintExtended'
         run_test!
       end
 
       response '422', 'Unprocessable Entity' do
-        schema type: :object,
-               properties: {
-                 errors: {
-                   type: :object,
-                   additionalProperties: {
-                     type: :array,
-                     items: {
-                       type: :string
-                     }
-                   }
-                 }
-               },
-               required: %w[errors]
-
+        schema '$ref' => '#/components/schemas/Error422'
         run_test!
       end
 
       response '401', 'Unauthorized' do
-        schema type: :object,
-               properties: {
-                 error: { type: :string }
-               },
-               required: %w[error]
-
+        schema '$ref' => '#/components/schemas/GeneralError'
         run_test!
       end
     end
@@ -230,41 +117,12 @@ describe 'Api::V1::CompanyEmployees::InvitationsController' do
       parameter name: :id, in: :path, type: :string
 
       response '200', 'Company Employee Data' do
-        schema type: :object,
-               properties: {
-                 id: { type: :integer },
-                 first_name: { type: :string },
-                 last_name: { type: :string },
-                 email: { type: :string },
-                 invitation_sent_at: { type: :string },
-                 invitation_accepted_at: { type: :string },
-                 uuid: { type: :string },
-                 created_at: { type: :string },
-                 updated_at: { type: :string },
-                 company: {
-                   type: :object,
-                   properties: {
-                     id: { type: :string },
-                     title: { type: :string },
-                     guid: { type: :string },
-                     logo: { type: :string },
-                     company_type_name: { type: :string },
-                     created_at: { type: :string },
-                     updated_at: { type: :string }
-                   }
-                 }
-               }
-
+        schema '$ref' => '#/components/schemas/DcCompanyEmployeeBlueprintExtended'
         run_test!
       end
 
       response '422', 'Unauthorized' do
-        schema type: :object,
-               properties: {
-                 error: { type: :string }
-               },
-               required: %w[error]
-
+        schema '$ref' => '#/components/schemas/GeneralError'
         run_test!
       end
     end
@@ -287,39 +145,17 @@ describe 'Api::V1::CompanyEmployees::InvitationsController' do
       }
 
       response '200', 'Invitations Sent Successfully.' do
-        schema type: :object,
-               properties: {
-                 message: { type: :string, example: 'Invitations Sent Successfully.' }
-               }
-
+        schema '$ref' => '#/components/schemas/SuccessMessage'
         run_test!
       end
 
       response '422', 'Unprocessable Entity' do
-        schema type: :object,
-               properties: {
-                 errors: {
-                   type: :object,
-                   additionalProperties: {
-                     type: :array,
-                     items: {
-                       type: :string
-                     }
-                   }
-                 }
-               },
-               required: %w[errors]
-
+        schema '$ref' => '#/components/schemas/Error422'
         run_test!
       end
 
       response '401', 'Unauthorized' do
-        schema type: :object,
-               properties: {
-                 error: { type: :string }
-               },
-               required: %w[error]
-
+        schema '$ref' => '#/components/schemas/GeneralError'
         run_test!
       end
     end

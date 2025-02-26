@@ -95,7 +95,7 @@ paths:
               schema:
                 type: array
                 items:
-                  "$ref": "#/components/schemas/Activity::TriggerBlueprint"
+                  "$ref": "#/components/schemas/ActivityTriggerBlueprint"
         '401':
           description: Unauthorized
           content:
@@ -128,7 +128,7 @@ paths:
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/Activity::TriggerBlueprint"
+                "$ref": "#/components/schemas/ActivityTriggerBlueprint"
         '401':
           description: Unauthorized
           content:
@@ -822,41 +822,19 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                  message:
-                    type: string
-                required:
-                - id
-                - message
+                "$ref": "#/components/schemas/SuccessMessageWithId"
         '422':
           description: Unprocessable Entity
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  errors:
-                    type: object
-                    additionalProperties:
-                      type: array
-                      items:
-                        type: string
-                required:
-                - errors
+                "$ref": "#/components/schemas/Error422"
         '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                required:
-                - error
+                "$ref": "#/components/schemas/GeneralError"
       requestBody:
         content:
           application/json:
@@ -898,64 +876,7 @@ paths:
               schema:
                 type: array
                 items:
-                  type: object
-                  properties:
-                    id:
-                      type: integer
-                    title:
-                      type: string
-                    tis_order_id:
-                      type: string
-                    status:
-                      type: string
-                    completed_at:
-                      type: string
-                    form_data:
-                      type: object
-                    deleted_at:
-                      type: string
-                    created_at:
-                      type: string
-                    updated_at:
-                      type: string
-                    account:
-                      type: object
-                      properties:
-                        id:
-                          type: integer
-                        uuid:
-                          type: string
-                        title:
-                          type: string
-                        guid:
-                          type: string
-                        logo:
-                          type: string
-                        deleted_at:
-                          type: string
-                        created_at:
-                          type: string
-                        updated_at:
-                          type: string
-                        primary_company_employee:
-                          type: object
-                          properties:
-                            id:
-                              type: string
-                            uuid:
-                              type: string
-                            email:
-                              type: string
-                            first_name:
-                              type: string
-                            last_name:
-                              type: string
-                            invitation_sent_at:
-                              type: string
-                            invitation_accepted_at:
-                              type: string
-                            employee_type:
-                              type: string
+                  "$ref": "#/components/schemas/AssessmentBlueprint"
         '401':
           description: Unauthorized
           content:
@@ -988,79 +909,13 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                  title:
-                    type: string
-                  tis_order_id:
-                    type: string
-                  status:
-                    type: string
-                  completed_at:
-                    type: string
-                  form_data:
-                    type: object
-                  deleted_at:
-                    type: string
-                  created_at:
-                    type: string
-                  updated_at:
-                    type: string
-                  account:
-                    type: object
-                    properties:
-                      id:
-                        type: integer
-                      uuid:
-                        type: string
-                      title:
-                        type: string
-                      guid:
-                        type: string
-                      logo:
-                        type: string
-                      deleted_at:
-                        type: string
-                      created_at:
-                        type: string
-                      updated_at:
-                        type: string
-                      primary_company_employee:
-                        type: object
-                        properties:
-                          id:
-                            type: string
-                          uuid:
-                            type: string
-                          email:
-                            type: string
-                          first_name:
-                            type: string
-                          last_name:
-                            type: string
-                          invitation_sent_at:
-                            type: string
-                          invitation_accepted_at:
-                            type: string
-                          employee_type:
-                            type: string
-                  assessment_action_results:
-                    type: array
-                    items:
-                      type: object
+                "$ref": "#/components/schemas/AssessmentBlueprintExtended"
         '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                required:
-                - error
+                "$ref": "#/components/schemas/GeneralError"
     put:
       summary: Update Assessment
       tags:
@@ -1081,41 +936,19 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                  message:
-                    type: string
-                required:
-                - id
-                - message
+                "$ref": "#/components/schemas/SuccessMessageWithId"
         '422':
           description: Unprocessable Entity
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  errors:
-                    type: object
-                    additionalProperties:
-                      type: array
-                      items:
-                        type: string
-                required:
-                - errors
+                "$ref": "#/components/schemas/Error422"
         '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                required:
-                - error
+                "$ref": "#/components/schemas/GeneralError"
       requestBody:
         content:
           application/json:
@@ -1162,23 +995,13 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                  message:
-                    type: string
+                "$ref": "#/components/schemas/Error422"
         '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                required:
-                - error
+                "$ref": "#/components/schemas/GeneralError"
   "/api/v1/associated_activities/{associated_activity_id}/associated_activity_actions/{id}":
     put:
       summary: Update Associated Activity Action
@@ -1205,7 +1028,7 @@ paths:
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/AssociatedActivity::ActionBlueprint"
+                "$ref": "#/components/schemas/AssociatedActivityActionBlueprint"
         '422':
           description: Unprocessable Entity
           content:
@@ -1413,99 +1236,19 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                  title:
-                    type: string
-                  guid:
-                    type: string
-                  logo:
-                    type: string
-                  company_type_name:
-                    type: string
-                  created_at:
-                    type: string
-                  updated_at:
-                    type: string
-                  deleted_at:
-                    type: string
-                  primary_company_employee:
-                    type: object
-                    properties:
-                      id:
-                        type: string
-                      uuid:
-                        type: string
-                      email:
-                        type: string
-                      first_name:
-                        type: string
-                      last_name:
-                        type: string
-                      invitation_sent_at:
-                        type: string
-                      invitation_accepted_at:
-                        type: string
-                      employee_type:
-                        type: string
-                  assigned_company_employees:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        id:
-                          type: string
-                        created_at:
-                          type: string
-                        updated_at:
-                          type: string
-                        company_employee:
-                          type: object
-                          properties:
-                            id:
-                              type: string
-                            uuid:
-                              type: string
-                            email:
-                              type: string
-                            first_name:
-                              type: string
-                            last_name:
-                              type: string
-                            invitation_sent_at:
-                              type: string
-                            invitation_accepted_at:
-                              type: string
-                            employee_type:
-                              type: string
+                "$ref": "#/components/schemas/DcCompanyBlueprintWithPrimaryCompanyEmployee"
         '422':
           description: Unprocessable Entity
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  errors:
-                    type: object
-                    additionalProperties:
-                      type: array
-                      items:
-                        type: string
-                required:
-                - errors
+                "$ref": "#/components/schemas/Error422"
         '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                required:
-                - error
+                "$ref": "#/components/schemas/GeneralError"
       requestBody:
         content:
           application/json:
@@ -1543,84 +1286,13 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                  title:
-                    type: string
-                  guid:
-                    type: string
-                  logo:
-                    type: string
-                  company_type_name:
-                    type: string
-                  created_at:
-                    type: string
-                  updated_at:
-                    type: string
-                  deleted_at:
-                    type: string
-                  primary_company_employee:
-                    type: object
-                    properties:
-                      id:
-                        type: string
-                      uuid:
-                        type: string
-                      email:
-                        type: string
-                      first_name:
-                        type: string
-                      last_name:
-                        type: string
-                      invitation_sent_at:
-                        type: string
-                      invitation_accepted_at:
-                        type: string
-                      employee_type:
-                        type: string
-                  assigned_company_employees:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        id:
-                          type: string
-                        created_at:
-                          type: string
-                        updated_at:
-                          type: string
-                        company_employee:
-                          type: object
-                          properties:
-                            id:
-                              type: string
-                            uuid:
-                              type: string
-                            email:
-                              type: string
-                            first_name:
-                              type: string
-                            last_name:
-                              type: string
-                            invitation_sent_at:
-                              type: string
-                            invitation_accepted_at:
-                              type: string
-                            employee_type:
-                              type: string
-        '422':
+                "$ref": "#/components/schemas/DcCompanyBlueprintWithPrimaryCompanyEmployee"
+        '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                required:
-                - error
+                "$ref": "#/components/schemas/GeneralError"
   "/api/v1/companies":
     get:
       summary: Get Linked Companies
@@ -1644,52 +1316,13 @@ paths:
               schema:
                 type: array
                 items:
-                  type: object
-                  properties:
-                    id:
-                      type: string
-                    title:
-                      type: string
-                    guid:
-                      type: string
-                    logo:
-                      type: string
-                    company_type_name:
-                      type: string
-                    created_at:
-                      type: string
-                    updated_at:
-                      type: string
-                    primary_company_employee:
-                      type: object
-                      properties:
-                        id:
-                          type: string
-                        uuid:
-                          type: string
-                        email:
-                          type: string
-                        first_name:
-                          type: string
-                        last_name:
-                          type: string
-                        invitation_sent_at:
-                          type: string
-                        invitation_accepted_at:
-                          type: string
-                        employee_type:
-                          type: string
+                  "$ref": "#/components/schemas/DcCompanyBlueprintWithPrimaryCompanyEmployee"
         '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                required:
-                - error
+                "$ref": "#/components/schemas/GeneralError"
     post:
       summary: Create Company
       tags:
@@ -1705,46 +1338,19 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                  title:
-                    type: string
-                  guid:
-                    type: string
-                  logo:
-                    type: string
-                  company_type_name:
-                    type: string
-                  created_at:
-                    type: string
-                  updated_at:
-                    type: string
+                "$ref": "#/components/schemas/DcCompanyBlueprint"
         '422':
           description: Unprocessable Entity
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  errors:
-                    type: object
-                    additionalProperties:
-                      type: array
-                      items:
-                        type: string
+                "$ref": "#/components/schemas/Error422"
         '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                required:
-                - error
+                "$ref": "#/components/schemas/GeneralError"
       requestBody:
         content:
           application/json:
@@ -1806,63 +1412,19 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  id:
-                    type: string
-                  title:
-                    type: string
-                  guid:
-                    type: string
-                  logo:
-                    type: string
-                  company_type_name:
-                    type: string
-                  created_at:
-                    type: string
-                  updated_at:
-                    type: string
-                  primary_company_employee:
-                    type: object
-                    properties:
-                      id:
-                        type: string
-                      uuid:
-                        type: string
-                      email:
-                        type: string
-                      first_name:
-                        type: string
-                      last_name:
-                        type: string
-                      invitation_sent_at:
-                        type: string
-                      invitation_accepted_at:
-                        type: string
-                      employee_type:
-                        type: string
+                "$ref": "#/components/schemas/DcCompanyBlueprintWithPrimaryCompanyEmployee"
         '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                required:
-                - error
+                "$ref": "#/components/schemas/GeneralError"
         '404':
           description: Not Found
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                required:
-                - error
+                "$ref": "#/components/schemas/GeneralError"
   "/api/v1/company_employees/invitation":
     get:
       summary: Get Company Employee by Invitation Token
@@ -1873,60 +1435,22 @@ paths:
       parameters:
       - name: invitation_token
         in: query
+        required: true
+        schema:
+          type: string
       responses:
         '200':
           description: Company Employee Data
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                  first_name:
-                    type: string
-                  last_name:
-                    type: string
-                  email:
-                    type: string
-                  invitation_sent_at:
-                    type: string
-                  invitation_accepted_at:
-                    type: string
-                  uuid:
-                    type: string
-                  created_at:
-                    type: string
-                  updated_at:
-                    type: string
-                  company:
-                    type: object
-                    properties:
-                      id:
-                        type: string
-                      title:
-                        type: string
-                      logo:
-                        type: string
-                      guid:
-                        type: string
-                      company_type_name:
-                        type: string
-                      created_at:
-                        type: string
-                      updated_at:
-                        type: string
+                "$ref": "#/components/schemas/DcCompanyEmployeeBlueprintExtended"
         '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                required:
-                - error
+                "$ref": "#/components/schemas/GeneralError"
     put:
       summary: Accept Invitation
       tags:
@@ -1936,75 +1460,28 @@ paths:
       parameters:
       - name: invitation_token
         in: query
+        required: true
+        schema:
+          type: string
       responses:
         '200':
           description: Company Employee Data
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                  first_name:
-                    type: string
-                  last_name:
-                    type: string
-                  email:
-                    type: string
-                  invitation_sent_at:
-                    type: string
-                  invitation_accepted_at:
-                    type: string
-                  uuid:
-                    type: string
-                  created_at:
-                    type: string
-                  updated_at:
-                    type: string
-                  company:
-                    type: object
-                    properties:
-                      id:
-                        type: string
-                      title:
-                        type: string
-                      guid:
-                        type: string
-                      logo:
-                        type: string
-                      company_type_name:
-                        type: string
-                      created_at:
-                        type: string
-                      updated_at:
-                        type: string
+                "$ref": "#/components/schemas/DcCompanyEmployeeBlueprintExtended"
         '422':
           description: Unprocessable Entity
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  errors:
-                    type: object
-                    additionalProperties:
-                      type: array
-                      items:
-                        type: string
-                required:
-                - errors
+                "$ref": "#/components/schemas/Error422"
         '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                required:
-                - error
+                "$ref": "#/components/schemas/GeneralError"
       requestBody:
         content:
           application/json:
@@ -2046,69 +1523,19 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                  first_name:
-                    type: string
-                  last_name:
-                    type: string
-                  email:
-                    type: string
-                  invitation_sent_at:
-                    type: string
-                  invitation_accepted_at:
-                    type: string
-                  uuid:
-                    type: string
-                  created_at:
-                    type: string
-                  updated_at:
-                    type: string
-                  company:
-                    type: object
-                    properties:
-                      id:
-                        type: string
-                      title:
-                        type: string
-                      guid:
-                        type: string
-                      logo:
-                        type: string
-                      company_type_name:
-                        type: string
-                      created_at:
-                        type: string
-                      updated_at:
-                        type: string
+                "$ref": "#/components/schemas/DcCompanyEmployeeBlueprintExtended"
         '422':
           description: Unprocessable Entity
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  errors:
-                    type: object
-                    additionalProperties:
-                      type: array
-                      items:
-                        type: string
-                required:
-                - errors
+                "$ref": "#/components/schemas/Error422"
         '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                required:
-                - error
+                "$ref": "#/components/schemas/GeneralError"
       requestBody:
         content:
           application/json:
@@ -2150,54 +1577,13 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                  first_name:
-                    type: string
-                  last_name:
-                    type: string
-                  email:
-                    type: string
-                  invitation_sent_at:
-                    type: string
-                  invitation_accepted_at:
-                    type: string
-                  uuid:
-                    type: string
-                  created_at:
-                    type: string
-                  updated_at:
-                    type: string
-                  company:
-                    type: object
-                    properties:
-                      id:
-                        type: string
-                      title:
-                        type: string
-                      guid:
-                        type: string
-                      logo:
-                        type: string
-                      company_type_name:
-                        type: string
-                      created_at:
-                        type: string
-                      updated_at:
-                        type: string
+                "$ref": "#/components/schemas/DcCompanyEmployeeBlueprintExtended"
         '422':
           description: Unauthorized
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                required:
-                - error
+                "$ref": "#/components/schemas/GeneralError"
   "/api/v1/company_employees/invitations/bulk_invite":
     post:
       summary: Bulk invite employees
@@ -2218,37 +1604,19 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: Invitations Sent Successfully.
+                "$ref": "#/components/schemas/SuccessMessage"
         '422':
           description: Unprocessable Entity
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  errors:
-                    type: object
-                    additionalProperties:
-                      type: array
-                      items:
-                        type: string
-                required:
-                - errors
+                "$ref": "#/components/schemas/Error422"
         '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                required:
-                - error
+                "$ref": "#/components/schemas/GeneralError"
       requestBody:
         content:
           application/json:
@@ -2285,54 +1653,13 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                  first_name:
-                    type: string
-                  last_name:
-                    type: string
-                  email:
-                    type: string
-                  invitation_sent_at:
-                    type: string
-                  invitation_accepted_at:
-                    type: string
-                  uuid:
-                    type: string
-                  created_at:
-                    type: string
-                  updated_at:
-                    type: string
-                  company:
-                    type: object
-                    properties:
-                      id:
-                        type: string
-                      title:
-                        type: string
-                      guid:
-                        type: string
-                      logo:
-                        type: string
-                      company_type_name:
-                        type: string
-                      created_at:
-                        type: string
-                      updated_at:
-                        type: string
+                "$ref": "#/components/schemas/DcCompanyEmployeeBlueprintExtended"
         '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                required:
-                - error
+                "$ref": "#/components/schemas/GeneralError"
       requestBody:
         content:
           application/json:
@@ -2373,54 +1700,13 @@ paths:
               schema:
                 type: array
                 items:
-                  type: object
-                  properties:
-                    id:
-                      type: integer
-                    first_name:
-                      type: string
-                    last_name:
-                      type: string
-                    email:
-                      type: string
-                    invitation_sent_at:
-                      type: string
-                    invitation_accepted_at:
-                      type: string
-                    uuid:
-                      type: string
-                    created_at:
-                      type: string
-                    updated_at:
-                      type: string
-                    company:
-                      type: object
-                      properties:
-                        id:
-                          type: string
-                        title:
-                          type: string
-                        guid:
-                          type: string
-                        logo:
-                          type: string
-                        company_type_name:
-                          type: string
-                        created_at:
-                          type: string
-                        updated_at:
-                          type: string
+                  "$ref": "#/components/schemas/DcCompanyEmployeeBlueprint"
         '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                required:
-                - error
+                "$ref": "#/components/schemas/GeneralError"
   "/api/v1/employees/profile/update_email":
     patch:
       summary: Update employee email
@@ -2437,7 +1723,7 @@ paths:
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/Dc::CompanyEmployeeBlueprintExtended"
+                "$ref": "#/components/schemas/DcCompanyEmployeeBlueprintExtended"
         '422':
           description: Unprocessable Entity
           content:
@@ -2599,7 +1885,7 @@ paths:
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/Dc::CompanyEmployeeBlueprintExtended"
+                "$ref": "#/components/schemas/DcCompanyEmployeeBlueprintExtended"
         '401':
           description: Failed to Get User Data
           content:
@@ -2716,67 +2002,13 @@ paths:
               schema:
                 type: array
                 items:
-                  type: object
-                  properties:
-                    id:
-                      type: string
-                    title:
-                      type: string
-                    description:
-                      type: string
-                    questionnaire_title:
-                      type: string
-                    deleted_at:
-                      type: string
-                    created_at:
-                      type: string
-                    updated_at:
-                      type: string
-                    criteria:
-                      type: object
-                      properties:
-                        conjunction:
-                          type: string
-                        conditions:
-                          type: array
-                          items:
-                            type: object
-                            properties:
-                              key:
-                                type: string
-                              operator:
-                                type: string
-                              value:
-                                type: string
-                            required:
-                            - key
-                            - operator
-                            - value
-                      required:
-                      - conjunction
-                      - conditions
-                    activity:
-                      type: object
-                  required:
-                  - id
-                  - title
-                  - description
-                  - questionnaire_title
-                  - deleted_at
-                  - created_at
-                  - updated_at
-                  - criteria
+                  "$ref": "#/components/schemas/TriggerBlueprint"
         '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                required:
-                - error
+                "$ref": "#/components/schemas/GeneralError"
   "/api/v1/triggers":
     post:
       summary: Create Trigger
@@ -2920,12 +2152,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                required:
-                - error
+                "$ref": "#/components/schemas/GeneralError"
       requestBody:
         content:
           multipart/form-data:
@@ -2966,30 +2193,97 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                required:
-                - error
+                "$ref": "#/components/schemas/GeneralError"
         '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                required:
-                - error
+                "$ref": "#/components/schemas/GeneralError"
 components:
   schemas:
-    Assessment::ActionResultBlueprint:
+    AssessmentActionResultBlueprint:
       type: object
-      properties: {}
-      required: []
-    AssociatedActivity::TriggerBlueprint:
+      properties:
+        id:
+          type: string
+          nullable: false
+        activity_action_id:
+          type: string
+          nullable: false
+        associated_activity_id:
+          type: string
+          nullable: false
+        assessment_id:
+          type: string
+          nullable: false
+        result_data:
+          type: string
+          nullable: false
+        deleted_at:
+          type: string
+          nullable: false
+        completed_at:
+          type: string
+          nullable: false
+        status:
+          type: string
+          nullable: false
+        created_at:
+          type: string
+          nullable: false
+        updated_at:
+          type: string
+          nullable: false
+        activity_triggers:
+          type: array
+          items:
+            "$ref": "#/components/schemas/ActivityTriggerBlueprint"
+        activity_action:
+          type: object
+          "$ref": "#/components/schemas/ActivityActionBlueprintWithSupportingDocuments"
+      required:
+      - id
+    AssessmentActionResultBlueprintWithActivities:
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: false
+        activity_action_id:
+          type: string
+          nullable: false
+        associated_activity_id:
+          type: string
+          nullable: false
+        assessment_id:
+          type: string
+          nullable: false
+        result_data:
+          type: string
+          nullable: false
+        deleted_at:
+          type: string
+          nullable: false
+        completed_at:
+          type: string
+          nullable: false
+        status:
+          type: string
+          nullable: false
+        created_at:
+          type: string
+          nullable: false
+        updated_at:
+          type: string
+          nullable: false
+        activities:
+          type: array
+          items:
+            "$ref": "#/components/schemas/ActivityBlueprintExtended"
+      required:
+      - id
+    AssociatedActivityTriggerBlueprint:
       type: object
       properties:
         id:
@@ -3016,7 +2310,7 @@ components:
       - associated_activity_id
       - created_at
       - updated_at
-    AssociatedActivity::ActionBlueprint:
+    AssociatedActivityActionBlueprint:
       type: object
       properties:
         id:
@@ -3048,7 +2342,7 @@ components:
           nullable: false
         activity_action:
           type: object
-          "$ref": "#/components/schemas/Activity::ActionBlueprintWithSupportingDocuments"
+          "$ref": "#/components/schemas/ActivityActionBlueprintWithSupportingDocuments"
       required:
       - id
       - activity_action_id
@@ -3095,11 +2389,11 @@ components:
         associated_activity_actions:
           type: array
           items:
-            "$ref": "#/components/schemas/AssociatedActivity::ActionBlueprint"
+            "$ref": "#/components/schemas/AssociatedActivityActionBlueprint"
         associated_activity_triggers:
           type: array
           items:
-            "$ref": "#/components/schemas/AssociatedActivity::TriggerBlueprint"
+            "$ref": "#/components/schemas/AssociatedActivityTriggerBlueprint"
       required:
       - id
       - company_id
@@ -3137,7 +2431,7 @@ components:
           nullable: false
         account:
           type: object
-          "$ref": "#/components/schemas/Dc::CompanyBlueprintWithPrimaryCompanyEmployee"
+          "$ref": "#/components/schemas/DcCompanyBlueprintWithPrimaryCompanyEmployee"
       required:
       - id
       - title
@@ -3250,7 +2544,7 @@ components:
           nullable: false
         company_employee:
           type: object
-          "$ref": "#/components/schemas/Dc::CompanyEmployeeBlueprint"
+          "$ref": "#/components/schemas/DcCompanyEmployeeBlueprint"
       required:
       - id
       - description
@@ -3259,7 +2553,7 @@ components:
       - deleted_at
       - created_at
       - updated_at
-    Activity::TriggerBlueprint:
+    ActivityTriggerBlueprint:
       type: object
       properties:
         id:
@@ -3285,7 +2579,7 @@ components:
       - trigger_id
       - created_at
       - updated_at
-    Activity::TriggerBlueprintExtended:
+    ActivityTriggerBlueprintExtended:
       type: object
       properties:
         id:
@@ -3311,7 +2605,7 @@ components:
       - trigger_id
       - created_at
       - updated_at
-    Activity::ActionBlueprint:
+    ActivityActionBlueprint:
       type: object
       properties:
         id:
@@ -3347,7 +2641,7 @@ components:
       - order
       - created_at
       - updated_at
-    Activity::ActionBlueprintWithSupportingDocuments:
+    ActivityActionBlueprintWithSupportingDocuments:
       type: object
       properties:
         id:
@@ -3388,7 +2682,7 @@ components:
       - order
       - created_at
       - updated_at
-    Dc::AssignedCompanyEmployeeBlueprint:
+    DcAssignedCompanyEmployeeBlueprint:
       type: object
       properties:
         id:
@@ -3396,10 +2690,10 @@ components:
           nullable: false
         company_employee:
           type: object
-          "$ref": "#/components/schemas/Dc::CompanyEmployeeBlueprint"
+          "$ref": "#/components/schemas/DcCompanyEmployeeBlueprint"
       required:
       - id
-    Dc::CompanyEmployeeBlueprint:
+    DcCompanyEmployeeBlueprint:
       type: object
       properties:
         id:
@@ -3443,7 +2737,7 @@ components:
       - invitation_sent_at
       - invitation_accepted_at
       - employee_type
-    Dc::CompanyEmployeeBlueprintExtended:
+    DcCompanyEmployeeBlueprintExtended:
       type: object
       properties:
         id:
@@ -3478,7 +2772,7 @@ components:
           nullable: false
         company:
           type: object
-          "$ref": "#/components/schemas/Dc::CompanyBlueprint"
+          "$ref": "#/components/schemas/DcCompanyBlueprint"
       required:
       - id
       - email
@@ -3490,9 +2784,12 @@ components:
       - invitation_sent_at
       - invitation_accepted_at
       - employee_type
-    Dc::CompanyBlueprint:
+    DcCompanyBlueprint:
       type: object
       properties:
+        id:
+          type: string
+          nullable: false
         guid:
           type: string
           nullable: false
@@ -3515,6 +2812,7 @@ components:
           type: string
           nullable: false
       required:
+      - id
       - guid
       - title
       - logo
@@ -3522,9 +2820,12 @@ components:
       - deleted_at
       - created_at
       - updated_at
-    Dc::CompanyBlueprintWithPrimaryCompanyEmployee:
+    DcCompanyBlueprintWithPrimaryCompanyEmployee:
       type: object
       properties:
+        id:
+          type: string
+          nullable: false
         guid:
           type: string
           nullable: false
@@ -3548,12 +2849,13 @@ components:
           nullable: false
         primary_company_employee:
           type: object
-          "$ref": "#/components/schemas/Dc::CompanyEmployeeBlueprint"
+          "$ref": "#/components/schemas/DcCompanyEmployeeBlueprint"
         assigned_company_employees:
           type: array
           items:
-            "$ref": "#/components/schemas/Dc::AssignedCompanyEmployeeBlueprint"
+            "$ref": "#/components/schemas/DcAssignedCompanyEmployeeBlueprint"
       required:
+      - id
       - guid
       - title
       - logo
@@ -3612,10 +2914,10 @@ components:
           nullable: false
         company:
           type: object
-          "$ref": "#/components/schemas/Dc::CompanyBlueprint"
+          "$ref": "#/components/schemas/DcCompanyBlueprint"
         company_employee:
           type: object
-          "$ref": "#/components/schemas/Dc::CompanyEmployeeBlueprint"
+          "$ref": "#/components/schemas/DcCompanyEmployeeBlueprint"
       required:
       - id
       - title
@@ -3646,18 +2948,18 @@ components:
           nullable: false
         company:
           type: object
-          "$ref": "#/components/schemas/Dc::CompanyBlueprint"
+          "$ref": "#/components/schemas/DcCompanyBlueprint"
         company_employee:
           type: object
-          "$ref": "#/components/schemas/Dc::CompanyEmployeeBlueprint"
+          "$ref": "#/components/schemas/DcCompanyEmployeeBlueprint"
         activity_actions:
           type: array
           items:
-            "$ref": "#/components/schemas/Activity::ActionBlueprintWithSupportingDocuments"
+            "$ref": "#/components/schemas/ActivityActionBlueprintWithSupportingDocuments"
         activity_triggers:
           type: array
           items:
-            "$ref": "#/components/schemas/Activity::TriggerBlueprint"
+            "$ref": "#/components/schemas/ActivityTriggerBlueprint"
       required:
       - id
       - title
@@ -3746,26 +3048,35 @@ components:
           nullable: false
         company:
           type: object
-          "$ref": "#/components/schemas/Dc::CompanyBlueprint"
+          "$ref": "#/components/schemas/DcCompanyBlueprint"
         access_token:
           type: string
-          nullable: false
-          required: true
         refresh_token:
           type: string
-          nullable: false
-          required: true
         token_expires_in:
           type: integer
-          nullable: false
-          required: true
+      required:
+      - id
+      - email
+      - first_name
+      - last_name
+      - uuid
+      - created_at
+      - updated_at
+      - invitation_sent_at
+      - invitation_accepted_at
+      - employee_type
+      - access_token
+      - refresh_token
+      - token_expires_in
     SuccessMessage:
       type: object
       properties:
         message:
           type: string
       nullable: false
-      required: true
+      required:
+      - message
     SuccessMessageWithId:
       type: object
       properties:
@@ -3774,7 +3085,8 @@ components:
         id:
           type: string
       nullable: false
-      required: true
+      required:
+      - message
   securitySchemes:
     bearerAuth:
       type: http

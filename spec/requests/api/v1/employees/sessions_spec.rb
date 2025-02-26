@@ -43,7 +43,7 @@ describe 'Api::V1::Employees::Sessions' do
       security [{ bearerAuth: [], apiKeyAuth: [], xApiKey: [] }]
 
       response '200', 'Logged In Employee Data' do
-        schema '$ref' => '#/components/schemas/Dc::CompanyEmployeeBlueprintExtended'
+        schema '$ref' => '#/components/schemas/DcCompanyEmployeeBlueprintExtended'
         run_test!
       end
 

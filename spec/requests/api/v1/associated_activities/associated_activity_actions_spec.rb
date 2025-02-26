@@ -33,7 +33,7 @@ describe 'Api::V1::AssociatedActivities' do
       }
 
       response '200', 'Associated Activity Action Updated' do
-        schema '$ref' => '#/components/schemas/AssociatedActivity::ActionBlueprint'
+        schema '$ref' => '#/components/schemas/AssociatedActivityActionBlueprint'
         run_test!
       end
 

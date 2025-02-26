@@ -27,41 +27,17 @@ describe 'Api::V1::Assessments' do
       }
 
       response '201', 'Assessment Created' do
-        schema type: :object,
-               properties: {
-                 id: { type: :integer },
-                 message: { type: :string }
-               },
-               required: %w[id message]
-
+        schema '$ref' => '#/components/schemas/SuccessMessageWithId'
         run_test!
       end
 
       response '422', 'Unprocessable Entity' do
-        schema type: :object,
-               properties: {
-                 errors: {
-                   type: :object,
-                   additionalProperties: {
-                     type: :array,
-                     items: {
-                       type: :string
-                     }
-                   }
-                 }
-               },
-               required: %w[errors]
-
+        schema '$ref' => '#/components/schemas/Error422'
         run_test!
       end
 
       response '401', 'Unauthorized' do
-        schema type: :object,
-               properties: {
-                 error: { type: :string }
-               },
-               required: %w[error]
-
+        schema '$ref' => '#/components/schemas/GeneralError'
         run_test!
       end
     end
@@ -75,46 +51,7 @@ describe 'Api::V1::Assessments' do
       parameter name: :account_id, in: :query, type: :string
       response '200', 'Assessment List' do
         schema type: :array,
-               items: {
-                 type: :object,
-                 properties: {
-                   id: { type: :integer },
-                   title: { type: :string },
-                   tis_order_id: { type: :string },
-                   status: { type: :string },
-                   completed_at: { type: :string },
-                   form_data: { type: :object },
-                   deleted_at: { type: :string },
-                   created_at: { type: :string },
-                   updated_at: { type: :string },
-                   account: {
-                     type: :object,
-                     properties: {
-                       id: { type: :integer },
-                       uuid: { type: :string },
-                       title: { type: :string },
-                       guid: { type: :string },
-                       logo: { type: :string },
-                       deleted_at: { type: :string },
-                       created_at: { type: :string },
-                       updated_at: { type: :string },
-                       primary_company_employee: {
-                         type: :object,
-                         properties: {
-                           id: { type: :string },
-                           uuid: { type: :string },
-                           email: { type: :string },
-                           first_name: { type: :string },
-                           last_name: { type: :string },
-                           invitation_sent_at: { type: :string },
-                           invitation_accepted_at: { type: :string },
-                           employee_type: { type: :string }
-                         }
-                       }
-                     }
-                   }
-                 }
-               }
+               items: { '$ref' => '#/components/schemas/AssessmentBlueprint' }
 
         run_test!
       end
@@ -140,56 +77,12 @@ describe 'Api::V1::Assessments' do
 
       parameter name: :id, in: :path, type: :string
       response '200', 'Assessment Data' do
-        schema type: :object,
-               properties: {
-                 id: { type: :integer },
-                 title: { type: :string },
-                 tis_order_id: { type: :string },
-                 status: { type: :string },
-                 completed_at: { type: :string },
-                 form_data: { type: :object },
-                 deleted_at: { type: :string },
-                 created_at: { type: :string },
-                 updated_at: { type: :string },
-                 account: {
-                   type: :object,
-                   properties: {
-                     id: { type: :integer },
-                     uuid: { type: :string },
-                     title: { type: :string },
-                     guid: { type: :string },
-                     logo: { type: :string },
-                     deleted_at: { type: :string },
-                     created_at: { type: :string },
-                     updated_at: { type: :string },
-                     primary_company_employee: {
-                       type: :object,
-                       properties: {
-                         id: { type: :string },
-                         uuid: { type: :string },
-                         email: { type: :string },
-                         first_name: { type: :string },
-                         last_name: { type: :string },
-                         invitation_sent_at: { type: :string },
-                         invitation_accepted_at: { type: :string },
-                         employee_type: { type: :string }
-                       }
-                     }
-                   }
-                 },
-                 assessment_action_results: { type: :array, items: { type: :object } }
-               }
-
+        schema '$ref' => '#/components/schemas/AssessmentBlueprintExtended'
         run_test!
       end
 
       response '401', 'Unauthorized' do
-        schema type: :object,
-               properties: {
-                 error: { type: :string }
-               },
-               required: %w[error]
-
+        schema '$ref' => '#/components/schemas/GeneralError'
         run_test!
       end
     end
@@ -218,41 +111,17 @@ describe 'Api::V1::Assessments' do
       }
 
       response '200', 'Assessment Updated' do
-        schema type: :object,
-               properties: {
-                 id: { type: :integer },
-                 message: { type: :string }
-               },
-               required: %w[id message]
-
+        schema '$ref' => '#/components/schemas/SuccessMessageWithId'
         run_test!
       end
 
       response '422', 'Unprocessable Entity' do
-        schema type: :object,
-               properties: {
-                 errors: {
-                   type: :object,
-                   additionalProperties: {
-                     type: :array,
-                     items: {
-                       type: :string
-                     }
-                   }
-                 }
-               },
-               required: %w[errors]
-
+        schema '$ref' => '#/components/schemas/Error422'
         run_test!
       end
 
       response '401', 'Unauthorized' do
-        schema type: :object,
-               properties: {
-                 error: { type: :string }
-               },
-               required: %w[error]
-
+        schema '$ref' => '#/components/schemas/GeneralError'
         run_test!
       end
     end
@@ -276,22 +145,12 @@ describe 'Api::V1::Assessments' do
       end
 
       response '422', 'Unprocessable Entity' do
-        schema type: :object,
-               properties: {
-                 status: { type: :string },
-                 message: { type: :string }
-               }
-
+        schema '$ref' => '#/components/schemas/Error422'
         run_test!
       end
 
       response '401', 'Unauthorized' do
-        schema type: :object,
-               properties: {
-                 error: { type: :string }
-               },
-               required: %w[error]
-
+        schema '$ref' => '#/components/schemas/GeneralError'
         run_test!
       end
     end

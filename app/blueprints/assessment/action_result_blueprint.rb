@@ -2,23 +2,23 @@
 
 class Assessment
   class ActionResultBlueprint < ApplicationBlueprint
-    identifier :id
+    api_identifier :id
 
-    fields :activity_action_id,
-           :associated_activity_id,
-           :assessment_id,
-           :result_data,
-           :deleted_at,
-           :completed_at,
-           :status,
-           :created_at,
-           :updated_at
+    api_field :activity_action_id, type: :string
+    api_field :associated_activity_id, type: :string
+    api_field :assessment_id, type: :string
+    api_field :result_data, type: :string
+    api_field :deleted_at, type: :string
+    api_field :completed_at, type: :string
+    api_field :status, type: :string
+    api_field :created_at, type: :string
+    api_field :updated_at, type: :string
 
-    association :activity_triggers, blueprint: Activity::TriggerBlueprint
-    association :activity_action, blueprint: Activity::ActionBlueprint, view: :with_supporting_documents
+    api_association :activity_triggers, blueprint: Activity::TriggerBlueprint, type: :array
+    api_association :activity_action, blueprint: Activity::ActionBlueprint, view: :with_supporting_documents
 
-    view :with_activities do
-      association :activities, blueprint: ActivityBlueprint, view: :extended
+    api_view :with_activities do
+      api_association :activities, blueprint: ActivityBlueprint, view: :extended, type: :array
     end
   end
 end

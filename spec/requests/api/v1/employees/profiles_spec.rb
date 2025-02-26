@@ -22,7 +22,7 @@ describe 'Api::V1::Employees::ProfilesController' do
       }
 
       response '200', 'Email Updated Successfully.' do
-        schema '$ref' => '#/components/schemas/Dc::CompanyEmployeeBlueprintExtended'
+        schema '$ref' => '#/components/schemas/DcCompanyEmployeeBlueprintExtended'
         run_test!
       end
 

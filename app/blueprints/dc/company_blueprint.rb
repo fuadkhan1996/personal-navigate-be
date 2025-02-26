@@ -2,7 +2,7 @@
 
 module Dc
   class CompanyBlueprint < ApplicationBlueprint
-    identifier :id
+    api_identifier :id
 
     api_field :guid, type: :string, required: true
     api_field :title, type: :string, required: true
