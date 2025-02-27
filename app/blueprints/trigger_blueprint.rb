@@ -3,6 +3,7 @@
 class TriggerBlueprint < ApplicationBlueprint
   api_identifier :id
 
+  api_field :title, type: :string, required: true
   api_field :description, type: :string, required: true
   api_field :criteria, type: :object, required: true
   api_field :questionnaire_title, type: :string, required: true

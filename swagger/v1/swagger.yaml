@@ -2492,6 +2492,9 @@ components:
         id:
           type: string
           nullable: false
+        title:
+          type: string
+          nullable: false
         description:
           type: string
           nullable: false
@@ -2512,6 +2515,7 @@ components:
           nullable: false
       required:
       - id
+      - title
       - description
       - criteria
       - questionnaire_title
@@ -2522,6 +2526,9 @@ components:
       type: object
       properties:
         id:
+          type: string
+          nullable: false
+        title:
           type: string
           nullable: false
         description:
@@ -2547,6 +2554,7 @@ components:
           "$ref": "#/components/schemas/DcCompanyEmployeeBlueprint"
       required:
       - id
+      - title
       - description
       - criteria
       - questionnaire_title
